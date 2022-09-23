@@ -1,0 +1,9 @@
+**/node_modules
+**/firebase-adminsdk.json
+.env.dev
+**/package-lock.json
+*.lock
+dist
+.npmrc
+*.log
+lib

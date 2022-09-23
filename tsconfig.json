@@ -1,0 +1,36 @@
+{
+    "include": [
+        "src",
+        "Types"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/__tests__/*"
+    ],
+    "compilerOptions": {
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "skipLibCheck": true,
+        "moduleResolution": "Node",
+        "removeComments": true,
+        "declaration": true,
+        "module": "esnext",
+        "noEmitOnError": true,
+        "esModuleInterop": false,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "declarationMap": false,
+        "emitDeclarationOnly": true,
+        "outDir": "lib",
+        "declarationDir": "lib",
+        "strict": true,
+        "target": "es6",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
+    }
+}

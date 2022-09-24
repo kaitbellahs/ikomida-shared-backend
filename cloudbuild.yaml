@@ -1,0 +1,9 @@
+steps:
+  - id: dockerBuild
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk:alpine"
+    args:
+      [
+        "-c",
+        'rm .npmrc && echo "@ikomida:registry=https://us-central1-npm.pkg.dev/$PROJECT_ID/node/" >> .npmrc && echo "//us-central1-npm.pkg.dev/$PROJECT_ID/node/:always-auth=true" >> .npmrc && apk update && apk --no-cache -U upgrade && apk add --no-cache npm && npm --global i yarn patch-package && npx google-artifactregistry-auth && yarn install && yarn build && npm publish',
+      ]
+    entrypoint: sh

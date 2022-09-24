@@ -31,7 +31,7 @@ export function setExpressResponse(app: Express) {
           delete (data as Return<T>).status;
         }
         this.type('json');
-        this.end(data && 'toString' in (data as Return<T>) ? (data as Return<T>).toString() : JSON.stringify(data));
+        this.end(data && data instanceof Return && 'toString' in (data as Return<T>) ? (data as Return<T>).toString() : JSON.stringify(data));
       } catch (exception: any) {
         console.error(new Date().toString(), 'exception:', exception);
         this.type('json');

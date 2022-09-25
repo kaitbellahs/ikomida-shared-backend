@@ -29,7 +29,7 @@ export default class GoogleAdmin {
         const credentials = JSON.parse(Buffer.from(process.env.GOOGLEADMIN ?? '', 'base64').toString());
         this.credential = FBAdmin.credential.cert(credentials);
       } catch (exception: any) {
-        console.error(exception);
+        this.logger.error(exception);
       }
     }
     return this.credential;
@@ -42,7 +42,7 @@ export default class GoogleAdmin {
           credential: await this.getCredential(),
         });
       } catch (exception: any) {
-        console.error(exception);
+        this.logger.error(exception);
         return null;
       }
     }
@@ -55,7 +55,7 @@ export default class GoogleAdmin {
       const response = await credential?.getAccessToken();
       return response?.access_token;
     } catch (exception: any) {
-      console.error(exception);
+      this.logger.error(exception);
       return null;
     }
   }
@@ -95,7 +95,7 @@ export default class GoogleAdmin {
         },
       });
       if (!this.production) {
-        console.log(response?.data);
+        this.logger.log(response?.data);
       }
       if (response.status >= 200 && response.status < 300) {
         if (!this.servicesUrl) {
@@ -120,7 +120,7 @@ export default class GoogleAdmin {
           'X-Requested-With': 'iKomida-PS-V0.0.1',
         },
       });
-      console.log(response?.data);
+      this.logger.log(response?.data);
       if (response.status >= 200 && response.status < 300) {
         return response?.data;
       }
@@ -132,7 +132,7 @@ export default class GoogleAdmin {
   async androidApp(projectId: any, appID: any) {
     const accessToken = await this.getAccessToken();
     const uri = `https://firebase.googleapis.com/v1beta1/projects/${projectId}/androidApps/${appID}/config`;
-    console.log(uri);
+    this.logger.log(uri);
     try {
       const response = await axios.get(`${uri}`, {
         headers: {
@@ -140,7 +140,7 @@ export default class GoogleAdmin {
           'X-Requested-With': 'iKomida-PS-V0.0.1',
         },
       });
-      console.log(response?.data);
+      this.logger.log(response?.data);
       if (response.status >= 200 && response.status < 300) {
         return null;
       }

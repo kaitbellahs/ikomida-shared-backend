@@ -19,10 +19,10 @@ export default class UserCreditCardModel extends BaseModel {
   type?: Types.TPaymentMethod;
   @Column(DataType.STRING(20))
   brand?: string;
-  @Column(DataType.INTEGER({ length: 4 }))
-  firstDigits?: number;
-  @Column(DataType.INTEGER({ length: 6 }))
-  lastDigits?: number;
+  @Column(DataType.CHAR({ length: 6 }))
+  firstDigits?: string;
+  @Column(DataType.CHAR({ length: 4 }))
+  lastDigits?: string;
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true,

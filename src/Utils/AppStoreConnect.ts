@@ -46,7 +46,7 @@ export default class AppStoreConnect {
       let id = null;
       if (code === 0) {
         const profilId = await this.createProfile(iKomidaId, bundleId, certificates);
-        console.log('profilId:', profilId);
+        this.logger.log('profilId:', profilId);
         if (profilId?.error) {
           code = profilId?.error;
         } else {

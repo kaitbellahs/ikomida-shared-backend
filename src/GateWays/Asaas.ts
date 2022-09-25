@@ -221,7 +221,7 @@ ikomidaID: ${payload.ikomidaID}`,
     if (axios.isAxiosError(exception)) {
       errors = Classes.Asaas.CAsaasErrors.fromObject(exception.response?.data)
     }
-    return new Return(false, axios.isAxiosError(exception) ? errors : exception);
+    return new Return(false, axios.isAxiosError(exception) ? errors?.toJSON() : exception);
   }
 
   async createPayment(input: any): Promise<Return<Classes.Asaas.CAsaasPayment>> {

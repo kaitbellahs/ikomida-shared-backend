@@ -60,6 +60,14 @@ export function resolveBeforeEnums(instance: any, model: any) {
         }
         instance[key] = newValue;
       }
+    } else if (typeof key === 'symbol') {
+      if (Array.isArray(instance[key])) {
+        for (const object of instance[key]) {
+          resolveBeforeEnums(object, model)
+        }
+      } else if (isObject(instance[key])) {
+        resolveBeforeEnums(instance[key], model)
+      }
     }
   }
 }

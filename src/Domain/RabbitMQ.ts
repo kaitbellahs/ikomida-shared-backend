@@ -89,7 +89,7 @@ export default class RabbitMQ {
               await callback(message, channel);
             }
           } catch (e) {
-            console.error(e);
+            this.logger.error(e);
           }
         },
         {

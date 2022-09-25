@@ -12,15 +12,19 @@ export type IHeaders = AxiosResponseHeaders & {
   X_CLIENT_ID?: string;
   X_CLIENT_SECRET?: string;
 };
-
+const host: any = {
+  development: 'https://dev.ikomida.com/',
+  homologation: 'https://hmlg.ikomida.com/',
+  production: 'https://ikomida.com/',
+}
 export default class PagSeguro {
   email?: string | null;
   accessToken?: string;
   hostAPI = 'https://sandbox.api.pagseguro.com';
   logger: Logger;
   app?: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse;
-  redirectUri = 'https://hmlg.ikomida.com/callback';
-  host = 'https://hmlg.ikomida.com/';
+  redirectUri = 'https://dev.ikomida.com/callback';
+  host = 'https://dev.ikomida.com/';
   webhooks = 'webhooks/pagseguro/';
   production: boolean;
 
@@ -34,9 +38,9 @@ export default class PagSeguro {
     this.email = email;
     this.accessToken = accessToken;
     this.production = process.env.NODE_ENV === 'production';
+    this.host = host[process.env.NODE_ENV ?? 'development'];
     this.hostAPI = !this.production ? 'https://sandbox.api.pagseguro.com' : 'https://api.pagseguro.com';
-    this.redirectUri = !this.production ? 'https://hmlg.ikomida.com/callback' : 'https://ikomida.com/callback';
-    this.host = !this.production ? 'https://hmlg.ikomida.com/' : 'https://ikomida.com/';
+    this.redirectUri = `${this.host}/callback`;
     this.logger = logger;
   }
 
@@ -75,7 +79,9 @@ export default class PagSeguro {
         }.pagseguro.uol.com.br/v3/transactions/notifications/${notificationCode}?email=${this.email}&token=${this.accessToken
         }`;
       const response = await axios.get<string>(url);
-      this.logger.logRequest('GET', url, response?.headers, response?.status, response?.data);
+      if (!this.production) {
+        this.logger.logRequest('GET', url, response?.headers, response?.status, response?.data);
+      }
       if (response.status >= 200 && response.status < 300) {
         const data = JSON.parse(
           convert.xml2json(response?.data, {
@@ -85,7 +91,7 @@ export default class PagSeguro {
         );
         let index = Number(data.transaction.status._text);
         index = isNaN(index) ? 0 : index;
-        return Classes.Pagseguro.CChargeResponse.init('', '', 0, 0, data?.transaction?.reference?._text, data.reference_id, index < (paymentStatus?.length ?? 0) ? paymentStatus[index]
+        return Classes.Pagseguro.CChargeResponse.init('', '', '', '', data?.transaction?.reference?._text, data.reference_id, index < (paymentStatus?.length ?? 0) ? paymentStatus[index]
           : undefined, Number(data?.transaction?.grossAmount?._text), `CHAR_${data?.transaction?.code?._text}`);
       }
     } catch (exception: any) {
@@ -110,16 +116,17 @@ export default class PagSeguro {
       const response = await axios.post(url, request.toJSON(), {
         headers: this.headers(),
       });
-      console.log(response)
-      this.logger.logRequest(
-        'POST',
-        url,
-        response?.headers,
-        response?.status,
-        response?.data,
-        this.headers(false),
-        request,
-      );
+      if (!this.production) {
+        this.logger.logRequest(
+          'POST',
+          url,
+          response?.headers,
+          response?.status,
+          response?.data,
+          this.headers(false),
+          request,
+        );
+      }
       const data: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse = Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(response.data);
       if (response.status >= 200 && response.status < 300 && data?.client_id) {
         this.app = data;
@@ -140,7 +147,9 @@ export default class PagSeguro {
         headers: this.headers(false),
       });
       const data: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse = Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(response.data);
-      this.logger.logRequest('GET', url, response?.headers, response?.status, data, this.headers(false));
+      if (!this.production) {
+        this.logger.logRequest('GET', url, response?.headers, response?.status, data, this.headers(false));
+      }
       if (response.status >= 200 && response.status < 300) {
         this.app = data;
         return this.app;
@@ -160,14 +169,15 @@ export default class PagSeguro {
       );
       error.log(this.logger);
     }
-    let errors: Classes.Pagseguro.CPagSeguroErrorResponse = Classes.Asaas.CAsaasErrors.fillWith(null)
+    let errors: Classes.Pagseguro.CPagSeguroErrorResponse = Classes.Pagseguro.CPagSeguroErrorResponse.fillWith(null)
     if (axios.isAxiosError(exception)) {
       errors = Classes.Pagseguro.CPagSeguroErrorResponse.fromObject(exception.response?.data)
-      this.logger.error(errors.toJSON())
+      this.logger.error(errors?.toJSON())
+      return errors.error_messages?.[0]?.code === 41008 ? null : false;
     } else {
       this.logger.error(exception)
     }
-    return errors.error_messages?.[0]?.code === 41008 ? null : false;
+    return false;
   }
 
   generateConnectUrl(state?: string | undefined) {
@@ -193,15 +203,17 @@ export default class PagSeguro {
         headers: this.headers(true, this.app?.client_id, this.app?.client_secret),
       });
       const data: Classes.Pagseguro.CPagSeguroGetAccessTokenResponse = Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(response.data);
-      this.logger.logRequest(
-        'POST',
-        url,
-        response?.headers,
-        response?.status,
-        data.toJSON(),
-        this.headers(true, this.app?.client_id, this.app?.client_secret),
-        request,
-      );
+      if (!this.production) {
+        this.logger.logRequest(
+          'POST',
+          url,
+          response?.headers,
+          response?.status,
+          data.toJSON(),
+          this.headers(true, this.app?.client_id, this.app?.client_secret),
+          request,
+        );
+      }
       if (response.status >= 200 && response.status < 300 && data.access_token) {
         return data;
       }
@@ -229,15 +241,17 @@ export default class PagSeguro {
         headers: this.headers(true, this.app?.client_id, this.app?.client_secret),
       });
       const data: Classes.Pagseguro.CPagSeguroGetAccessTokenResponse = Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(response.data);
-      this.logger.logRequest(
-        'POST',
-        url,
-        response?.headers,
-        response?.status,
-        response?.data,
-        this.headers(true, this.app?.client_id, this.app?.client_secret),
-        request,
-      );
+      if (!this.production) {
+        this.logger.logRequest(
+          'POST',
+          url,
+          response?.headers,
+          response?.status,
+          response?.data,
+          this.headers(true, this.app?.client_id, this.app?.client_secret),
+          request,
+        );
+      }
       if (response.status >= 200 && response.status < 300) {
         return data;
       }
@@ -259,15 +273,17 @@ export default class PagSeguro {
       const response = await axios.post<void>(url, request.toJSON(), {
         headers: this.headers(true, this.app?.client_id, this.app?.client_secret),
       });
-      this.logger.logRequest(
-        'POST',
-        url,
-        response?.headers,
-        response?.status,
-        response?.data,
-        this.headers(true, this.app?.client_id, this.app?.client_secret),
-        request,
-      );
+      if (!this.production) {
+        this.logger.logRequest(
+          'POST',
+          url,
+          response?.headers,
+          response?.status,
+          response?.data,
+          this.headers(true, this.app?.client_id, this.app?.client_secret),
+          request,
+        );
+      }
       if (response.status >= 200 && response.status < 300) {
         return true;
       }
@@ -326,7 +342,9 @@ export default class PagSeguro {
         headers: this.headers(),
       });
       const data: Classes.Pagseguro.CPagSeguroChargeResponse = Classes.Pagseguro.CPagSeguroChargeResponse.fromObject(response.data);
-      this.logger.logRequest('POST', url, response?.headers, response?.status, response?.data, this.headers(), request);
+      if (!this.production) {
+        this.logger.logRequest('POST', url, response?.headers, response?.status, response?.data, this.headers(), request);
+      }
       const paymentStatus = data?.status;
       if (
         response.status >= 200 &&
@@ -335,7 +353,7 @@ export default class PagSeguro {
         ![Types?.TPagSeguroPaymentStatus.DECLINED, Types?.TPagSeguroPaymentStatus.CANCELED].includes(paymentStatus)
       ) {
         const paymentMethod = data.payment_method?.card;
-        return Classes.Pagseguro.CChargeResponse.init(paymentMethod?.id, paymentMethod?.brand, Number(paymentMethod?.first_digits), Number(paymentMethod?.last_digits), data.reference_id, data.reference_id, data.status, data.amount?.value, data.id);
+        return Classes.Pagseguro.CChargeResponse.init(paymentMethod?.id, paymentMethod?.brand, paymentMethod?.first_digits, paymentMethod?.last_digits, data.reference_id, data.reference_id, data.status, data.amount?.value, data.id);
       }
       const error = new iKomidaError(iKomidaError.PAGSEGURO_CREATE_CHARGE_FAILED_2, data.toJSON());
       error.log(this.logger);
@@ -360,7 +378,9 @@ export default class PagSeguro {
         headers: this.headers(),
       });
       const data: Classes.Pagseguro.CPagSeguroChargeResponse = Classes.Pagseguro.CPagSeguroChargeResponse.fromObject(response.data);
-      this.logger.logRequest('POST', url, response?.headers, response?.status, response?.data, this.headers(), request);
+      if (!this.production) {
+        this.logger.logRequest('POST', url, response?.headers, response?.status, response?.data, this.headers(), request);
+      }
       const paymentStatus = data?.status;
       if (
         response.status >= 200 &&
@@ -369,7 +389,7 @@ export default class PagSeguro {
         [Types?.TPagSeguroPaymentStatus.CANCELED].includes(paymentStatus)
       ) {
         const paymentMethod = data.payment_method?.card;
-        return Classes.Pagseguro.CChargeResponse.init(paymentMethod?.id, paymentMethod?.brand, Number(paymentMethod?.first_digits), Number(paymentMethod?.last_digits), data.metadata?.contractID, data.reference_id, data.status, data.amount?.value, data.id);
+        return Classes.Pagseguro.CChargeResponse.init(paymentMethod?.id, paymentMethod?.brand, paymentMethod?.first_digits, paymentMethod?.last_digits, data.metadata?.contractID, data.reference_id, data.status, data.amount?.value, data.id);
       }
       const error = new iKomidaError(iKomidaError.PAGSEGURO_CANCEL_CHARGE_FAILED_2);
       error.log(this.logger);

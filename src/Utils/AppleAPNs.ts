@@ -32,7 +32,7 @@ export default class AppleAPNs {
       try {
         pkcs8 = Buffer.from(process.env.APPLE_APNS ?? '', 'base64').toString('utf8');
       } catch (exception: any) {
-        console.error(exception);
+        this.logger.error(exception);
       }
       const ecPrivateKey = await importPKCS8(pkcs8, algorithm);
       return await new CompactSign(new TextEncoder().encode(JSON.stringify(payload)))
@@ -42,8 +42,7 @@ export default class AppleAPNs {
         })
         .sign(ecPrivateKey);
     } catch (error: any) {
-      //TODO: -- report errors
-      console.error(error);
+      this.logger.error(error);
     }
     return null;
   }

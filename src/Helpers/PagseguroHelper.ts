@@ -1,64 +1,49 @@
-import * as SqlDB from '../Domain/SqlDB';
-import SettingModel from '../Domain/Models/SettingModel';
 import { DateTime } from '@ikomida/shared-logics';
 import Logger from '../Utils/Logger';
 import PagSeguro from '../GateWays/PagSeguro';
 import { VendorPaymentGatewayModel } from '../Domain/Models';
 import { Classes } from '@ikomida/shared-types';
 
+const hostPrefixes: any = {
+  development: 'dev/',
+  homologation: 'hmlg',
+  production: '',
+}
+
 export default class PagseguroHelper {
   logger: Logger;
   host?: string;
   uri?: string;
+  prefix: string;
   constructor(logger: Logger) {
     this.logger = logger;
+    this.prefix = hostPrefixes[process.env.NODE_ENV ?? 'development'];
+  }
+
+  async createApp() {
+    const host = `https://${this.prefix}.ikomida.com`;
+    const pagSeguroEmail = process.env?.PAGSEGURO_EMAIL;
+    const pagSeguroToken = process.env?.PAGSEGURO_TOKEN;
+    const paymentGateway = new PagSeguro(this.logger, pagSeguroEmail, pagSeguroToken, undefined);
+    if (!pagSeguroEmail || !pagSeguroToken) {
+      return false;
+    }
+    const pagseguroLogo = `https://${this.prefix}.ikomida.com/assets/icons/logo-pagseguro.png`;
+    const response = await paymentGateway?.createApp(host, pagseguroLogo);
+    if (!response) {
+      return false;
+    }
+    return response;
   }
 
   async configure(vendorPaymentGatewayModel?: VendorPaymentGatewayModel) {
     try {
-      const settings = await SettingModel.findAll({
-        where: {
-          [SqlDB.Op.or]: [
-            {
-              name: 'host',
-            },
-            {
-              name: 'pagseguroLogo',
-            },
-            {
-              name: 'pagSeguroApp',
-            },
-          ],
-        },
-      });
-      let pagSeguroApp: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse = Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(
-        JSON.parse(settings?.filter((setting) => setting.name === 'pagSeguroApp')?.[0]?.value ?? '{}'),
+      const pagSeguroApp: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse = Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(
+        JSON.parse(Buffer.from(process.env.PAGSEGURO_APP ?? '', 'base64').toString() ?? '{}'),
       );
-      const host = settings?.filter((setting) => setting.name === 'host')?.[0]?.value ?? 'https://hmlg.ikomida.com';
-      const pagseguroLogo =
-        settings?.filter((setting) => setting.name === 'pagseguroLogo')?.[0]?.value ??
-        'https://hmlg.ikomida.com/assets/icons/logo-pagseguro.png';
-      const production = process.env.NODE_ENV === 'production';
       const pagSeguroEmail = process.env?.PAGSEGURO_EMAIL;
       const pagSeguroToken = process.env?.PAGSEGURO_TOKEN;
-
-      let paymentGateway = new PagSeguro(this.logger, pagSeguroEmail, pagSeguroToken, undefined);
-      if ((!pagSeguroApp || !pagSeguroApp.client_id?.trim()) && !production) {
-        if (!pagSeguroEmail || !pagSeguroToken) {
-          return false;
-        }
-        const response = await paymentGateway?.createApp(host, pagseguroLogo);
-        if (!response) {
-          return false;
-        }
-        await SettingModel.create({
-          name: 'pagSeguroApp',
-          value: JSON.stringify(response.toJSON()),
-          type: 'TEXT',
-        });
-        pagSeguroApp = response;
-      }
-      paymentGateway = new PagSeguro(this.logger, pagSeguroEmail, pagSeguroToken, pagSeguroApp);
+      let paymentGateway = new PagSeguro(this.logger, pagSeguroEmail, pagSeguroToken, pagSeguroApp);
       if (!vendorPaymentGatewayModel?.data) {
         return paymentGateway;
       }
@@ -82,8 +67,7 @@ export default class PagseguroHelper {
       paymentGateway = new PagSeguro(this.logger, undefined, gatewayData?.access_token, pagSeguroApp);
       return paymentGateway;
     } catch (exception: any) {
-      this.logger.error('Ocorreu um erro inespirado:');
-      console.error(exception);
+      this.logger.error(exception);
     }
     return false;
   }

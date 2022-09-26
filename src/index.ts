@@ -37,7 +37,7 @@ export async function signData(object?: any) {
   return signed.toString('base64');
 }
 
-export async function validateSignature(object?: Classes.CUser, signature?: string): Promise<boolean> {
+export async function validateSignature(object?: any, signature?: string): Promise<boolean> {
   try {
     const spki = Buffer.from(process.env.IKOMIDA_PUBLICKEY ?? '', 'base64').toString();
     const ecPublicKey = (await importSPKI(spki, algorithm)) as VerifyPublicKeyInput;

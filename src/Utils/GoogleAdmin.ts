@@ -10,6 +10,7 @@ import iKomidaError from './iKomidaError';
 import sharp from 'sharp';
 import Logger from './Logger';
 import { Interfaces, Classes, Types } from '@ikomida/shared-types';
+import { AddressModel } from '../Domain/Models';
 
 export default class GoogleAdmin {
   googleAdmin?: FBAdmin.app.App;
@@ -309,13 +310,16 @@ export default class GoogleAdmin {
     return null;
   }
 
-  static async calcDistance(apiKey: any, pointA: string, pointB: string) {
+  static async calcDistance(pointA?: AddressModel, pointB?: Classes.CAddress) {
+    const apiKey = process.env.CALC_DISTANCE_API_KEY
     if (!apiKey || !pointA || !pointB) {
       return false;
     }
+    const addressOrigin = `${pointA.street}, ${pointA.number}, ${pointA.neighborhood} - ${pointA.city}/${pointA.stat}, cep:${pointA.postalCode}`;
+    const addressDelivery = `${pointB.street}, ${pointB.number}, ${pointB.neighborhood} - ${pointB.city}/${pointB.stat}, cep:${pointB.postalCode}`;
     const uri = `https://maps.googleapis.com/maps/api/distancematrix/json?key=${apiKey}&origins=${encodeURI(
-      pointA,
-    )}&destinations=${encodeURI(pointB)}&units=imperial'`;
+      addressOrigin,
+    )}&destinations=${encodeURI(addressDelivery)}&units=imperial'`;
     try {
       const response = await axios.get(`${uri}`, {
         headers: {

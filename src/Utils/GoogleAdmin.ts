@@ -319,7 +319,7 @@ export default class GoogleAdmin {
     const addressDelivery = `${pointB.street}, ${pointB.number}, ${pointB.neighborhood} - ${pointB.city}/${pointB.stat}, cep:${pointB.postalCode}`;
     const uri = `https://maps.googleapis.com/maps/api/distancematrix/json?key=${apiKey}&origins=${encodeURI(
       addressOrigin,
-    )}&destinations=${encodeURI(addressDelivery)}&units=imperial'`;
+    )}&destinations=${encodeURI(addressDelivery)}&units=imperial`;
     try {
       const response = await axios.get(`${uri}`, {
         headers: {

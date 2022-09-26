@@ -310,7 +310,7 @@ export default class GoogleAdmin {
     return null;
   }
 
-  static async calcDistance(pointA: AddressModel, pointB: AddressModel) {
+  static async calcDistance(pointA?: AddressModel, pointB?: AddressModel) {
     const apiKey = process.env.CALC_DISTANCE_API_KEY
     if (!apiKey || !pointA || !pointB) {
       return false;

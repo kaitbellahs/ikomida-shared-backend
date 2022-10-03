@@ -29,4 +29,3 @@ export { default as VendorSettingsModel } from './VendorSettingsModel';
 export { default as ProductOptionCategoryModel } from './ProductOptionCategoryModel';
 export { default as ProductOptionModel } from './ProductOptionModel';
 export { default as OrderProductOptionModel } from './OrderProductOptionModel';
-export { default as OrderProductProductOptionModel } from './OrderProductProductOptionModel';

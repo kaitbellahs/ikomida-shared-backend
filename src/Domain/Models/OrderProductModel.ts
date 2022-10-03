@@ -1,11 +1,10 @@
 import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
 import OrderModel from './OrderModel';
-import OrderProductProductOptionModel from './OrderProductProductOptionModel';
+import OrderProductOptionModel from './OrderProductOptionModel';
 import ProductModel from './ProductModel';
-import ProductOptionModel from './ProductOptionModel';
 import UserModel from './UserModel';
 
 @Table({
@@ -26,7 +25,7 @@ export default class OrderProductModel extends BaseModel {
   @Column(DataType.INTEGER)
   quantity?: number;
 
-  //MARK: --Associations
+  //MARK: -- Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
   userId?: string;
@@ -51,6 +50,6 @@ export default class OrderProductModel extends BaseModel {
   @BelongsTo(() => ProductModel)
   product?: ProductModel;
 
-  @BelongsToMany(() => ProductOptionModel, () => OrderProductProductOptionModel)
-  productOptions?: ProductOptionModel[];
+  @HasMany(() => OrderProductOptionModel)
+  productOptions?: OrderProductOptionModel[];
 }

@@ -1,9 +1,10 @@
 import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
 import OrderModel from './OrderModel';
 import ProductModel from './ProductModel';
+import ProductOptionModel from './ProductOptionModel';
 import UserModel from './UserModel';
 
 @Table({
@@ -48,4 +49,7 @@ export default class OrderProductModel extends BaseModel {
   productId?: string;
   @BelongsTo(() => ProductModel)
   product?: ProductModel;
+
+  @HasMany(() => ProductOptionModel)
+  productOptions?: ProductOptionModel[];
 }

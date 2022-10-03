@@ -7,11 +7,11 @@ export default class OtimaTel {
   host = 'https://mm.otimatel.com.br/api/v2';
   basic;
   logger: Logger;
-  production
+  production;
 
   constructor(logger: Logger) {
     this.logger = logger;
-    this.production = process.env.NODE_ENV === 'production'
+    this.production = process.env.NODE_ENV === 'production';
     try {
       this.basic = Buffer.from(`${process.env?.OTIMATELUSER}:${process.env?.OTIMATELPASS}`).toString('base64');
     } catch (exception: any) {
@@ -50,7 +50,7 @@ export default class OtimaTel {
       if (!this.production) {
         return {
           success: true,
-          id: null
+          id: null,
         };
       } else {
         const response = await axios.post<Classes.COtimaTelResponse>(`${this.host}${endPoint}`, requestObject, {
@@ -63,10 +63,13 @@ export default class OtimaTel {
             id: response?.data?.message?.id ?? null,
           };
         }
-        return new iKomidaError(iKomidaError.IKOMIDA_OTIMATEL_SEND_ERROR, JSON.stringify(response?.data)).logAndReturn(this.logger);
+        return new iKomidaError(iKomidaError.IKOMIDA_OTIMATEL_SEND_ERROR, JSON.stringify(response?.data)).logAndReturn(
+          this.logger,
+        );
       }
     } catch (exception: any) {
-      return new iKomidaError(iKomidaError.IKOMIDA_OTIMATEL_SEND_EXCEPTION,
+      return new iKomidaError(
+        iKomidaError.IKOMIDA_OTIMATEL_SEND_EXCEPTION,
         axios.isAxiosError(exception) ? exception.response?.data : exception,
       ).logAndReturn(this.logger);
     }

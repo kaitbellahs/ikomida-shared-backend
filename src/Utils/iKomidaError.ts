@@ -20,10 +20,10 @@ export default class iKomidaError {
       this.code = error.code;
       this.message = error.message;
       if ((args?.length ?? 0) > 0) {
-        const params: any[] = []
+        const params: any[] = [];
         for (const arg of args) {
           if (typeof arg === 'string') {
-            params.push(arg)
+            params.push(arg);
           } else {
             this.errors.push(arg);
           }

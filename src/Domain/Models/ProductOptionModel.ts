@@ -1,7 +1,11 @@
 import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, DataType, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript';
 import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
+import OrderModel from './OrderModel';
+import OrderProductModel from './OrderProductModel';
+import OrderProductOptionModel from './OrderProductOptionModel';
+import OrderProductProductOptionModel from './OrderProductProductOptionModel';
 import ProductCategoryModel from './ProductCategoryModel';
 import ProductModel from './ProductModel';
 import ProductOptionCategoryModel from './ProductOptionCategoryModel';
@@ -17,12 +21,12 @@ export default class ProductOptionModel extends BaseModel {
   image?: string;
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   })
   highlighted?: boolean;
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
   })
   @Column(DataType.TEXT)
   order?: number;
@@ -56,4 +60,8 @@ export default class ProductOptionModel extends BaseModel {
   contractId?: string;
   @BelongsTo(() => ContractModel)
   contract?: ContractModel;
+  @BelongsToMany(() => OrderModel, () => OrderProductOptionModel)
+  orders?: OrderModel[];
+  @BelongsToMany(() => OrderProductModel, () => OrderProductProductOptionModel)
+  orderProducts?: OrderProductModel[];
 }

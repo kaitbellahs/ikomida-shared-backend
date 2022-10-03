@@ -1,7 +1,6 @@
 import { generateKeyPair, exportPKCS8, exportSPKI, importSPKI, importPKCS8 } from 'jose';
 import { sign, verify, SignPrivateKeyInput, VerifyPublicKeyInput } from 'crypto';
 import bcrypt from 'bcrypt';
-import { Classes } from '@ikomida/shared-types';
 export * as Logics from '@ikomida/shared-logics';
 export * as Helpers from './Helpers';
 export * as Domain from './Domain';

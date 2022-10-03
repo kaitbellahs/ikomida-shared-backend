@@ -8,7 +8,7 @@ const hostPrefixes: any = {
   development: 'dev/',
   homologation: 'hmlg',
   production: '',
-}
+};
 
 export default class PagseguroHelper {
   logger: Logger;
@@ -38,20 +38,22 @@ export default class PagseguroHelper {
 
   async configure(vendorPaymentGatewayModel?: VendorPaymentGatewayModel) {
     try {
-      const pagSeguroApp: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse = Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(
-        JSON.parse(Buffer.from(process.env.PAGSEGURO_APP ?? '', 'base64').toString() ?? '{}'),
-      );
+      const pagSeguroApp: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse =
+        Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(
+          JSON.parse(Buffer.from(process.env.PAGSEGURO_APP ?? '', 'base64').toString() ?? '{}'),
+        );
       const pagSeguroEmail = process.env?.PAGSEGURO_EMAIL;
       const pagSeguroToken = process.env?.PAGSEGURO_TOKEN;
       let paymentGateway = new PagSeguro(this.logger, pagSeguroEmail, pagSeguroToken, pagSeguroApp);
       if (!vendorPaymentGatewayModel?.data) {
         return paymentGateway;
       }
-      const gatewayData: Classes.Pagseguro.CPagSeguroGetAccessTokenResponse = Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(vendorPaymentGatewayModel?.data);
+      const gatewayData: Classes.Pagseguro.CPagSeguroGetAccessTokenResponse =
+        Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(vendorPaymentGatewayModel?.data);
       if (
         new Date(DateTime?.localDate().toString()).getTime() >
-        gatewayData?.expires_in + vendorPaymentGatewayModel?.updatedAt?.getTime()
-        && gatewayData.refresh_token
+          gatewayData?.expires_in + vendorPaymentGatewayModel?.updatedAt?.getTime() &&
+        gatewayData.refresh_token
       ) {
         const response = await paymentGateway?.refreshAccessToken(gatewayData?.refresh_token);
         if (response) {

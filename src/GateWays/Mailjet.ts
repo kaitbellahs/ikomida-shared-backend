@@ -52,7 +52,8 @@ export default class Mailjet {
         new iKomidaError(iKomidaError.MAILJET_SEND_EMAIL_ERROR_RESPONSE, result).log(this.logger);
       }
     } catch (exception) {
-      new iKomidaError(iKomidaError.MAILJET_SEND_EMAIL_EXCEPTION,
+      new iKomidaError(
+        iKomidaError.MAILJET_SEND_EMAIL_EXCEPTION,
         axios.isAxiosError(exception) ? exception.response?.data : exception,
       ).log(this.logger);
     }

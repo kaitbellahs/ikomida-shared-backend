@@ -273,7 +273,13 @@ export default class GoogleAdmin {
     return { code: -1 };
   }
 
-  async uploadFileToStorage(bucketName: string, fileContents: Buffer, mimType: string, destination: string, metadata: Interfaces.IMetadata) {
+  async uploadFileToStorage(
+    bucketName: string,
+    fileContents: Buffer,
+    mimType: string,
+    destination: string,
+    metadata: Interfaces.IMetadata,
+  ) {
     try {
       const sharpData = sharp(fileContents).resize({
         width: 512,
@@ -306,13 +312,20 @@ export default class GoogleAdmin {
     return null;
   }
 
-  async uploadToStorage(identity: Classes.CUser, id: string, type: string, dir: string, payload?: string, image?: string) {
+  async uploadToStorage(
+    identity: Classes.CUser,
+    id: string,
+    type: string,
+    dir: string,
+    payload?: string,
+    image?: string,
+  ) {
     try {
       const bucket: any = {
         development: 'dev.',
         homologation: 'hmlg.',
         production: '',
-      }
+      };
       if (payload?.includes('data:')) {
         const [metadata, base64Image] = payload.split(',');
         const [dataType] = metadata ? metadata.split(';') : [];
@@ -323,26 +336,28 @@ export default class GoogleAdmin {
         const imageUri = `${identity.ikomidaID}/${dir}/${id}/0.${imageExtension}`;
         const buffer = Buffer.from(base64Image, 'base64');
 
-        return (await this.uploadFileToStorage(
-          `${bucket[process.env.NODE_ENV ?? 'development']}cdn.ikomida.com`,
-          buffer,
-          imageExtension,
-          imageUri,
-          {
-            ikomidaID: identity.ikomidaID,
-            type,
-            dir,
-          },
-        )) ?? image;
+        return (
+          (await this.uploadFileToStorage(
+            `${bucket[process.env.NODE_ENV ?? 'development']}cdn.ikomida.com`,
+            buffer,
+            imageExtension,
+            imageUri,
+            {
+              ikomidaID: identity.ikomidaID,
+              type,
+              dir,
+            },
+          )) ?? image
+        );
       }
     } catch (exception: any) {
       new iKomidaError(iKomidaError.IKOMIDA_PRODUCTS_SERVICE_EDIT_PRODUCT_UPLOAD_IMAGE, exception).log(this.logger);
     }
-    return payload ?? image
+    return payload ?? image;
   }
 
   static async calcDistance(pointA?: AddressModel, pointB?: Classes.CAddress) {
-    const apiKey = process.env.CALC_DISTANCE_API_KEY
+    const apiKey = process.env.CALC_DISTANCE_API_KEY;
     if (!apiKey || !pointA || !pointB) {
       return false;
     }

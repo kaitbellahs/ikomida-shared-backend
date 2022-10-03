@@ -19,7 +19,7 @@ export function setExpressResponse(app: Express) {
       try {
         req.headers.identity = JSON.parse(req.headers?.identity as string);
         // eslint-disable-next-line no-empty
-      } catch (_) { }
+      } catch (_) {}
     }
     res.sendResponse = function <T extends any & IiKomidaError>(data: Return<T> | T): Response {
       try {
@@ -31,7 +31,11 @@ export function setExpressResponse(app: Express) {
           delete (data as Return<T>).status;
         }
         this.type('json');
-        this.end(data && data instanceof Return && 'toString' in (data as Return<T>) ? (data as Return<T>).toString() : JSON.stringify(data));
+        this.end(
+          data && data instanceof Return && 'toString' in (data as Return<T>)
+            ? (data as Return<T>).toString()
+            : JSON.stringify(data),
+        );
       } catch (exception: any) {
         console.error(new Date().toString(), 'exception:', exception);
         this.type('json');

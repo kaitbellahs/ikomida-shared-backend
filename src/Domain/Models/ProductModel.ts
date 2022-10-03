@@ -4,6 +4,7 @@ import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
 import ProductCategoryModel from './ProductCategoryModel';
 import ProductOptionCategoryModel from './ProductOptionCategoryModel';
+import ProductOptionModel from './ProductOptionModel';
 
 @Table({
   paranoid: true,
@@ -54,4 +55,7 @@ export default class ProductModel extends BaseModel {
 
   @HasMany(() => ProductOptionCategoryModel)
   productOptionCategories?: ProductOptionCategoryModel[];
+
+  @HasMany(() => ProductOptionModel)
+  productOptions?: ProductOptionModel[];
 }

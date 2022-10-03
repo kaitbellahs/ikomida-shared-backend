@@ -1,4 +1,4 @@
-name: build and test ikomida dev lib before pull request merge
+name: build and test ikomida shared backend lib before pull request merge
 on:
   pull_request:
     branches:

@@ -26,3 +26,5 @@ export { default as UserPaymentModel } from './UserPaymentModel';
 export { default as VendorPaymentGatewayModel } from './VendorPaymentGatewayModel';
 export { default as VendorPNMessageModel } from './VendorPNMessageModel';
 export { default as VendorSettingsModel } from './VendorSettingsModel';
+export { default as ProductOptionCategoryModel } from './ProductOptionCategoryModel';
+export { default as ProductOptionModel } from './ProductOptionModel';

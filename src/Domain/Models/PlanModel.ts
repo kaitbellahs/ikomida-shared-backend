@@ -34,6 +34,8 @@ export default class PlanModel extends BaseModel {
   @Column(DataType.INTEGER)
   orders?: number;
   @Column(DataType.INTEGER)
+  productOptions?: number;
+  @Column(DataType.INTEGER)
   billing?: number;
   @Column(DataType.JSON)
   @Enum(Types.TSupport)

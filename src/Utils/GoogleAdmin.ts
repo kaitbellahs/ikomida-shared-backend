@@ -306,7 +306,7 @@ export default class GoogleAdmin {
     return null;
   }
 
-  async uploadToStorage(identity: Classes.CUser, id: string, image: string, type: string, dir: string, payload?: string) {
+  async uploadToStorage(identity: Classes.CUser, id: string, type: string, dir: string, payload?: string, image?: string) {
     try {
       const bucket: any = {
         development: 'dev.',

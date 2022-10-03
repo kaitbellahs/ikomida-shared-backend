@@ -22,6 +22,8 @@ import VendorPaymentGatewayModel from './VendorPaymentGatewayModel';
 import VendorSettingsModel from './VendorSettingsModel';
 import ContractPaymentModel from './ContractPaymentModel';
 import { Types } from '@ikomida/shared-types';
+import ProductOptionCategoryModel from './ProductOptionCategoryModel';
+import ProductOptionModel from './ProductOptionModel';
 
 @Table({
   paranoid: true,
@@ -100,6 +102,12 @@ export default class ContractModel extends BaseModel {
 
   @HasMany(() => ProductCategoryModel)
   productCategories?: ProductCategoryModel[];
+
+  @HasMany(() => ProductOptionCategoryModel)
+  productOptionCategories?: ProductOptionCategoryModel[];
+
+  @HasMany(() => ProductOptionModel)
+  productOptions?: ProductOptionModel[];
 
   @HasMany(() => OrderProductModel)
   orderProducts?: OrderProductModel[];

@@ -3,6 +3,7 @@ import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typesc
 import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
 import ProductCategoryModel from './ProductCategoryModel';
+import ProductModel from './ProductModel';
 import ProductOptionCategoryModel from './ProductOptionCategoryModel';
 
 @Table({
@@ -38,15 +39,21 @@ export default class ProductOptionModel extends BaseModel {
   @BelongsTo(() => ProductOptionCategoryModel)
   productOptionCategory?: ProductOptionCategoryModel;
 
-  @ForeignKey(() => ContractModel)
+  @ForeignKey(() => ProductModel)
   @Column(DataType.UUID)
-  contractId?: string;
-  @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  productId?: string;
+  @BelongsTo(() => ProductModel)
+  product?: ProductModel;
 
   @ForeignKey(() => ProductCategoryModel)
   @Column(DataType.UUID)
   productCategoryId?: string;
   @BelongsTo(() => ProductCategoryModel)
   productCategory?: ProductCategoryModel;
+
+  @ForeignKey(() => ContractModel)
+  @Column(DataType.UUID)
+  contractId?: string;
+  @BelongsTo(() => ContractModel)
+  contract?: ContractModel;
 }

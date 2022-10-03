@@ -1,4 +1,4 @@
-import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo } from 'sequelize-typescript';
 import AddressModel from './AddressModel';
 import BaseModel from './BaseModel';
 import CouponModel from './CouponModel';
@@ -8,8 +8,6 @@ import OrderProductModel from './OrderProductModel';
 import ContractModel from './ContractModel';
 import UserPaymentModel from './UserPaymentModel';
 import { Types } from '@ikomida/shared-types';
-import ProductOptionModel from './ProductOptionModel';
-import OrderProductOptionModel from './OrderProductOptionModel';
 
 @Table({
   paranoid: true,
@@ -87,7 +85,4 @@ export default class OrderModel extends BaseModel {
 
   @HasMany(() => OrderProductModel)
   orderProducts?: OrderProductModel[];
-
-  @BelongsToMany(() => ProductOptionModel, () => OrderProductOptionModel)
-  productOptions?: ProductOptionModel[];
 }

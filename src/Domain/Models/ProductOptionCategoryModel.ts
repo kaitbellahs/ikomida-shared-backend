@@ -1,6 +1,7 @@
 import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
 import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
+import ProductCategoryModel from './ProductCategoryModel';
 import ProductModel from './ProductModel';
 import ProductOptionModel from './ProductOptionModel';
 
@@ -32,17 +33,24 @@ export default class ProductOptionCategoryModel extends BaseModel {
   order?: number;
 
   //MARK: --Associations
-  @ForeignKey(() => ContractModel)
-  @Column(DataType.UUID)
-  contractId?: string;
-  @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
 
   @ForeignKey(() => ProductModel)
   @Column(DataType.UUID)
   productId?: string;
   @BelongsTo(() => ProductModel)
   product?: ProductModel;
+
+  @ForeignKey(() => ProductCategoryModel)
+  @Column(DataType.UUID)
+  productCategoryId?: string;
+  @BelongsTo(() => ProductCategoryModel)
+  productCategory?: ProductCategoryModel;
+
+  @ForeignKey(() => ContractModel)
+  @Column(DataType.UUID)
+  contractId?: string;
+  @BelongsTo(() => ContractModel)
+  contract?: ContractModel;
 
   @HasMany(() => ProductOptionModel)
   productOptions?: ProductOptionModel[];

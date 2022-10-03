@@ -39,17 +39,19 @@ export default class ProductModel extends BaseModel {
   active?: boolean;
 
   //MARK: --Associaions
-  @ForeignKey(() => ContractModel)
-  @Column(DataType.UUID)
-  contractId?: string;
-  @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
 
   @ForeignKey(() => ProductCategoryModel)
   @Column(DataType.UUID)
   productCategoryId?: string;
   @BelongsTo(() => ProductCategoryModel)
   productCategory?: ProductCategoryModel;
+
+  @ForeignKey(() => ContractModel)
+  @Column(DataType.UUID)
+  contractId?: string;
+  @BelongsTo(() => ContractModel)
+  contract?: ContractModel;
+
   @HasMany(() => ProductOptionCategoryModel)
   productOptionCategories?: ProductOptionCategoryModel[];
 }

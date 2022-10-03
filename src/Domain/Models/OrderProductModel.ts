@@ -1,8 +1,9 @@
 import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
+import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany, BelongsToMany } from 'sequelize-typescript';
 import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
 import OrderModel from './OrderModel';
+import OrderProductProductOptionModel from './OrderProductProductOptionModel';
 import ProductModel from './ProductModel';
 import ProductOptionModel from './ProductOptionModel';
 import UserModel from './UserModel';
@@ -50,6 +51,6 @@ export default class OrderProductModel extends BaseModel {
   @BelongsTo(() => ProductModel)
   product?: ProductModel;
 
-  @HasMany(() => ProductOptionModel)
-  productOptions?: ProductOptionModel[];
+  @BelongsToMany(() => ProductOptionModel, () => OrderProductProductOptionModel)
+  productOptions?: ProductOptionModel[]
 }

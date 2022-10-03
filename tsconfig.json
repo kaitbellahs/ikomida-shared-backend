@@ -1,7 +1,6 @@
 {
     "include": [
-        "src",
-        "Types"
+        "src/**/*.ts"
     ],
     "exclude": [
         "node_modules",
@@ -9,28 +8,28 @@
     ],
     "compilerOptions": {
         "lib": [
-            "dom",
-            "dom.iterable",
-            "esnext"
+            "ESNext",
+            "DOM",
+            "dom.iterable"
         ],
         "skipLibCheck": true,
         "moduleResolution": "Node",
         "removeComments": true,
         "declaration": true,
-        "module": "esnext",
         "noEmitOnError": true,
-        "esModuleInterop": false,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-        "allowJs": true,
-        "declarationMap": false,
-        "emitDeclarationOnly": true,
         "outDir": "lib",
-        "declarationDir": "lib",
+        "declarationDir": "types",
         "strict": true,
-        "target": "es6",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "allowJs": false,
+        "declarationMap": true,
+        "emitDeclarationOnly": false,
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "target": "ESNext"
     }
 }

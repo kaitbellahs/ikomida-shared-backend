@@ -135,7 +135,7 @@ export default class BaseModel extends Model {
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
   })
-  id?: string;
+  id?: string = undefined;
 
   @BeforeCount
   static DoBeforeCount(instance: any, options: any) {

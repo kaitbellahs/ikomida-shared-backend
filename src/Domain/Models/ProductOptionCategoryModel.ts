@@ -6,7 +6,7 @@ import ProductOptionModel from './ProductOptionModel';
 
 @Table({
   paranoid: true,
-  modelName: 'productCategory',
+  modelName: 'productOptionsCategory',
 })
 export default class ProductOptionCategoryModel extends BaseModel {
   @Column(DataType.CHAR(100))

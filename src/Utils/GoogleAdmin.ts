@@ -1,11 +1,7 @@
-// import {
-//     readFile
-// } from 'fs/promises'
 import FBAdmin, { app } from 'firebase-admin';
 import { Credential } from 'firebase-admin/app';
 import { FirebaseError } from '@firebase/util';
 import axios from 'axios';
-// import Logger from '../Utils/Logger'
 import iKomidaError from './iKomidaError';
 import sharp from 'sharp';
 import Logger from './Logger';
@@ -308,6 +304,41 @@ export default class GoogleAdmin {
       error.log(this.logger);
     }
     return null;
+  }
+
+  async uploadToStorage(identity: Classes.CUser, id: string, image: string, type: string, dir: string, payload?: string) {
+    try {
+      const bucket: any = {
+        development: 'dev.',
+        homologation: 'hmlg.',
+        production: '',
+      }
+      if (payload?.includes('data:')) {
+        const [metadata, base64Image] = payload.split(',');
+        const [dataType] = metadata ? metadata.split(';') : [];
+        let imageExtension = 'jpg';
+        if (dataType === 'data:image/png') {
+          imageExtension = 'png';
+        }
+        const imageUri = `${identity.ikomidaID}/${dir}/${id}/0.${imageExtension}`;
+        const buffer = Buffer.from(base64Image, 'base64');
+
+        return (await this.uploadFileToStorage(
+          `${bucket[process.env.NODE_ENV ?? 'development']}cdn.ikomida.com`,
+          buffer,
+          imageExtension,
+          imageUri,
+          {
+            ikomidaID: identity.ikomidaID,
+            type,
+            dir,
+          },
+        )) ?? image;
+      }
+    } catch (exception: any) {
+      new iKomidaError(iKomidaError.IKOMIDA_PRODUCTS_SERVICE_EDIT_PRODUCT_UPLOAD_IMAGE, exception).log(this.logger);
+    }
+    return payload ?? image
   }
 
   static async calcDistance(pointA?: AddressModel, pointB?: Classes.CAddress) {

@@ -45,10 +45,9 @@ export default class OrderModel extends BaseModel {
   })
   paymentMethodType?: Types.TPaymentMethod;
   @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: true,
+    type: DataType.CHAR({ length: 255 }),
   })
-  active?: boolean;
+  observation?: string;
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)

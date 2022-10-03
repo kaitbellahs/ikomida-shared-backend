@@ -19,14 +19,16 @@ export default class Asaas {
 
   private headers() {
     return {
-      'access_token': this.accessToken,
+      access_token: this.accessToken,
       'Content-Type': 'application/json',
       accept: 'application/json',
       'X-Requested-With': 'iKomida-PS-V0.0.1',
-    }
+    };
   }
 
-  async createNewCustomer(input?: Classes.Asaas.CAsaasNewCustomer): Promise<Return<Classes.Asaas.CNewCustomerResponse>> {
+  async createNewCustomer(
+    input?: Classes.Asaas.CAsaasNewCustomer,
+  ): Promise<Return<Classes.Asaas.CNewCustomerResponse>> {
     try {
       const endpoint = '/api/v3/customers';
       const request = Classes.Asaas.CNewCustomerResquest.init(
@@ -59,7 +61,7 @@ export default class Asaas {
       error = new iKomidaError(iKomidaError.ASAAS_NEW_CUSTOMER_CREATE_FAILED_3);
       return new Return(false, data);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_NEW_CUSTOMER_CREATE_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_NEW_CUSTOMER_CREATE_FAILED_1);
     }
   }
 
@@ -82,9 +84,11 @@ export default class Asaas {
         payload.address.complement,
       );
       const response = await axios.post(`${this.host}${endpoint}`, request.toJSON(), {
-        headers: this.headers()
+        headers: this.headers(),
       });
-      const data: Classes.Asaas.CAsaasNewAccountResponse = Classes.Asaas.CAsaasNewAccountResponse.fromObject(response.data);
+      const data: Classes.Asaas.CAsaasNewAccountResponse = Classes.Asaas.CAsaasNewAccountResponse.fromObject(
+        response.data,
+      );
       if (response.status >= 200 && response.status < 300 && data?.id) {
         return new Return(true, data);
       }
@@ -93,7 +97,7 @@ export default class Asaas {
       error = new iKomidaError(iKomidaError.ASAAS_NEW_CUSTOMER_CREATE_FAILED_3);
       return new Return(false);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_NEW_CUSTOMER_CREATE_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_NEW_CUSTOMER_CREATE_FAILED_1);
     }
   }
 
@@ -106,7 +110,7 @@ export default class Asaas {
     const endpoint = `/api/v3/subscriptions/${id}`;
     try {
       const response = await axios.get(`${this.host}${endpoint}`, {
-        headers: this.headers()
+        headers: this.headers(),
       });
       const data: Classes.Asaas.CSubscriptionResponse = Classes.Asaas.CSubscriptionResponse.fromObject(response.data);
       if (response.status >= 200 && response.status < 300 && data?.id) {
@@ -115,7 +119,7 @@ export default class Asaas {
       const error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_2, data.toJSON());
       error.log(this.logger);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
     return new Return(false);
   }
@@ -129,7 +133,7 @@ export default class Asaas {
     const endpoint = `/api/v3/payments?subscription = ${subscriptionId}`;
     try {
       const response = await axios.get(`${this.host}${endpoint}`, {
-        headers: this.headers()
+        headers: this.headers(),
       });
       const data: Classes.Asaas.CAsaasPaymentsResponse = Classes.Asaas.CAsaasPaymentsResponse.fromObject(response.data);
       if (response.status >= 200 && response.status < 300 && data.data) {
@@ -138,7 +142,7 @@ export default class Asaas {
       const error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_2, data.toJSON());
       error.log(this.logger);
     } catch (exception: any) {
-      this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
     return new Return(false, []);
   }
@@ -197,9 +201,10 @@ ikomidaID: ${payload.ikomidaID}`,
     );
     try {
       const response = await axios.post(`${this.host}${endpoint}`, request.toJSON(), {
-        headers: this.headers()
+        headers: this.headers(),
       });
-      const data: Classes.Asaas.CAsaasCreateSubscriptionResponse = Classes.Asaas.CAsaasCreateSubscriptionResponse.fromObject(response.data);
+      const data: Classes.Asaas.CAsaasCreateSubscriptionResponse =
+        Classes.Asaas.CAsaasCreateSubscriptionResponse.fromObject(response.data);
       if (response.status >= 200 && response.status < 300 && data?.id) {
         return new Return(true, data);
       }
@@ -208,25 +213,23 @@ ikomidaID: ${payload.ikomidaID}`,
       error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_3);
       return new Return(false, data);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
   }
 
   private handleException(exception: any, errorModel: IiKomidaErrorModel) {
-    const error = new iKomidaError(errorModel,
-      axios.isAxiosError(exception) ? exception.response?.data : exception,
-    );
+    const error = new iKomidaError(errorModel, axios.isAxiosError(exception) ? exception.response?.data : exception);
     error.log(this.logger);
-    let errors: Classes.Asaas.CAsaasErrors = Classes.Asaas.CAsaasErrors.fillWith(null)
+    let errors: Classes.Asaas.CAsaasErrors = Classes.Asaas.CAsaasErrors.fillWith(null);
     if (axios.isAxiosError(exception)) {
-      errors = Classes.Asaas.CAsaasErrors.fromObject(exception.response?.data)
+      errors = Classes.Asaas.CAsaasErrors.fromObject(exception.response?.data);
     }
     return new Return(false, axios.isAxiosError(exception) ? errors?.toJSON() : exception);
   }
 
   async createPayment(input: any): Promise<Return<Classes.Asaas.CAsaasPayment>> {
     const endpoint = '/api/v3/payments';
-    const payload: Classes.Asaas.CAsaasCreatePayment = Classes.Asaas.CAsaasCreatePayment.fromObject(input)
+    const payload: Classes.Asaas.CAsaasCreatePayment = Classes.Asaas.CAsaasCreatePayment.fromObject(input);
     const request = new Classes.Asaas.CAsaasRequestPayment({
       customer: payload.customer?.id,
       billingType: payload.type,
@@ -263,7 +266,7 @@ ikomidaID: ${payload.ikomidaID}`,
     }
     try {
       const response = await axios.post<Classes.Asaas.CAsaasPayment>(`${this.host}${endpoint}`, request.toJSON(), {
-        headers: this.headers()
+        headers: this.headers(),
       });
 
       if (response.status >= 200 && response.status < 300 && response?.data?.id) {
@@ -274,13 +277,13 @@ ikomidaID: ${payload.ikomidaID}`,
       error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_3);
       return new Return(false);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
   }
 
   async transfer(input: any): Promise<Return<Classes.Asaas.CAsaasTransferResponse>> {
     const endpoint = '/api/v3/transfers';
-    const payload: Classes.Asaas.CAsaasTransfer = Classes.Asaas.CAsaasTransfer.fromObject(input)
+    const payload: Classes.Asaas.CAsaasTransfer = Classes.Asaas.CAsaasTransfer.fromObject(input);
     const request = new Classes.Asaas.CAsaasTransferRequest({
       pixAddressKeyType: payload.pixAddressKeyType,
       value: Math.ceil((payload.amount ?? 0) * 0.01),
@@ -288,9 +291,13 @@ ikomidaID: ${payload.ikomidaID}`,
       pixAddressKey: payload.pixAddressKey,
     });
     try {
-      const response = await axios.post<Classes.Asaas.CAsaasTransferResponse>(`${this.host}${endpoint}`, request.toJSON(), {
-        headers: this.headers()
-      });
+      const response = await axios.post<Classes.Asaas.CAsaasTransferResponse>(
+        `${this.host}${endpoint}`,
+        request.toJSON(),
+        {
+          headers: this.headers(),
+        },
+      );
 
       if (response.status >= 200 && response.status < 300 && response?.data?.id) {
         return new Return(true, response?.data);
@@ -300,7 +307,7 @@ ikomidaID: ${payload.ikomidaID}`,
       error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_3);
       return new Return(false);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
   }
 
@@ -308,7 +315,7 @@ ikomidaID: ${payload.ikomidaID}`,
     const endpoint = `/api/v3/payments/${id}/refund`;
     try {
       const response = await axios.post<Classes.Asaas.CAsaasPayment>(`${this.host}${endpoint}`, null, {
-        headers: this.headers()
+        headers: this.headers(),
       });
 
       if (response.status >= 200 && response.status < 300 && response?.data?.id) {
@@ -319,7 +326,7 @@ ikomidaID: ${payload.ikomidaID}`,
       error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_3);
       return new Return(false);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
   }
 
@@ -332,7 +339,7 @@ ikomidaID: ${payload.ikomidaID}`,
     const endpoint = `/api/v3/financialTransactions?startDate=${startDate}&finishDate=${finishDate}&offset=${offset}&limit=${limit}`;
     try {
       const response = await axios.post<Classes.Asaas.CAsaasStatmentsResponse>(`${this.host}${endpoint}`, {
-        headers: this.headers()
+        headers: this.headers(),
       });
 
       if (response.status >= 200 && response.status < 300) {
@@ -343,7 +350,7 @@ ikomidaID: ${payload.ikomidaID}`,
       error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_3);
       return new Return(false);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
   }
 
@@ -351,7 +358,7 @@ ikomidaID: ${payload.ikomidaID}`,
     const endpoint = `/api/v3/finance/balance`;
     try {
       const response = await axios.post<Classes.Asaas.CAsaasBalance>(`${this.host}${endpoint}`, {
-        headers: this.headers()
+        headers: this.headers(),
       });
 
       if (response.status >= 200 && response.status < 300) {
@@ -362,7 +369,7 @@ ikomidaID: ${payload.ikomidaID}`,
       error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_3);
       return new Return(false);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
   }
 
@@ -370,7 +377,7 @@ ikomidaID: ${payload.ikomidaID}`,
     const endpoint = `/api/v3/finance/payment/statistics?status=PENDING`;
     try {
       const response = await axios.post<Classes.Asaas.CAsaasStatistics>(`${this.host}${endpoint}`, {
-        headers: this.headers()
+        headers: this.headers(),
       });
 
       if (response.status >= 200 && response.status < 300) {
@@ -381,7 +388,7 @@ ikomidaID: ${payload.ikomidaID}`,
       error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_3);
       return new Return(false);
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1);
     }
   }
 

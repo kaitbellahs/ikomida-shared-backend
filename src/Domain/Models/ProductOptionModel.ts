@@ -21,12 +21,12 @@ export default class ProductOptionModel extends BaseModel {
   image?: string;
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   })
   highlighted?: boolean;
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
   })
   @Column(DataType.TEXT)
   order?: number;
@@ -61,7 +61,7 @@ export default class ProductOptionModel extends BaseModel {
   @BelongsTo(() => ContractModel)
   contract?: ContractModel;
   @BelongsToMany(() => OrderModel, () => OrderProductOptionModel)
-  orders?: OrderModel[]
+  orders?: OrderModel[];
   @BelongsToMany(() => OrderProductModel, () => OrderProductProductOptionModel)
-  orderProducts?: OrderProductModel[]
+  orderProducts?: OrderProductModel[];
 }

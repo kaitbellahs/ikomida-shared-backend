@@ -10,9 +10,9 @@ import ProductOptionModel from './ProductOptionModel';
 export default class OrderProductOptionModel extends BaseModel {
   @ForeignKey(() => OrderModel)
   @Column(DataType.UUID)
-  orderId?: string
+  orderId?: string;
 
   @ForeignKey(() => ProductOptionModel)
   @Column(DataType.UUID)
-  productOptionId?: string
+  productOptionId?: string;
 }

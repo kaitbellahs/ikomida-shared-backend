@@ -63,10 +63,10 @@ export function resolveBeforeEnums(instance: any, model: any) {
     } else if (typeof key === 'symbol') {
       if (Array.isArray(instance[key])) {
         for (const object of instance[key]) {
-          resolveBeforeEnums(object, model)
+          resolveBeforeEnums(object, model);
         }
       } else if (isObject(instance[key])) {
-        resolveBeforeEnums(instance[key], model)
+        resolveBeforeEnums(instance[key], model);
       }
     }
   }
@@ -88,7 +88,10 @@ export function handleAfterEnums(instance: any, model: any) {
         const field = model.rawAttributes[key];
         const isArrayOfEnums = Reflect.getMetadata('design:type:array', model, key) === 'arrayOfEnums';
         if (field.type.constructor.key === 'ENUM') {
-          instance.dataValues[key] = typeof instance.dataValues[key] === 'string' ? Reflect.getMetadata('design:type', model, key).valueOf(instance.dataValues[key]) : instance.dataValues[key];
+          instance.dataValues[key] =
+            typeof instance.dataValues[key] === 'string'
+              ? Reflect.getMetadata('design:type', model, key).valueOf(instance.dataValues[key])
+              : instance.dataValues[key];
         } else if (isArrayOfEnums && Array.isArray(instance.dataValues[key])) {
           const designType = Reflect.getMetadata('design:type:array:type', model, key);
           const newValue = [];
@@ -199,7 +202,6 @@ export default class BaseModel extends Model {
   static afterUpdateModel(instance: any, options: any): void {
     resolveAfterEnums(instance, this.prototype);
   }
-
 
   // NOTE: this hook only available in Sequelize v4
   @AfterSave

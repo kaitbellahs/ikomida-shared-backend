@@ -16,6 +16,18 @@ jobs:
       - uses: actions/checkout@v3
       - id: "auth"
         name: "Authenticate to Google Cloud"
+      - name: Check lib version
+        run: |
+          LIB_NAME=$(node --eval="process.stdout.write(require('./package.json').name)")
+          LIB_VERSION=$(node --eval="process.stdout.write(require('./package.json').version)")
+          LIB_VERSION_REMOTE=$(npm view "${LIB_NAME}" version)
+          if [[ $LIB_VERSION > $LIB_VERSION_REMOTE ]]; then
+            echo "Lib package version is correct"
+            exit 0
+          else 
+            echo "Error: you mast update lib package version"
+            exit 1
+          fi
         uses: "google-github-actions/auth@v0"
         with:
           credentials_json: "${{ endsWith(github.ref, '/main') && secrets.ARTIFACT_REGISTRY_IKOMIDA_PROD_SERVICE_ACOUNT || (endsWith(github.ref, '/hmlg') && secrets.ARTIFACT_REGISTRY_IKOMIDA_HMLG_SERVICE_ACOUNT || secrets.ARTIFACT_REGISTRY_IKOMIDA_DEV_SERVICE_ACOUNT) }}"
@@ -38,18 +50,6 @@ jobs:
           echo "@ikomida:registry=https://${GCLOUD_LOCATION}-npm.pkg.dev/${PROJECT_ID}/node/" >> .npmrc
           echo "//${GCLOUD_LOCATION}-npm.pkg.dev/${PROJECT_ID}/node/:always-auth=true" >> .npmrc
           yarn glogin
-      - name: Check lib version
-        run: |
-          LIB_NAME=$(node --eval="process.stdout.write(require('./package.json').name)")
-          LIB_VERSION=$(node --eval="process.stdout.write(require('./package.json').version)")
-          LIB_VERSION_REMOTE=$(npm view "${LIB_NAME}" version)
-          if [[ $LIB_VERSION > $LIB_VERSION_REMOTE ]]; then
-            echo "Lib package version is correct"
-            exit 0
-          else 
-            echo "Error: you mast update lib package version"
-            exit 1
-          fi
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Prepare code

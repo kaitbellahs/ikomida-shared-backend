@@ -89,5 +89,5 @@ export default class OrderModel extends BaseModel {
   orderProducts?: OrderProductModel[];
 
   @BelongsToMany(() => ProductOptionModel, () => OrderProductOptionModel)
-  productOptions?: ProductOptionModel[]
+  productOptions?: ProductOptionModel[];
 }

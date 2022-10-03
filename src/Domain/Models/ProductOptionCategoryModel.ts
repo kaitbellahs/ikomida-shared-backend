@@ -16,17 +16,17 @@ export default class ProductOptionCategoryModel extends BaseModel {
   image?: string;
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   })
   highlighted?: boolean;
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
   })
   min?: number;
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
   })
   max?: number;
   @Column(DataType.INTEGER)

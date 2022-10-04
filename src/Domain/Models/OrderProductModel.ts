@@ -5,6 +5,7 @@ import ContractModel from './ContractModel';
 import OrderModel from './OrderModel';
 import OrderProductOptionModel from './OrderProductOptionModel';
 import ProductModel from './ProductModel';
+import ProductOptionModel from './ProductOptionModel';
 import UserModel from './UserModel';
 
 @Table({
@@ -51,5 +52,5 @@ export default class OrderProductModel extends BaseModel {
   product?: ProductModel;
 
   @HasMany(() => OrderProductOptionModel)
-  productOptions?: OrderProductOptionModel[];
+  orderProductOptions?: OrderProductOptionModel[];
 }

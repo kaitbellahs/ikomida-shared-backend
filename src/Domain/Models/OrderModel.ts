@@ -8,6 +8,8 @@ import OrderProductModel from './OrderProductModel';
 import ContractModel from './ContractModel';
 import UserPaymentModel from './UserPaymentModel';
 import { Types } from '@ikomida/shared-types';
+import OrderProductOptionModel from './OrderProductOptionModel';
+import ProductOptionModel from './ProductOptionModel';
 
 @Table({
   paranoid: true,
@@ -85,4 +87,7 @@ export default class OrderModel extends BaseModel {
 
   @HasMany(() => OrderProductModel)
   orderProducts?: OrderProductModel[];
+
+  @HasMany(() => OrderProductOptionModel)
+  orderProductOptions?: OrderProductOptionModel[];
 }

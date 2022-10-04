@@ -1,7 +1,7 @@
-import { Table, Column, ForeignKey, DataType, HasOne } from 'sequelize-typescript';
+import { Table, Column, ForeignKey, DataType, HasOne, BelongsTo } from 'sequelize-typescript';
 import BaseModel from './BaseModel';
 import OrderModel from './OrderModel';
-import ProductModel from './ProductModel';
+import OrderProductModel from './OrderProductModel';
 import ProductOptionModel from './ProductOptionModel';
 
 @Table({
@@ -23,20 +23,20 @@ export default class OrderProductOptionModel extends BaseModel {
   @Column(DataType.UUID)
   orderId?: string;
 
-  @HasOne(() => OrderModel)
+  @BelongsTo(() => OrderModel)
   order?: OrderModel;
 
-  @ForeignKey(() => ProductModel)
+  @ForeignKey(() => OrderProductModel)
   @Column(DataType.UUID)
-  productId?: string;
+  orderProductId?: string;
 
-  @HasOne(() => ProductModel)
-  product?: ProductModel;
+  @BelongsTo(() => OrderProductModel)
+  orderProduct?: OrderProductModel;
 
   @ForeignKey(() => ProductOptionModel)
   @Column(DataType.UUID)
   productOptionId?: string;
 
-  @HasOne(() => ProductOptionModel)
+  @BelongsTo(() => ProductOptionModel)
   productOption?: ProductOptionModel;
 }

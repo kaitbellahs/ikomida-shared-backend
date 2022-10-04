@@ -239,10 +239,10 @@
   resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-0.1.8.tgz#e17bb91cc55995204c592ca24c53a3ddbe8c6e55"
   integrity sha512-eClS8TDi799Q4tcpDOto90vL3zpRKWl91XPeE6785JZHxlCpIlEyiVJQY/woYzXEP3MGdyGQPQWvOBrXm8Oafg==
 
-"@ikomida/shared-types@^1.0.0":
-  version "1.0.0"
-  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.0.0.tgz#207a9cb9b03c5759896c52dd85fc965fb361bfa5"
-  integrity sha512-opCWPeQmdB+oebZdRMP90Ugos1BQRKeimwMetBtDXgfNo2otzXF+4055xLBpzYOJYYzuRUBpCVAbB0BN8DqlAg==
+"@ikomida/shared-types@^1.0.2":
+  version "1.0.2"
+  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.0.2.tgz#1026a9c3002e0862cbbbcbfc42da2c092ca71d02"
+  integrity sha512-VIjVAo7AExX1b/LVVIAOXsMftcBf3ssUNrCB9eFs8rXC7ApYrOzgBg/RNXynZ7N8GMmbCAyXQ6NXnGt0BwJjSw==
 
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"

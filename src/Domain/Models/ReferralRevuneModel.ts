@@ -1,48 +1,48 @@
-import { Table, Column, DataType, ForeignKey, HasOne, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ReferralModel from './ReferralModel';
-import UserPIXKeyModel from './UserPIXKeyModel';
+import { Table, Column, DataType, ForeignKey, HasOne, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import ReferralModel from './ReferralModel'
+import UserPIXKeyModel from './UserPIXKeyModel'
 
 @Table({
   paranoid: true,
-  modelName: 'referralRevune',
+  modelName: 'referralRevune'
 })
 export default class ReferralRevuneModel extends BaseModel {
   @Column(DataType.INTEGER)
-  total?: number;
+  total?: number
   @Column(DataType.INTEGER)
-  revune?: number;
+  revune?: number
   @Column(DataType.INTEGER)
-  bonus?: number;
+  bonus?: number
   @Column(DataType.DATE)
-  date?: Date;
+  date?: Date
   @Column(DataType.JSON)
-  revuneDetails?: any;
+  revuneDetails?: any
   @Column(DataType.JSON)
-  bonusDetails?: any;
+  bonusDetails?: any
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: false,
+    defaultValue: false
   })
-  approved?: boolean;
+  approved?: boolean
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: false,
+    defaultValue: false
   })
-  paid?: boolean;
+  paid?: boolean
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => ReferralModel)
   @Column(DataType.UUID)
-  referralId?: string;
+  referralId?: string
   @BelongsTo(() => ReferralModel)
-  referral?: ReferralModel;
+  referral?: ReferralModel
 
   @HasOne(() => UserPIXKeyModel)
-  UserBankAccount?: UserPIXKeyModel;
+  UserBankAccount?: UserPIXKeyModel
 }

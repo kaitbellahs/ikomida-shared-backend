@@ -1,23 +1,23 @@
-import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
 
 @Table({
   paranoid: true,
-  modelName: 'setting',
+  modelName: 'setting'
 })
 export default class SettingModel extends BaseModel {
   @Column(DataType.STRING(50))
-  name?: string;
+  name?: string
   @Column(DataType.TEXT)
-  value?: string;
+  value?: string
   @Column({
-    type: DataType.ENUM(...Types.TSetting.keys()),
+    type: DataType.ENUM(...Types.TSetting.keys())
   })
-  type?: Types.TSetting;
+  type?: Types.TSetting
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 }

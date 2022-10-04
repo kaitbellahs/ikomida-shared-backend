@@ -1,40 +1,40 @@
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import ProductModel from './ProductModel';
-import ProductOptionCategoryModel from './ProductOptionCategoryModel';
-import ProductOptionModel from './ProductOptionModel';
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import ContractModel from './ContractModel'
+import ProductModel from './ProductModel'
+import ProductOptionCategoryModel from './ProductOptionCategoryModel'
+import ProductOptionModel from './ProductOptionModel'
 
 @Table({
   paranoid: true,
-  modelName: 'productCategory',
+  modelName: 'productCategory'
 })
 export default class ProductCategoryModel extends BaseModel {
   @Column(DataType.STRING(100))
-  title?: string;
+  title?: string
   @Column(DataType.TEXT)
-  description?: string;
+  description?: string
   @Column(DataType.INTEGER)
-  order?: number;
+  order?: number
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => ProductModel)
-  products?: ProductModel[];
+  products?: ProductModel[]
 
   @HasMany(() => ProductOptionCategoryModel)
-  productOptionCategories?: ProductOptionCategoryModel[];
+  productOptionCategories?: ProductOptionCategoryModel[]
 
   @HasMany(() => ProductOptionModel)
-  productOptions?: ProductOptionModel[];
+  productOptions?: ProductOptionModel[]
 }

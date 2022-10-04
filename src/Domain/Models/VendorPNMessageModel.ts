@@ -1,36 +1,36 @@
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import PNMessageModel from './PNMessageModel';
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import ContractModel from './ContractModel'
+import PNMessageModel from './PNMessageModel'
 
 @Table({
   paranoid: true,
-  modelName: 'vendorPNMessage',
+  modelName: 'vendorPNMessage'
 })
 export default class VendorPNMessageModel extends BaseModel {
   @Column(DataType.STRING(255))
-  remoteId?: string;
+  remoteId?: string
   @Column(DataType.STRING(100))
-  title?: string;
+  title?: string
   @Column(DataType.STRING(255))
-  body?: string;
+  body?: string
   @Column(DataType.JSON)
-  data?: string;
+  data?: string
   @Column(DataType.INTEGER)
-  sends?: number;
+  sends?: number
   @Column(DataType.INTEGER)
-  fails?: number;
+  fails?: number
   @Column(DataType.INTEGER)
-  opens?: number;
+  opens?: number
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
 
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => PNMessageModel)
-  pNMessages?: PNMessageModel[];
+  pNMessages?: PNMessageModel[]
 }

@@ -1,35 +1,34 @@
-import { DateTime } from '@ikomida/shared-logics';
-import { Classes } from '@ikomida/shared-types';
-import { AxiosResponseHeaders } from 'axios';
-import { IHeaders } from '../GateWays/PagSeguro';
+import { DateTime } from '@ikomida/shared-logics'
+import { Classes } from '@ikomida/shared-types'
+import { AxiosResponseHeaders, RawAxiosRequestHeaders, RawAxiosResponseHeaders } from 'axios'
 
 export interface ILoggerMetadata {
-  environment: string;
+  environment: string
   resource: {
-    type: string;
-  };
-  severity: string;
-  message: string;
-  errorCode?: string;
-  errors?: any[];
+    type: string
+  }
+  severity: string
+  message: string
+  errorCode?: string
+  errors?: any[]
 }
 export abstract class ILoggerObject {
-  code: string;
-  message: string;
-  errors?: string[];
+  code: string
+  message: string
+  errors?: string[]
   constructor(code: string, message: string, errors?: string[]) {
-    this.code = code;
-    this.message = message;
-    this.errors = errors;
+    this.code = code
+    this.message = message
+    this.errors = errors
   }
 }
 export default class Logger {
-  service;
-  isProd = false;
+  service
+  isProd = false
 
   constructor(service: string) {
-    this.service = service;
-    this.isProd = process.env.NODE_ENV === 'production';
+    this.service = service
+    this.isProd = process.env.NODE_ENV === 'production'
     // axios.interceptors.request.use(request => {
     //     this.info(`Starting Request, ${JSON.stringify(request, null, 2)}`)
     //     return request
@@ -47,22 +46,22 @@ export default class Logger {
         ? `${logObject.code}: ${logObject.message}`
         : typeof logObject === 'string'
         ? logObject
-        : JSON.stringify(logObject);
+        : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       environment: this.isProd ? 'Production' : 'Development',
       resource: { type: 'global' },
       severity: 'ERROR',
-      message,
-    };
-    if (typeof logObject === 'object') {
-      metadata.errorCode = logObject.code;
-      metadata.errors = logObject.errors;
+      message
     }
-    this.writeLog(metadata, message, ...args);
+    if (typeof logObject === 'object') {
+      metadata.errorCode = logObject.code
+      metadata.errors = logObject.errors
+    }
+    this.writeLog(metadata, message, ...args)
   }
 
   log(logObject: ILoggerObject | string | any, ...args: any[]) {
-    this.info(logObject, ...args);
+    this.info(logObject, ...args)
   }
 
   info(logObject: ILoggerObject | string | any, ...args: any[]) {
@@ -71,18 +70,18 @@ export default class Logger {
         ? `${logObject?.code}: ${logObject?.message}`
         : logObject instanceof String
         ? (logObject as string)
-        : JSON.stringify(logObject);
+        : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
       environment: this.isProd ? 'Production' : 'Development',
       severity: 'INFO',
-      message,
-    };
-    if (typeof logObject === 'object') {
-      metadata.errorCode = logObject?.code;
-      metadata.errors = logObject?.errors;
+      message
     }
-    this.writeLog(metadata, message, ...args);
+    if (typeof logObject === 'object') {
+      metadata.errorCode = logObject?.code
+      metadata.errors = logObject?.errors
+    }
+    this.writeLog(metadata, message, ...args)
   }
 
   warn(logObject: ILoggerObject | string | any, ...args: any[]) {
@@ -91,90 +90,90 @@ export default class Logger {
         ? `${logObject?.code}: ${logObject?.message}`
         : logObject instanceof String
         ? (logObject as string)
-        : JSON.stringify(logObject);
+        : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
       environment: this.isProd ? 'Production' : 'Development',
       severity: 'WARNING',
-      message,
-    };
-    if (typeof logObject === 'object') {
-      metadata.errorCode = logObject?.code;
-      metadata.errors = logObject?.errors;
+      message
     }
-    this.writeLog(metadata, message, ...args);
+    if (typeof logObject === 'object') {
+      metadata.errorCode = logObject?.code
+      metadata.errors = logObject?.errors
+    }
+    this.writeLog(metadata, message, ...args)
   }
 
   async logRequest(
     method: string,
     url: string,
-    responseHeaders: AxiosResponseHeaders,
+    responseHeaders: RawAxiosResponseHeaders | AxiosResponseHeaders,
     responseStatus: number,
     responseData: string | Classes.Pagseguro.CPagSeguroConnectTokenResponse | void,
-    requestHeaders?: IHeaders,
-    requestData?: any,
+    requestHeaders?: RawAxiosRequestHeaders,
+    requestData?: any
   ) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       console.log(
-        `iKLogger|${DateTime.now()}: [${this.service}[${process.env?.NODE_APP_INSTANCE ?? '-'}]] [INFO]: Request:`,
-      );
-      console.log('-*-*-*-*-*-*-*-*-*-*-');
-      console.log('Request :', method, ' : ', `${url}`);
-      console.log('Request Headers:', requestHeaders);
-      console.log('Request data:', requestData);
-      console.log('Response Headers:', responseHeaders);
-      console.log('Response status:', responseStatus);
-      console.log('Response data:', responseData);
-      console.log('-*-*-*-*-*-*-*-*-*-*-');
-      resolve(true);
-    });
+        `iKLogger|${DateTime.now()}: [${this.service}[${process.env?.NODE_APP_INSTANCE ?? '-'}]] [INFO]: Request:`
+      )
+      console.log('-*-*-*-*-*-*-*-*-*-*-')
+      console.log('Request :', method, ' : ', `${url}`)
+      console.log('Request Headers:', requestHeaders)
+      console.log('Request data:', requestData)
+      console.log('Response Headers:', responseHeaders)
+      console.log('Response status:', responseStatus)
+      console.log('Response data:', responseData)
+      console.log('-*-*-*-*-*-*-*-*-*-*-')
+      resolve(true)
+    })
   }
 
   async writeLog(metadata: ILoggerMetadata, message: string, ...args: any[]) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const log = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${
         metadata.severity
-      }]: Message: ${message}`;
+      }]: Message: ${message}`
       switch (metadata.severity) {
         case 'ERROR':
-          console.error(log);
+          console.error(log)
           if (metadata.errors) {
             const error = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${
               metadata.severity
-            }]: Error:`;
-            console.error(error, ...metadata.errors);
+            }]: Error:`
+            console.error(error, ...metadata.errors)
           }
           if ((args?.length ?? 0) > 0) {
-            console.log(...args);
+            console.log(...args)
           }
-          break;
+          break
         case 'WARNING':
-          console.warn(log);
+          console.warn(log)
           if ((args?.length ?? 0) > 0) {
-            console.log(...args);
+            console.log(...args)
           }
-          break;
+          break
         default:
-          console.log(log);
+          console.log(log)
           if ((args?.length ?? 0) > 0) {
-            console.log(...args);
+            console.log(...args)
           }
-          break;
+          break
       }
-      resolve(true);
-    });
+      resolve(true)
+    })
   }
 
-  static instance: any;
+  static instance: any
   static getInstance(service: string) {
     if (!Logger.instance) {
       Object.defineProperty(Logger, 'instance', {
         value: new Logger(service),
         writable: false,
         enumerable: false,
-        configurable: false,
-      });
+        configurable: false
+      })
     }
-    return Logger.instance;
+    return Logger.instance
   }
 }

@@ -1,61 +1,61 @@
-import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import ProductCategoryModel from './ProductCategoryModel';
-import ProductOptionCategoryModel from './ProductOptionCategoryModel';
-import ProductOptionModel from './ProductOptionModel';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import ContractModel from './ContractModel'
+import ProductCategoryModel from './ProductCategoryModel'
+import ProductOptionCategoryModel from './ProductOptionCategoryModel'
+import ProductOptionModel from './ProductOptionModel'
 
 @Table({
   paranoid: true,
-  modelName: 'product',
+  modelName: 'product'
 })
 export default class ProductModel extends BaseModel {
   @Column(DataType.STRING(100))
-  title?: string;
+  title?: string
   @Column(DataType.TEXT)
-  description?: string;
+  description?: string
   @Column({
-    type: DataType.ENUM(...Types.TDiscount.keys()),
+    type: DataType.ENUM(...Types.TDiscount.keys())
   })
-  discountType?: Types.TDiscount;
+  discountType?: Types.TDiscount
   @Column(DataType.STRING(255))
-  image?: string;
+  image?: string
   @Column(DataType.INTEGER)
-  order?: number;
+  order?: number
   @Column(DataType.INTEGER)
-  serves?: number;
+  serves?: number
   @Column(DataType.INTEGER)
-  price?: number;
+  price?: number
   @Column(DataType.INTEGER)
-  discount?: number;
+  discount?: number
   @Column(DataType.INTEGER)
-  weight?: number;
+  weight?: number
   @Column(DataType.INTEGER)
-  quantity?: number;
+  quantity?: number
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associaions
 
   @ForeignKey(() => ProductCategoryModel)
   @Column(DataType.UUID)
-  productCategoryId?: string;
+  productCategoryId?: string
   @BelongsTo(() => ProductCategoryModel)
-  productCategory?: ProductCategoryModel;
+  productCategory?: ProductCategoryModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => ProductOptionCategoryModel)
-  productOptionCategories?: ProductOptionCategoryModel[];
+  productOptionCategories?: ProductOptionCategoryModel[]
 
   @HasMany(() => ProductOptionModel)
-  productOptions?: ProductOptionModel[];
+  productOptions?: ProductOptionModel[]
 }

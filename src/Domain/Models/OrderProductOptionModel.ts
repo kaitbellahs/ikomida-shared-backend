@@ -1,42 +1,42 @@
-import { Table, Column, ForeignKey, DataType, HasOne, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import OrderModel from './OrderModel';
-import OrderProductModel from './OrderProductModel';
-import ProductOptionModel from './ProductOptionModel';
+import { Table, Column, ForeignKey, DataType, HasOne, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import OrderModel from './OrderModel'
+import OrderProductModel from './OrderProductModel'
+import ProductOptionModel from './ProductOptionModel'
 
 @Table({
   paranoid: true,
-  modelName: 'orderProductOption',
+  modelName: 'orderProductOption'
 })
 export default class OrderProductOptionModel extends BaseModel {
   @Column(DataType.CHAR(100))
-  name?: string;
+  name?: string
 
   @Column(DataType.INTEGER)
-  price?: number;
+  price?: number
 
   @Column(DataType.INTEGER)
-  units?: number;
+  units?: number
 
   //MARK: -- associations
   @ForeignKey(() => OrderModel)
   @Column(DataType.UUID)
-  orderId?: string;
+  orderId?: string
 
   @BelongsTo(() => OrderModel)
-  order?: OrderModel;
+  order?: OrderModel
 
   @ForeignKey(() => OrderProductModel)
   @Column(DataType.UUID)
-  orderProductId?: string;
+  orderProductId?: string
 
   @BelongsTo(() => OrderProductModel)
-  orderProduct?: OrderProductModel;
+  orderProduct?: OrderProductModel
 
   @ForeignKey(() => ProductOptionModel)
   @Column(DataType.UUID)
-  productOptionId?: string;
+  productOptionId?: string
 
   @BelongsTo(() => ProductOptionModel)
-  productOption?: ProductOptionModel;
+  productOption?: ProductOptionModel
 }

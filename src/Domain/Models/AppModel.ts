@@ -1,53 +1,53 @@
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import UserModel from './UserModel';
-import ContractModel from './ContractModel';
-import BaseModel from './BaseModel';
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import UserModel from './UserModel'
+import ContractModel from './ContractModel'
+import BaseModel from './BaseModel'
 
 @Table({
   paranoid: true,
-  modelName: 'app',
+  modelName: 'app'
 })
 export default class AppModel extends BaseModel {
   @Column(DataType.STRING(255))
-  bundleId?: string;
+  bundleId?: string
   @Column(DataType.STRING(100))
-  displayName?: string;
+  displayName?: string
   @Column(DataType.STRING(10))
-  platform?: string;
+  platform?: string
   @Column(DataType.STRING(50))
-  appVersion?: string;
+  appVersion?: string
   @Column(DataType.STRING(255))
-  fireBaseId?: string;
+  fireBaseId?: string
   @Column(DataType.STRING(20))
-  iOSProfileId?: string;
+  iOSProfileId?: string
   @Column(DataType.STRING(50))
-  storeStatus?: string;
+  storeStatus?: string
   @Column(DataType.TEXT)
-  storeNote?: string;
+  storeNote?: string
   @Column(DataType.JSON)
-  storeEvidences: any;
+  storeEvidences: any
   @Column(DataType.STRING(50))
-  storeVersion?: string;
+  storeVersion?: string
   @Column(DataType.STRING(50))
-  storeBuildStatus?: string;
+  storeBuildStatus?: string
   @Column(DataType.STRING(50))
-  storePublishStatus?: string;
+  storePublishStatus?: string
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 }

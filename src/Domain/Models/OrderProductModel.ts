@@ -1,56 +1,56 @@
-import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import OrderModel from './OrderModel';
-import OrderProductOptionModel from './OrderProductOptionModel';
-import ProductModel from './ProductModel';
-import ProductOptionModel from './ProductOptionModel';
-import UserModel from './UserModel';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import ContractModel from './ContractModel'
+import OrderModel from './OrderModel'
+import OrderProductOptionModel from './OrderProductOptionModel'
+import ProductModel from './ProductModel'
+import ProductOptionModel from './ProductOptionModel'
+import UserModel from './UserModel'
 
 @Table({
   paranoid: true,
-  modelName: 'orderProduct',
+  modelName: 'orderProduct'
 })
 export default class OrderProductModel extends BaseModel {
   @Column(DataType.STRING(100))
-  title?: string;
+  title?: string
   @Column({
-    type: DataType.ENUM(...Types.TDiscount.keys()),
+    type: DataType.ENUM(...Types.TDiscount.keys())
   })
-  discountType?: Types.TDiscount;
+  discountType?: Types.TDiscount
   @Column(DataType.INTEGER)
-  price?: number;
+  price?: number
   @Column(DataType.INTEGER)
-  discount?: number;
+  discount?: number
   @Column(DataType.INTEGER)
-  quantity?: number;
+  quantity?: number
 
   //MARK: -- Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @ForeignKey(() => OrderModel)
   @Column(DataType.UUID)
-  orderId?: string;
+  orderId?: string
   @BelongsTo(() => OrderModel)
-  order?: OrderModel;
+  order?: OrderModel
 
   @ForeignKey(() => ProductModel)
   @Column(DataType.UUID)
-  productId?: string;
+  productId?: string
   @BelongsTo(() => ProductModel)
-  product?: ProductModel;
+  product?: ProductModel
 
   @HasMany(() => OrderProductOptionModel)
-  orderProductOptions?: OrderProductOptionModel[];
+  orderProductOptions?: OrderProductOptionModel[]
 }

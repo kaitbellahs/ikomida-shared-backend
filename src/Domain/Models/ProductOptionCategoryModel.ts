@@ -1,57 +1,57 @@
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import ProductCategoryModel from './ProductCategoryModel';
-import ProductModel from './ProductModel';
-import ProductOptionModel from './ProductOptionModel';
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import ContractModel from './ContractModel'
+import ProductCategoryModel from './ProductCategoryModel'
+import ProductModel from './ProductModel'
+import ProductOptionModel from './ProductOptionModel'
 
 @Table({
   paranoid: true,
-  modelName: 'productOptionsCategory',
+  modelName: 'productOptionsCategory'
 })
 export default class ProductOptionCategoryModel extends BaseModel {
   @Column(DataType.CHAR(100))
-  name?: string;
+  name?: string
   @Column(DataType.STRING(255))
-  image?: string;
+  image?: string
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: false,
+    defaultValue: false
   })
-  highlighted?: boolean;
+  highlighted?: boolean
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0,
+    defaultValue: 0
   })
-  min?: number;
+  min?: number
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0,
+    defaultValue: 0
   })
-  max?: number;
+  max?: number
   @Column(DataType.INTEGER)
-  order?: number;
+  order?: number
 
   //MARK: --Associations
 
   @ForeignKey(() => ProductModel)
   @Column(DataType.UUID)
-  productId?: string;
+  productId?: string
   @BelongsTo(() => ProductModel)
-  product?: ProductModel;
+  product?: ProductModel
 
   @ForeignKey(() => ProductCategoryModel)
   @Column(DataType.UUID)
-  productCategoryId?: string;
+  productCategoryId?: string
   @BelongsTo(() => ProductCategoryModel)
-  productCategory?: ProductCategoryModel;
+  productCategory?: ProductCategoryModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => ProductOptionModel)
-  productOptions?: ProductOptionModel[];
+  productOptions?: ProductOptionModel[]
 }

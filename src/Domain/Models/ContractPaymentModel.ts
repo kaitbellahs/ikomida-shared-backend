@@ -1,70 +1,70 @@
-import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import ContractPaymentSignatureModel from './ContractPaymentSignatureModel';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel'
+import ContractModel from './ContractModel'
+import ContractPaymentSignatureModel from './ContractPaymentSignatureModel'
 
 @Table({
   paranoid: true,
-  modelName: 'contractPayment',
+  modelName: 'contractPayment'
 })
 export default class ContractPaymentModel extends BaseModel {
   @Column(DataType.STRING(50))
-  gateway?: string;
+  gateway?: string
   @Column(DataType.TEXT)
-  subscriptionID?: string;
+  subscriptionID?: string
   @Column(DataType.TEXT)
-  paymentID?: string;
+  paymentID?: string
   @Column({
-    type: DataType.ENUM(...Types.TAsaasPaymentStatus.keys()),
+    type: DataType.ENUM(...Types.TAsaasPaymentStatus.keys())
   })
-  status?: Types.TAsaasPaymentStatus;
+  status?: Types.TAsaasPaymentStatus
   @Column(DataType.STRING(50))
-  plan?: string;
+  plan?: string
   @Column(DataType.STRING(50))
-  billingType?: string;
+  billingType?: string
   @Column(DataType.STRING(20))
-  creditCardBrand?: string;
+  creditCardBrand?: string
   @Column(DataType.TEXT)
-  creditCardToken?: string;
+  creditCardToken?: string
   @Column(DataType.STRING(255))
-  invoiceUrl?: string;
+  invoiceUrl?: string
   @Column(DataType.STRING(50))
-  invoiceNumber?: string;
+  invoiceNumber?: string
   @Column(DataType.STRING(255))
-  transactionReceiptUrl?: string;
+  transactionReceiptUrl?: string
   @Column(DataType.INTEGER({ length: 2 }))
-  month?: number;
+  month?: number
   @Column(DataType.INTEGER({ length: 6 }))
-  creditCardNumber?: number;
+  creditCardNumber?: number
   @Column(DataType.INTEGER)
-  value?: number;
+  value?: number
   @Column(DataType.INTEGER)
-  netValue?: number;
+  netValue?: number
   @Column(DataType.DATE)
-  dueDate?: Date;
+  dueDate?: Date
   @Column(DataType.DATE)
-  confirmedDate?: Date;
+  confirmedDate?: Date
   @Column(DataType.DATE)
-  clientPaymentDate?: Date;
+  clientPaymentDate?: Date
   @Column(DataType.DATE)
-  nextDueDate?: Date;
+  nextDueDate?: Date
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @ForeignKey(() => ContractPaymentSignatureModel)
   @Column(DataType.UUID)
-  contractPaymentSignatureId?: string;
+  contractPaymentSignatureId?: string
   @BelongsTo(() => ContractPaymentSignatureModel)
-  contractPaymentSignature?: ContractPaymentSignatureModel;
+  contractPaymentSignature?: ContractPaymentSignatureModel
 }

@@ -1,56 +1,56 @@
-import { Types, Classes } from '@ikomida/shared-types';
-import { Table, Column, DataType, HasMany } from 'sequelize-typescript';
-import { Enum } from '../../Decorators/Enum';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
+import { Types, Classes } from '@ikomida/shared-types'
+import { Table, Column, DataType, HasMany } from 'sequelize-typescript'
+import { Enum } from '../../Decorators/Enum'
+import BaseModel from './BaseModel'
+import ContractModel from './ContractModel'
 
 @Table({
   paranoid: true,
-  modelName: 'plan',
+  modelName: 'plan'
 })
 export default class PlanModel extends BaseModel {
   @Column(DataType.STRING(50))
-  name?: string;
+  name?: string
   @Column({
-    type: DataType.ENUM(...Types.TDiscount.keys()),
+    type: DataType.ENUM(...Types.TDiscount.keys())
   })
-  discountType?: Types.TDiscount;
+  discountType?: Types.TDiscount
   @Column(DataType.INTEGER)
-  order?: number;
+  order?: number
   @Column(DataType.INTEGER)
-  price?: number;
+  price?: number
   @Column(DataType.INTEGER)
-  discount?: number;
+  discount?: number
   @Column(DataType.INTEGER)
-  staff?: number;
+  staff?: number
   @Column(DataType.INTEGER)
-  pushNotifications?: number;
+  pushNotifications?: number
   @Column(DataType.INTEGER)
-  categories?: number;
+  categories?: number
   @Column(DataType.INTEGER)
-  products?: number;
+  products?: number
   @Column(DataType.INTEGER)
-  coupons?: number;
+  coupons?: number
   @Column(DataType.INTEGER)
-  orders?: number;
+  orders?: number
   @Column(DataType.INTEGER)
-  productOptions?: number;
+  productOptions?: number
   @Column(DataType.INTEGER)
-  billing?: number;
+  billing?: number
   @Column(DataType.JSON)
   @Enum(Types.TSupport)
-  support?: Types.TSupport[];
+  support?: Types.TSupport[]
   @Column(DataType.JSON)
-  details?: Classes.CKeyValue[];
+  details?: Classes.CKeyValue[]
   @Column(DataType.BOOLEAN)
-  highlighted?: boolean;
+  highlighted?: boolean
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @HasMany(() => ContractModel)
-  contracts?: ContractModel[];
+  contracts?: ContractModel[]
 }

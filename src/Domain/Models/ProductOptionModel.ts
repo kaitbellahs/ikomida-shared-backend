@@ -1,6 +1,7 @@
 import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
 import BaseModel from './BaseModel';
 import ContractModel from './ContractModel';
+import OrderProductModel from './OrderProductModel';
 import OrderProductOptionModel from './OrderProductOptionModel';
 import ProductCategoryModel from './ProductCategoryModel';
 import ProductModel from './ProductModel';
@@ -57,5 +58,5 @@ export default class ProductOptionModel extends BaseModel {
   contract?: ContractModel;
 
   @HasMany(() => OrderProductOptionModel)
-  orderProducts?: OrderProductOptionModel[];
+  orderProductOptions?: OrderProductOptionModel[]
 }

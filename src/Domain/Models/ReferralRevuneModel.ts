@@ -1,7 +1,7 @@
 import { Table, Column, DataType, ForeignKey, HasOne, BelongsTo } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import ReferralModel from './ReferralModel'
-import UserPIXKeyModel from './UserPIXKeyModel'
+import BaseModel from './BaseModel.js'
+import ReferralModel from './ReferralModel.js'
+import UserPIXKeyModel from './UserPIXKeyModel.js'
 
 @Table({
   paranoid: true,

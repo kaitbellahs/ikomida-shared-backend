@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Logger from './Logger'
+import Logger from './Logger.js'
 export default class ReCaptcha {
   apiKey: string
   logger: Logger

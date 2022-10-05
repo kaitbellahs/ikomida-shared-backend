@@ -1,11 +1,10 @@
 import { Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import ContractModel from './ContractModel'
-import OrderProductModel from './OrderProductModel'
-import OrderProductOptionModel from './OrderProductOptionModel'
-import ProductCategoryModel from './ProductCategoryModel'
-import ProductModel from './ProductModel'
-import ProductOptionCategoryModel from './ProductOptionCategoryModel'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import OrderProductOptionModel from './OrderProductOptionModel.js'
+import ProductCategoryModel from './ProductCategoryModel.js'
+import ProductModel from './ProductModel.js'
+import ProductOptionCategoryModel from './ProductOptionCategoryModel.js'
 
 @Table({
   paranoid: true,

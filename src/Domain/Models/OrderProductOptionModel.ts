@@ -1,8 +1,8 @@
 import { Table, Column, ForeignKey, DataType, HasOne, BelongsTo } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import OrderModel from './OrderModel'
-import OrderProductModel from './OrderProductModel'
-import ProductOptionModel from './ProductOptionModel'
+import BaseModel from './BaseModel.js'
+import OrderModel from './OrderModel.js'
+import OrderProductModel from './OrderProductModel.js'
+import ProductOptionModel from './ProductOptionModel.js'
 
 @Table({
   paranoid: true,

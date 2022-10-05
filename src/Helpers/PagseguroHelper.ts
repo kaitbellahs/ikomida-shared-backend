@@ -1,8 +1,8 @@
 import { DateTime } from '@ikomida/shared-logics'
-import Logger from '../Utils/Logger'
-import PagSeguro from '../GateWays/PagSeguro'
-import { VendorPaymentGatewayModel } from '../Domain/Models'
 import { Classes } from '@ikomida/shared-types'
+import Logger from '../Utils/Logger.js'
+import PagSeguro from '../GateWays/PagSeguro.js'
+import { VendorPaymentGatewayModel } from '../Domain/Models/index.js'
 
 const hostPrefixes: any = {
   development: 'dev/',
@@ -52,7 +52,7 @@ export default class PagseguroHelper {
         Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(vendorPaymentGatewayModel?.data)
       if (
         new Date(DateTime?.localDate().toString()).getTime() >
-          gatewayData?.expires_in + vendorPaymentGatewayModel?.updatedAt?.getTime() &&
+        gatewayData?.expires_in + vendorPaymentGatewayModel?.updatedAt?.getTime() &&
         gatewayData.refresh_token
       ) {
         const response = await paymentGateway?.refreshAccessToken(gatewayData?.refresh_token)

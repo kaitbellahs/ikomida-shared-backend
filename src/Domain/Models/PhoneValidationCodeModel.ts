@@ -1,8 +1,8 @@
 import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
-import Roles from '../../Types/Roles'
-import BaseModel from './BaseModel'
-import ContractModel from './ContractModel'
-import UserModel from './UserModel'
+import Roles from '../../Types/Roles.js'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import UserModel from './UserModel.js'
 
 @Table({
   paranoid: true,

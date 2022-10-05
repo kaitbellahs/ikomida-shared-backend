@@ -1,8 +1,8 @@
 import { Types, Classes } from '@ikomida/shared-types'
 import { Table, Column, DataType, HasMany } from 'sequelize-typescript'
-import { Enum } from '../../Decorators/Enum'
-import BaseModel from './BaseModel'
-import ContractModel from './ContractModel'
+import { Enum } from '../../Decorators/Enum.js'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
 
 @Table({
   paranoid: true,

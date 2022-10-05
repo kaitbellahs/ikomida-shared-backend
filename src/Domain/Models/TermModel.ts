@@ -1,7 +1,7 @@
 import { Types } from '@ikomida/shared-types'
 import { Table, Column, DataType, HasMany } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import TermHashModel from './TermHashModel'
+import BaseModel from './BaseModel.js'
+import TermHashModel from './TermHashModel.js'
 
 @Table({
   paranoid: true,

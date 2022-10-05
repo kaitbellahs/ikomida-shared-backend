@@ -2,11 +2,11 @@ import FBAdmin, { app } from 'firebase-admin'
 import { Credential } from 'firebase-admin/app'
 import { FirebaseError } from '@firebase/util'
 import axios from 'axios'
-import iKomidaError from './iKomidaError'
-import sharp from 'sharp'
-import Logger from './Logger'
 import { Interfaces, Classes, Types } from '@ikomida/shared-types'
-import { AddressModel } from '../Domain/Models'
+import sharp from 'sharp'
+import iKomidaError from './iKomidaError.js'
+import Logger from './Logger.js'
+import { AddressModel } from '../Domain/Models/index.js'
 
 export default class GoogleAdmin {
   googleAdmin?: FBAdmin.app.App

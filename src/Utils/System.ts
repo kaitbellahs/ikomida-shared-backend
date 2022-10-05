@@ -1,7 +1,7 @@
-import Return from './Return'
 import { Finances } from '@ikomida/shared-logics'
 import { Request, NextFunction, Express, Response } from 'express'
-import { IiKomidaError } from './iKomidaError'
+import Return from './Return.js'
+import { IiKomidaError } from './iKomidaError.js'
 
 export async function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -19,7 +19,7 @@ export function setExpressResponse(app: Express) {
       try {
         req.headers.identity = JSON.parse(req.headers?.identity as string)
         // eslint-disable-next-line no-empty
-      } catch (_) {}
+      } catch (_) { }
     }
     res.sendResponse = function <T extends any & IiKomidaError>(data: Return<T> | T): Response {
       try {

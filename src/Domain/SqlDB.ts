@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript'
 export { Op, Includeable, col as Column } from 'sequelize'
-import Logger from '../Utils/Logger'
-import * as Models from './Models'
+import Logger from '../Utils/Logger.js'
+import * as Models from './Models/index.js'
 
 export const sequelize = new Sequelize(
   process.env?.DBNAME ?? 'ikomida',

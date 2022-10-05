@@ -1,8 +1,8 @@
 import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
-import ContractPaymentModel from './ContractPaymentModel'
-import ContractModel from './ContractModel'
-import BaseModel from './BaseModel'
 import { Types } from '@ikomida/shared-types'
+import ContractPaymentModel from './ContractPaymentModel.js'
+import ContractModel from './ContractModel.js'
+import BaseModel from './BaseModel.js'
 
 @Table({
   paranoid: true,

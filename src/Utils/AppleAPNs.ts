@@ -2,7 +2,7 @@ import { Classes, Types } from '@ikomida/shared-types'
 import axios from 'axios'
 import https from 'https'
 import { CompactSign, importPKCS8 } from 'jose'
-import Logger from './Logger'
+import Logger from './Logger.js'
 
 export default class AppleAPNs {
   logger: Logger

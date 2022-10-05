@@ -1,6 +1,6 @@
 import { Types } from '@ikomida/shared-types'
 import { Table, Column, DataType } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
+import BaseModel from './BaseModel.js'
 
 @Table({
   paranoid: true,

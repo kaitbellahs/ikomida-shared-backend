@@ -1,8 +1,8 @@
 import { Table, Column, DataType, HasMany, HasOne } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import UserModel from './UserModel'
-import ContractModel from './ContractModel'
-import ReferralRevuneModel from './ReferralRevuneModel'
+import BaseModel from './BaseModel.js'
+import UserModel from './UserModel.js'
+import ContractModel from './ContractModel.js'
+import ReferralRevuneModel from './ReferralRevuneModel.js'
 
 @Table({
   paranoid: true,

@@ -1,1 +1,1 @@
-export { default as PagseguroHelper } from './PagseguroHelper'
+export { default as PagseguroHelper } from './PagseguroHelper.js'

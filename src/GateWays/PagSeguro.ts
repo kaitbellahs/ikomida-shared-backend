@@ -1,8 +1,8 @@
-import axios, { AxiosError, AxiosHeaders, AxiosResponseHeaders, RawAxiosRequestHeaders } from 'axios'
-import iKomidaError, { IiKomidaErrorModel } from '../Utils/iKomidaError'
-import Logger from '../Utils/Logger'
+import axios, { RawAxiosRequestHeaders } from 'axios'
 import convert from 'xml-js'
 import { Classes, Types } from '@ikomida/shared-types'
+import iKomidaError, { IiKomidaErrorModel } from '../Utils/iKomidaError.js'
+import Logger from '../Utils/Logger.js'
 
 const host: any = {
   development: 'https://dev.ikomida.com/',
@@ -68,11 +68,9 @@ export default class PagSeguro {
       Types.TPagSeguroPaymentStatus.ONRETURN
     ]
     try {
-      const url = `https://ws${
-        !this.production ? '.sandbox' : ''
-      }.pagseguro.uol.com.br/v3/transactions/notifications/${notificationCode}?email=${this.email}&token=${
-        this.accessToken
-      }`
+      const url = `https://ws${!this.production ? '.sandbox' : ''
+        }.pagseguro.uol.com.br/v3/transactions/notifications/${notificationCode}?email=${this.email}&token=${this.accessToken
+        }`
       const response = await axios.get<string>(url)
       // if (!this.production) {
       this.logger.logRequest('GET', url, response?.headers, response?.status, response?.data)
@@ -186,13 +184,11 @@ export default class PagSeguro {
   }
 
   generateConnectUrl(state?: string | undefined) {
-    const url = `https://connect${
-      !this.production ? '.sandbox' : ''
-    }.pagseguro.uol.com.br/oauth2/authorize?response_type=code&client_id=${
-      this.app?.client_id
-    }&redirect_uri=${encodeURIComponent(
-      this.app?.redirect_uri ?? ''
-    )}&scope=payments.read+payments.create+payments.refund+accounts.read&state=${encodeURIComponent(String(state))}`
+    const url = `https://connect${!this.production ? '.sandbox' : ''
+      }.pagseguro.uol.com.br/oauth2/authorize?response_type=code&client_id=${this.app?.client_id
+      }&redirect_uri=${encodeURIComponent(
+        this.app?.redirect_uri ?? ''
+      )}&scope=payments.read+payments.create+payments.refund+accounts.read&state=${encodeURIComponent(String(state))}`
     this.logger.log(`Pagseguro connect Url: ${url}`)
     return url
   }

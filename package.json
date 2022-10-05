@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "the iKomida backend shared code",
   "private": false,
   "module": "lib/index.js",
@@ -32,8 +32,8 @@
   "author": "Khalid Ait Bellahs",
   "license": "UNLICENSED",
   "dependencies": {
-    "@ikomida/shared-logics": "^0.1.0",
-    "@ikomida/shared-types": "^1.0.2",
+    "@ikomida/shared-logics": "^0.2.0",
+    "@ikomida/shared-types": "^1.0.3",
     "amqplib": "^0.10.3",
     "axios": "^1.0.0",
     "bcrypt": "^5.0.1",

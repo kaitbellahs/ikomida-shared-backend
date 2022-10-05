@@ -22,6 +22,20 @@ export default {
             preferBuiltins: true
         }),
         json(),
-        terser()
+        terser({
+            compress: {
+                ecma: 2020,
+                dead_code: false,
+                drop_console: true,
+                drop_debugger: true,
+                keep_classnames: true,
+                properties: false,
+                reduce_funcs: false,
+                reduce_vars: false
+            },
+            ecma: 2020,
+            keep_classnames: true,
+            mangle: false
+        })
     ],
 }

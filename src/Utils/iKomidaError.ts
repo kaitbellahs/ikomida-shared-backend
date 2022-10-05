@@ -1,5 +1,5 @@
-import Logger from './Logger'
-import Return from './Return'
+import Logger from './Logger.js'
+import Return from './Return.js'
 export interface IiKomidaErrorModel {
   code: string
   message: string

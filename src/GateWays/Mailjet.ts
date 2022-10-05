@@ -1,9 +1,9 @@
-import Logger from '../Utils/Logger'
-import iKomidaError from '../Utils/iKomidaError'
 import NodeMailjet, { Client, SendEmailV3_1 } from 'node-mailjet'
 import { TRequestData } from 'node-mailjet/declarations/request/IRequest'
 import axios from 'axios'
 import { Classes } from '@ikomida/shared-types'
+import Logger from '../Utils/Logger.js'
+import iKomidaError from '../Utils/iKomidaError.js'
 export default class Mailjet {
   provider: Client
   logger: Logger

@@ -1,8 +1,8 @@
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import UserModel from './UserModel'
-import ReferralRevuneModel from './ReferralRevuneModel'
 import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import UserModel from './UserModel.js'
+import ReferralRevuneModel from './ReferralRevuneModel.js'
 
 @Table({
   paranoid: true,

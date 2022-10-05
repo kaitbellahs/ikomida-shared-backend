@@ -1,10 +1,10 @@
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import OrderModel from './OrderModel'
-import UserCreditCardModel from './UserCreditCardModel'
-import UserModel from './UserModel'
-import ContractModel from './ContractModel'
 import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import OrderModel from './OrderModel.js'
+import UserCreditCardModel from './UserCreditCardModel.js'
+import UserModel from './UserModel.js'
+import ContractModel from './ContractModel.js'
 
 @Table({
   paranoid: true,

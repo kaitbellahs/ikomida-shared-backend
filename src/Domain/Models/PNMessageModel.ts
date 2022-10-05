@@ -1,9 +1,9 @@
 import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import ContractModel from './ContractModel'
-import PNModel from './PNModel'
-import UserModel from './UserModel'
-import VendorPNMessageModel from './VendorPNMessageModel'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import PNModel from './PNModel.js'
+import UserModel from './UserModel.js'
+import VendorPNMessageModel from './VendorPNMessageModel.js'
 
 @Table({
   paranoid: true,

@@ -1,8 +1,8 @@
 import { Classes, Types } from '@ikomida/shared-types'
-import amqpLib, { Connection, Channel, Message, ConsumeMessage } from 'amqplib'
-import iKomidaError from '../Utils/iKomidaError'
-import Logger from '../Utils/Logger'
-import MicroService from './MicroService'
+import amqpLib, { Connection, Channel, ConsumeMessage } from 'amqplib'
+import iKomidaError from '../Utils/iKomidaError.js'
+import Logger from '../Utils/Logger.js'
+import MicroService from './MicroService.js'
 export default class RabbitMQ {
   channel?: Channel | null
   logger: Logger

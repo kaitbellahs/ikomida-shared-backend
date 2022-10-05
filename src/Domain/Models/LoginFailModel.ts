@@ -1,6 +1,6 @@
 import { Table, Column, DataType } from 'sequelize-typescript'
-import Roles from '../../Types/Roles'
-import BaseModel from './BaseModel'
+import Roles from '../../Types/Roles.js'
+import BaseModel from './BaseModel.js'
 
 @Table({
   paranoid: true,

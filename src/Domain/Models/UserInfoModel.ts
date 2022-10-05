@@ -1,6 +1,6 @@
 import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import UserModel from './UserModel'
+import BaseModel from './BaseModel.js'
+import UserModel from './UserModel.js'
 
 @Table({
   paranoid: true,

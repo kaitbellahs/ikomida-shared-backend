@@ -1,8 +1,8 @@
 import { CompactSign, importPKCS8 } from 'jose'
 import axios, { RawAxiosRequestHeaders } from 'axios'
 import https from 'https'
-import iKomidaError from './iKomidaError'
-import Logger from './Logger'
+import iKomidaError from './iKomidaError.js'
+import Logger from './Logger.js'
 
 export default class AppStoreConnect {
   logger: Logger
@@ -367,34 +367,34 @@ export default class AppStoreConnect {
     url: string,
     data: {
       data:
-        | { attributes: { identifier: any; name: any; platform: string }; type: string }
-        | {
-            attributes: { capabilityType: string }
-            relationships: { bundleId: { data: { id: any; type: string } } }
-            type: string
-          }
-        | {
-            attributes: { name: any; profileType: string }
-            relationships: { bundleId: { data: { id: any; type: string } }; certificates: { data: any } }
-            type: string
-          }
-        | { type: string; id: any }
-        | {
-            type: string
-            attributes: { platform: string; versionString: any; releaseType: string }
-            relationships: { app: { data: { type: string; id: any } }; build: { data: { type: string; id: any } } }
-          }
-        | {
-            type: string
-            attributes: { whatsNew: any }
-            relationships: { appStoreVersion: { data: { type: string; id: any } } }
-          }
-        | {
-            type: string
-            attributes: { platform: string }
-            relationships: { app: { data: { type: string; id: any } } }
-          }
-        | { attributes: { capabilityType: string }; id: any; type: string }
+      | { attributes: { identifier: any; name: any; platform: string }; type: string }
+      | {
+        attributes: { capabilityType: string }
+        relationships: { bundleId: { data: { id: any; type: string } } }
+        type: string
+      }
+      | {
+        attributes: { name: any; profileType: string }
+        relationships: { bundleId: { data: { id: any; type: string } }; certificates: { data: any } }
+        type: string
+      }
+      | { type: string; id: any }
+      | {
+        type: string
+        attributes: { platform: string; versionString: any; releaseType: string }
+        relationships: { app: { data: { type: string; id: any } }; build: { data: { type: string; id: any } } }
+      }
+      | {
+        type: string
+        attributes: { whatsNew: any }
+        relationships: { appStoreVersion: { data: { type: string; id: any } } }
+      }
+      | {
+        type: string
+        attributes: { platform: string }
+        relationships: { app: { data: { type: string; id: any } } }
+      }
+      | { attributes: { capabilityType: string }; id: any; type: string }
     }
   ) {
     try {

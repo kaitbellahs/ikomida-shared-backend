@@ -1,7 +1,7 @@
 import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
-import BaseModel from './BaseModel'
-import ContractModel from './ContractModel'
-import VendorSettingsModel from './VendorSettingsModel'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import VendorSettingsModel from './VendorSettingsModel.js'
 
 @Table({
   paranoid: true,

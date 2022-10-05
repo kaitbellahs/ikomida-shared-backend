@@ -1,7 +1,7 @@
 import { Classes } from '@ikomida/shared-types'
 import axios from 'axios'
-import iKomidaError from '../Utils/iKomidaError'
-import Logger from '../Utils/Logger'
+import iKomidaError from '../Utils/iKomidaError.js'
+import Logger from '../Utils/Logger.js'
 
 export default class OtimaTel {
   host = 'https://mm.otimatel.com.br/api/v2'

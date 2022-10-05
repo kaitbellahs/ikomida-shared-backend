@@ -3,7 +3,8 @@ import tsPlugin from '@rollup/plugin-typescript';
 import resolve from "@rollup/plugin-node-resolve";
 import json from '@rollup/plugin-json';
 import pkg from "./package.json";
-import tsconfig from './tsconfig.json';
+import commonjs from "@rollup/plugin-commonjs";
+// import tsconfig from './tsconfig.json';
 
 export default {
     input: "src/index.ts",
@@ -15,12 +16,13 @@ export default {
         },
     ],
     plugins: [
+        json(),
         autoExternal(),
-        tsPlugin(tsconfig),
+        tsPlugin(),
+        commonjs(),
         resolve({
             exportConditions: ["import", "require", "default"],
             preferBuiltins: true
         }),
-        json()
     ],
 }

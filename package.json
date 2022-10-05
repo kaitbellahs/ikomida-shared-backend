@@ -16,7 +16,7 @@
   "type": "module",
   "node": ">=16",
   "scripts": {
-    "build": "rimraf ./types ./lib ./docs && tsc",
+    "build": "rimraf ./types ./lib ./docs && rollup -c",
     "prebuild:types": "rimraf ./types",
     "build:types": "tsc -p ./tsconfig.json --outDir types && api-extractor run",
     "predoc:jsdoc": "rimraf ./docs",

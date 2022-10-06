@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "the iKomida backend shared code",
   "private": false,
   "module": "lib/index.js",
@@ -34,11 +34,11 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@ikomida/shared-logics": "^0.2.0",
-    "@ikomida/shared-types": "^1.1.0",
+    "@ikomida/shared-types": "^1.1.1",
     "amqplib": "^0.10.3",
     "axios": "^1.0.0",
-    "bcrypt": "^5.0.1",
-    "firebase-admin": "^11.0.1",
+    "bcrypt": "^5.1.0",
+    "firebase-admin": "^11.1.0",
     "jose": "^4.10.0",
     "luxon": "^3.0.4",
     "mysql2": "^2.3.3",

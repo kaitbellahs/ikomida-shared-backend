@@ -9,7 +9,7 @@ import ProductOptionModel from './ProductOptionModel.js'
   paranoid: true,
   modelName: 'productOptionsCategory'
 })
-export default class ProductOptionCategoryModel extends BaseModel {
+export default class ProductOptionsCategoryModel extends BaseModel {
   @Column(DataType.CHAR(100))
   name?: string
   @Column(DataType.STRING(255))

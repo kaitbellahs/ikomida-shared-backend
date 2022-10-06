@@ -203,7 +203,6 @@ export default class BaseModel extends Model {
     resolveAfterEnums(instance, this.prototype)
   }
 
-  // NOTE: this hook only available in Sequelize v4
   @AfterSave
   static afterSaveModel(instance: any, options: any): void {
     resolveAfterEnums(instance, this.prototype)

@@ -4,7 +4,7 @@ import ContractModel from './ContractModel.js'
 import OrderProductOptionModel from './OrderProductOptionModel.js'
 import ProductCategoryModel from './ProductCategoryModel.js'
 import ProductModel from './ProductModel.js'
-import ProductOptionCategoryModel from './ProductOptionCategoryModel.js'
+import ProductOptionsCategoryModel from './ProductOptionsCategoryModel.js'
 
 @Table({
   paranoid: true,
@@ -32,11 +32,11 @@ export default class ProductOptionModel extends BaseModel {
 
   //MARK: --Associaions
 
-  @ForeignKey(() => ProductOptionCategoryModel)
+  @ForeignKey(() => ProductOptionsCategoryModel)
   @Column(DataType.UUID)
-  productOptionCategoryId?: string
-  @BelongsTo(() => ProductOptionCategoryModel)
-  productOptionCategory?: ProductOptionCategoryModel
+  productOptionsCategoryId?: string
+  @BelongsTo(() => ProductOptionsCategoryModel)
+  productOptionsCategory?: ProductOptionsCategoryModel
 
   @ForeignKey(() => ProductModel)
   @Column(DataType.UUID)

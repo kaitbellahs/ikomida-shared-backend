@@ -22,7 +22,7 @@ import VendorPaymentGatewayModel from './VendorPaymentGatewayModel.js'
 import VendorSettingsModel from './VendorSettingsModel.js'
 import ContractPaymentModel from './ContractPaymentModel.js'
 import { Types } from '@ikomida/shared-types'
-import ProductOptionCategoryModel from './ProductOptionCategoryModel.js'
+import ProductOptionsCategoryModel from './ProductOptionsCategoryModel.js'
 import ProductOptionModel from './ProductOptionModel.js'
 
 @Table({
@@ -103,8 +103,8 @@ export default class ContractModel extends BaseModel {
   @HasMany(() => ProductCategoryModel)
   productCategories?: ProductCategoryModel[]
 
-  @HasMany(() => ProductOptionCategoryModel)
-  productOptionCategories?: ProductOptionCategoryModel[]
+  @HasMany(() => ProductOptionsCategoryModel)
+  productOptionsCategories?: ProductOptionsCategoryModel[]
 
   @HasMany(() => ProductOptionModel)
   productOptions?: ProductOptionModel[]

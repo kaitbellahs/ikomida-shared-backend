@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "0.2.20",
+  "version": "1.0.0",
   "description": "the iKomida backend shared code",
   "private": false,
   "module": "lib/index.js",
@@ -27,13 +27,14 @@
     "lint": "eslint . --ext .ts --quiet --fix",
     "clean": "rimraf ./types ./lib ./docs",
     "glogin": "artifactregistry-auth",
+    "local": "yarn glogin && ncu -u && yarn && yarn format && yarn lint && yarn build",
     "test": "mocha"
   },
   "author": "Khalid Ait Bellahs",
   "license": "UNLICENSED",
   "dependencies": {
     "@ikomida/shared-logics": "^0.2.0",
-    "@ikomida/shared-types": "^1.0.7",
+    "@ikomida/shared-types": "^1.1.0",
     "amqplib": "^0.10.3",
     "axios": "^1.0.0",
     "bcrypt": "^5.0.1",

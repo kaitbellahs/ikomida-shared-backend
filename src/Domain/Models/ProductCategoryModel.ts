@@ -2,7 +2,7 @@ import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequeli
 import BaseModel from './BaseModel.js'
 import ContractModel from './ContractModel.js'
 import ProductModel from './ProductModel.js'
-import ProductOptionCategoryModel from './ProductOptionCategoryModel.js'
+import ProductOptionsCategoryModel from './ProductOptionsCategoryModel.js'
 import ProductOptionModel from './ProductOptionModel.js'
 
 @Table({
@@ -32,8 +32,8 @@ export default class ProductCategoryModel extends BaseModel {
   @HasMany(() => ProductModel)
   products?: ProductModel[]
 
-  @HasMany(() => ProductOptionCategoryModel)
-  productOptionCategories?: ProductOptionCategoryModel[]
+  @HasMany(() => ProductOptionsCategoryModel)
+  productOptionsCategories?: ProductOptionsCategoryModel[]
 
   @HasMany(() => ProductOptionModel)
   productOptions?: ProductOptionModel[]

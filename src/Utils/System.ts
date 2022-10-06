@@ -19,7 +19,7 @@ export function setExpressResponse(app: Express) {
       try {
         req.headers.identity = JSON.parse(req.headers?.identity as string)
         // eslint-disable-next-line no-empty
-      } catch (_) { }
+      } catch (_) {}
     }
     res.sendResponse = function <T extends any & IiKomidaError>(data: Return<T> | T): Response {
       try {

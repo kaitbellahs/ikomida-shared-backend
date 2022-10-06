@@ -367,34 +367,34 @@ export default class AppStoreConnect {
     url: string,
     data: {
       data:
-      | { attributes: { identifier: any; name: any; platform: string }; type: string }
-      | {
-        attributes: { capabilityType: string }
-        relationships: { bundleId: { data: { id: any; type: string } } }
-        type: string
-      }
-      | {
-        attributes: { name: any; profileType: string }
-        relationships: { bundleId: { data: { id: any; type: string } }; certificates: { data: any } }
-        type: string
-      }
-      | { type: string; id: any }
-      | {
-        type: string
-        attributes: { platform: string; versionString: any; releaseType: string }
-        relationships: { app: { data: { type: string; id: any } }; build: { data: { type: string; id: any } } }
-      }
-      | {
-        type: string
-        attributes: { whatsNew: any }
-        relationships: { appStoreVersion: { data: { type: string; id: any } } }
-      }
-      | {
-        type: string
-        attributes: { platform: string }
-        relationships: { app: { data: { type: string; id: any } } }
-      }
-      | { attributes: { capabilityType: string }; id: any; type: string }
+        | { attributes: { identifier: any; name: any; platform: string }; type: string }
+        | {
+            attributes: { capabilityType: string }
+            relationships: { bundleId: { data: { id: any; type: string } } }
+            type: string
+          }
+        | {
+            attributes: { name: any; profileType: string }
+            relationships: { bundleId: { data: { id: any; type: string } }; certificates: { data: any } }
+            type: string
+          }
+        | { type: string; id: any }
+        | {
+            type: string
+            attributes: { platform: string; versionString: any; releaseType: string }
+            relationships: { app: { data: { type: string; id: any } }; build: { data: { type: string; id: any } } }
+          }
+        | {
+            type: string
+            attributes: { whatsNew: any }
+            relationships: { appStoreVersion: { data: { type: string; id: any } } }
+          }
+        | {
+            type: string
+            attributes: { platform: string }
+            relationships: { app: { data: { type: string; id: any } } }
+          }
+        | { attributes: { capabilityType: string }; id: any; type: string }
     }
   ) {
     try {

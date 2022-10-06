@@ -1,11 +1,10 @@
 import { Classes } from '@ikomida/shared-types'
 
-export default class Notification implements Classes.CNotification {
-  title: string
-  body: string
+export default class Notification extends Classes.CNotification {
   private object: Classes.CNotification
 
   constructor(object: Classes.CNotification, ...args: any[]) {
+    super(object)
     this.object = object
     this.title = object?.title ?? ''
     this.body = object?.body ?? ''
@@ -16,24 +15,21 @@ export default class Notification implements Classes.CNotification {
         ) ?? this.body
     }
   }
-  id?: string | undefined
-  timestamp?: number | undefined
 
-  validate(): boolean {
-    throw new Error('Method not implemented.')
-  }
-  toJSON() {
-    throw new Error('Method not implemented.')
-  }
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   get method() {
     return this.object?.method
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   get uri() {
     return this.object?.uri
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   get logon() {
     return this.object?.logon
   }

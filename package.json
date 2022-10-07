@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "the iKomida backend shared code",
   "private": false,
   "module": "lib/index.js",
@@ -33,10 +33,10 @@
   "author": "Khalid Ait Bellahs",
   "license": "UNLICENSED",
   "dependencies": {
-    "@ikomida/shared-logics": "^0.2.0",
+    "@ikomida/shared-logics": "^0.2.3",
     "@ikomida/shared-types": "^1.1.1",
     "amqplib": "^0.10.3",
-    "axios": "^1.0.0",
+    "axios": "^1.1.0",
     "bcrypt": "^5.1.0",
     "firebase-admin": "^11.1.0",
     "jose": "^4.10.0",
@@ -51,13 +51,17 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
+    "@firebase/app-types": "0.x",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
     "@types/amqplib": "^0.8.2",
     "@types/bcrypt": "^5.0.0",
+    "@types/node": "^18.8.3",
     "@types/sharp": "^0.31.0",
+    "@types/uuid": "^8.3.4",
+    "@types/validator": "^13.7.7",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "eslint": "^8.24.0",

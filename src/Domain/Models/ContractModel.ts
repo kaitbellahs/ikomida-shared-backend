@@ -24,6 +24,7 @@ import ContractPaymentModel from './ContractPaymentModel.js'
 import { Types } from '@ikomida/shared-types'
 import ProductOptionsCategoryModel from './ProductOptionsCategoryModel.js'
 import ProductOptionModel from './ProductOptionModel.js'
+import OrderProductOptionModel from './OrderProductOptionModel.js'
 
 @Table({
   paranoid: true,
@@ -123,6 +124,9 @@ export default class ContractModel extends BaseModel {
 
   @HasMany(() => PhoneValidationCodeModel)
   phoneValidationCodes?: PhoneValidationCodeModel[]
+
+  @HasMany(() => OrderProductOptionModel)
+  orderProductOptions?: OrderProductOptionModel[]
 
   @HasMany(() => AddressModel)
   addresses?: AddressModel[]

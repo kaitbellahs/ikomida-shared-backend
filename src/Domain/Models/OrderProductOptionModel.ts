@@ -1,5 +1,6 @@
 import { Table, Column, ForeignKey, DataType, HasOne, BelongsTo } from 'sequelize-typescript'
 import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
 import OrderModel from './OrderModel.js'
 import OrderProductModel from './OrderProductModel.js'
 import ProductOptionModel from './ProductOptionModel.js'
@@ -39,4 +40,10 @@ export default class OrderProductOptionModel extends BaseModel {
 
   @BelongsTo(() => ProductOptionModel)
   productOption?: ProductOptionModel
+
+  @ForeignKey(() => ContractModel)
+  @Column(DataType.UUID)
+  contractId?: string
+  @BelongsTo(() => ContractModel)
+  contract?: ContractModel
 }

@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript'
-export { Op, Includeable, col as Column } from 'sequelize'
+export { Op, Includeable, col as Column, Transaction } from 'sequelize'
 import Logger from '../Utils/Logger.js'
 import * as Models from './Models/index.js'
 

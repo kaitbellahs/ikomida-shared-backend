@@ -26,16 +26,12 @@ export function setExpressResponse(app: Express) {
         if (!this?.statusCode) {
           this.status(200)
         }
-        if (data && (data as Return<T>)?.status && !isNaN(Number((data as Return<T>)?.status))) {
-          this.status((data as Return<T>)?.status ?? 0)
-          delete (data as Return<T>).status
+        if (data instanceof Return && data.status && !isNaN(Number(data.status))) {
+          this.status(data.status ?? 0)
+          delete data.status
         }
         this.type('json')
-        this.end(
-          data && data instanceof Return && 'toString' in (data as Return<T>)
-            ? (data as Return<T>).toString()
-            : JSON.stringify(data)
-        )
+        this.end(data instanceof Return ? data.toString() : JSON.stringify(data))
       } catch (exception: any) {
         console.error(new Date().toString(), 'exception:', exception)
         this.type('json')

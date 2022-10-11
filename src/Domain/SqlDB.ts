@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize-typescript'
+import { Transaction } from 'sequelize'
 export { Op, Includeable, col as Column, Transaction } from 'sequelize'
 import Logger from '../Utils/Logger.js'
 import * as Models from './Models/index.js'
@@ -16,6 +17,7 @@ export const sequelize = new Sequelize(
     host: process.env?.DBHOST ?? 'localhost',
     port: Number(process.env?.DBPORT) ?? 3306,
     typeValidation: true,
+    isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
     logging: false
   }
 )

@@ -74,9 +74,7 @@ export default class PagSeguro {
         this.accessToken
       }`
       const response = await axios.get<string>(url)
-      // if (!this.production) {
       this.logger.logRequest('GET', url, response?.headers, response?.status, response?.data)
-      // }
       if (response.status >= 200 && response.status < 300) {
         const data = JSON.parse(
           convert.xml2json(response?.data, {
@@ -121,7 +119,6 @@ export default class PagSeguro {
       const response = await axios.post(url, request.toJSON(), {
         headers: this.headers()
       })
-      // if (!this.production) {
       this.logger.logRequest(
         'POST',
         url,
@@ -131,7 +128,6 @@ export default class PagSeguro {
         this.headers(false),
         request
       )
-      // }
       const data: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse =
         Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(response.data)
       if (response.status >= 200 && response.status < 300 && data?.client_id) {
@@ -154,9 +150,7 @@ export default class PagSeguro {
       })
       const data: Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse =
         Classes.Pagseguro.CPgseguroCreateOAuth2AppResponse.fromObject(response.data)
-      // if (!this.production) {
       this.logger.logRequest('GET', url, response?.headers, response?.status, data, this.headers(false))
-      // }
       if (response.status >= 200 && response.status < 300) {
         this.app = data
         return this.app
@@ -212,7 +206,6 @@ export default class PagSeguro {
       })
       const data: Classes.Pagseguro.CPagSeguroGetAccessTokenResponse =
         Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(response.data)
-      // if (!this.production) {
       this.logger.logRequest(
         'POST',
         url,
@@ -222,7 +215,6 @@ export default class PagSeguro {
         this.headers(true, this.app?.client_id, this.app?.client_secret),
         request
       )
-      // }
       if (response.status >= 200 && response.status < 300 && data.access_token) {
         return data
       }
@@ -254,7 +246,6 @@ export default class PagSeguro {
       })
       const data: Classes.Pagseguro.CPagSeguroGetAccessTokenResponse =
         Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(response.data)
-      // if (!this.production) {
       this.logger.logRequest(
         'POST',
         url,
@@ -264,7 +255,6 @@ export default class PagSeguro {
         this.headers(true, this.app?.client_id, this.app?.client_secret),
         request
       )
-      // }
       if (response.status >= 200 && response.status < 300) {
         return data
       }
@@ -287,7 +277,6 @@ export default class PagSeguro {
       const response = await axios.post<void>(url, request.toJSON(), {
         headers: this.headers(true, this.app?.client_id, this.app?.client_secret)
       })
-      // if (!this.production) {
       this.logger.logRequest(
         'POST',
         url,
@@ -297,7 +286,6 @@ export default class PagSeguro {
         this.headers(true, this.app?.client_id, this.app?.client_secret),
         request
       )
-      // }
       if (response.status >= 200 && response.status < 300) {
         return true
       }
@@ -353,9 +341,7 @@ export default class PagSeguro {
       const data: Classes.Pagseguro.CPagSeguroChargeResponse = Classes.Pagseguro.CPagSeguroChargeResponse.fromObject(
         response.data
       )
-      // if (!this.production) {
       this.logger.logRequest('POST', url, response?.headers, response?.status, response?.data, this.headers(), request)
-      // }
       const paymentStatus = data?.status
       if (
         response.status >= 200 &&
@@ -401,9 +387,7 @@ export default class PagSeguro {
       const data: Classes.Pagseguro.CPagSeguroChargeResponse = Classes.Pagseguro.CPagSeguroChargeResponse.fromObject(
         response.data
       )
-      // if (!this.production) {
       this.logger.logRequest('POST', url, response?.headers, response?.status, response?.data, this.headers(), request)
-      // }
       const paymentStatus = data?.status
       if (
         response.status >= 200 &&

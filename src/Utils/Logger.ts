@@ -24,11 +24,11 @@ export abstract class ILoggerObject {
 }
 export default class Logger {
   service
-  isProd = false
+  isProduction = false
 
   constructor(service: string) {
     this.service = service
-    this.isProd = process.env.NODE_ENV === 'production'
+    this.isProduction = process.env.NODE_ENV === 'production'
     // axios.interceptors.request.use(request => {
     //     this.info(`Starting Request, ${JSON.stringify(request, null, 2)}`)
     //     return request
@@ -48,7 +48,7 @@ export default class Logger {
         ? logObject
         : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
-      environment: this.isProd ? 'Production' : 'Development',
+      environment: this.isProduction ? 'Production' : 'Development',
       resource: { type: 'global' },
       severity: 'ERROR',
       message
@@ -73,7 +73,7 @@ export default class Logger {
         : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
-      environment: this.isProd ? 'Production' : 'Development',
+      environment: this.isProduction ? 'Production' : 'Development',
       severity: 'INFO',
       message
     }
@@ -93,7 +93,7 @@ export default class Logger {
         : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
-      environment: this.isProd ? 'Production' : 'Development',
+      environment: this.isProduction ? 'Production' : 'Development',
       severity: 'WARNING',
       message
     }
@@ -114,17 +114,19 @@ export default class Logger {
     requestData?: any
   ) {
     return new Promise(resolve => {
-      console.log(
-        `iKLogger|${DateTime.now()}: [${this.service}[${process.env?.NODE_APP_INSTANCE ?? '-'}]] [INFO]: Request:`
-      )
-      console.log('-*-*-*-*-*-*-*-*-*-*-')
-      console.log('Request :', method, ' : ', `${url}`)
-      console.log('Request Headers:', requestHeaders)
-      console.log('Request data:', requestData)
-      console.log('Response Headers:', responseHeaders)
-      console.log('Response status:', responseStatus)
-      console.log('Response data:', responseData)
-      console.log('-*-*-*-*-*-*-*-*-*-*-')
+      if (!this.isProduction) {
+        console.log(
+          `iKLogger|${DateTime.now()}: [${this.service}[${process.env?.NODE_APP_INSTANCE ?? '-'}]] [INFO]: Request:`
+        )
+        console.log('-*-*-*-*-*-*-*-*-*-*-')
+        console.log('Request :', method, ' : ', `${url}`)
+        console.log('Request Headers:', requestHeaders)
+        console.log('Request data:', requestData)
+        console.log('Response Headers:', responseHeaders)
+        console.log('Response status:', responseStatus)
+        console.log('Response data:', responseData)
+        console.log('-*-*-*-*-*-*-*-*-*-*-')
+      }
       resolve(true)
     })
   }

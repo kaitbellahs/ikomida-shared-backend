@@ -15,7 +15,7 @@ export default class VendorPNMessageModel extends BaseModel {
   @Column(DataType.STRING(255))
   body?: string
   @Column(DataType.JSON)
-  data?: string
+  data?: any
   @Column(DataType.INTEGER)
   sends?: number
   @Column(DataType.INTEGER)

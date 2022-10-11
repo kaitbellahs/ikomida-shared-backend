@@ -17,7 +17,7 @@ export default class PNMessageModel extends BaseModel {
   @Column(DataType.STRING(255))
   body?: string
   @Column(DataType.JSON)
-  data?: string
+  data?: any
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true

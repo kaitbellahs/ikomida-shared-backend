@@ -84,7 +84,7 @@ export function resolveAfterEnums(instance: any, model: any) {
 export function handleAfterEnums(instance: any, model: any) {
   if (isObject(instance) && 'dataValues' in instance) {
     for (const key of Reflect.ownKeys(isObject(instance.dataValues) ? instance.dataValues : {})) {
-      if (isObject(model.rawAttributes) && key in model.rawAttributes) {
+      if (isObject(model) && isObject(model.rawAttributes) && key in model.rawAttributes) {
         const field = model.rawAttributes[key]
         const isArrayOfEnums = Reflect.getMetadata('design:type:array', model, key) === 'arrayOfEnums'
         if (field.type.constructor.key === 'ENUM') {
@@ -101,7 +101,7 @@ export function handleAfterEnums(instance: any, model: any) {
           instance.dataValues[key] = newValue
         }
         if ('_previousDataValues' in instance) {
-          instance._previousDataValues = Object.assign(instance._previousDataValues, instance.dataValues)
+          instance._previousDataValues = { ...instance._previousDataValues, ...instance.dataValues }
         }
       } else {
         resolveAfterEnums(instance.dataValues[key], instance[key])

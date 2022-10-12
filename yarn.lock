@@ -225,10 +225,10 @@
   dependencies:
     luxon "^3.0.4"
 
-"@ikomida/shared-types@^1.2.3":
-  version "1.2.3"
-  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.2.3.tgz#010718dbaa5cbb377fa99453ea102f8ad3cd75da"
-  integrity sha512-ocN5FGEF/aaGUxWFrWLBQ8zxO8XvaPHmIZ6IXvvNUrOWRY5VJ9IDdN2BHasWUJ/4PZSRohiIw5AJjJf1E7qwug==
+"@ikomida/shared-types@^1.2.4":
+  version "1.2.4"
+  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.2.4.tgz#faf63d0764202246f899be84e9cf79bea821afe1"
+  integrity sha512-es7syLNzE3SGsKuMjNb5W8ToG+TDZj6ftsdgR6W8EnkjaPsaC0B8K2BbSx1HIVat4ihTGZPJ54s61F8tsGw/ZQ==
 
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"

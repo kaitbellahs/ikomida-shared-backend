@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "the iKomida backend shared code",
   "private": false,
   "module": "lib/index.js",
@@ -34,7 +34,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@ikomida/shared-logics": "^0.2.3",
-    "@ikomida/shared-types": "^1.2.2",
+    "@ikomida/shared-types": "^1.2.3",
     "amqplib": "^0.10.3",
     "axios": "^1.1.2",
     "bcrypt": "^5.1.0",
@@ -68,7 +68,7 @@
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "rollup": "^3.0.0",
+    "rollup": "^3.1.0",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.8.4"

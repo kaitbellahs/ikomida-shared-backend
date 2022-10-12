@@ -20,7 +20,8 @@
         "outDir": "lib",
         "declarationDir": "lib",
         "strict": true,
-        "target": "ES2021",
+        "useDefineForClassFields": false,
+        "target": "ESNext",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true

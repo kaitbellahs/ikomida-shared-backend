@@ -24,6 +24,10 @@ export default class OrderProductModel extends BaseModel {
   discount?: number
   @Column(DataType.INTEGER)
   quantity?: number
+  @Column({
+    type: DataType.CHAR({ length: 255 })
+  })
+  observation?: string
 
   //MARK: -- Associations
   @ForeignKey(() => UserModel)

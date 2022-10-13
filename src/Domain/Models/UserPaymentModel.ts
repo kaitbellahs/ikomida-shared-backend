@@ -19,9 +19,9 @@ export default class UserPaymentModel extends BaseModel {
   gateway?: string
   @Column(DataType.STRING(20))
   brand?: string
-  @Column(DataType.CHAR({ length: 6 }))
+  @Column(DataType.STRING({ length: 6 }))
   firstDigits?: string
-  @Column(DataType.CHAR({ length: 4 }))
+  @Column(DataType.STRING({ length: 4 }))
   lastDigits?: string
   @Column(DataType.TEXT)
   gatewayPaymentID?: string

@@ -10,7 +10,7 @@ import ProductOptionModel from './ProductOptionModel.js'
   modelName: 'orderProductOption'
 })
 export default class OrderProductOptionModel extends BaseModel {
-  @Column(DataType.CHAR(100))
+  @Column(DataType.STRING(100))
   name?: string
 
   @Column(DataType.INTEGER)

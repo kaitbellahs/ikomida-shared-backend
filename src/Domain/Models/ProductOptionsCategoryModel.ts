@@ -10,7 +10,7 @@ import ProductOptionModel from './ProductOptionModel.js'
   modelName: 'productOptionsCategory'
 })
 export default class ProductOptionsCategoryModel extends BaseModel {
-  @Column(DataType.CHAR(100))
+  @Column(DataType.STRING(100))
   name?: string
   @Column(DataType.STRING(255))
   image?: string

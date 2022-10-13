@@ -46,7 +46,7 @@ export default class OrderModel extends BaseModel {
   })
   paymentMethodType?: Types.TPaymentMethod
   @Column({
-    type: DataType.CHAR({ length: 255 })
+    type: DataType.STRING({ length: 255 })
   })
   observation?: string
 

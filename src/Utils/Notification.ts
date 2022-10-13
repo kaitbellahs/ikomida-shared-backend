@@ -1,11 +1,11 @@
 import { Classes } from '@ikomida/shared-types'
 
 export default class Notification extends Classes.CNotification {
-  private object: Classes.CNotification
+  private _object: Classes.CNotification
 
   constructor(object: Classes.CNotification, ...args: any[]) {
     super(object)
-    this.object = object
+    this._object = object
     this.title = object?.title ?? ''
     this.body = object?.body ?? ''
     if ((args?.length ?? 0) > 0) {
@@ -16,22 +16,8 @@ export default class Notification extends Classes.CNotification {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  get method() {
-    return this.object?.method
-  }
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  get uri() {
-    return this.object?.uri
-  }
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  get logon() {
-    return this.object?.logon
+  get object() {
+    return this._object
   }
 
   static NEW_ORDER = Classes.CNotification.init(

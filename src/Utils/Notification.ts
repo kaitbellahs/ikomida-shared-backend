@@ -29,28 +29,28 @@ export default class Notification extends Classes.CNotification {
   )
   static USER_ORDER_UPDATED = Classes.CNotification.init(
     'Seu pedido foi atualizado',
-    'O status do seu pedido foi atualizado para "{0}"',
+    'O seu pedido foi alterado para "{0}"',
     'orderUpdate',
     '/order/',
     'true'
   )
   static VENDOR_ORDER_UPDATED = Classes.CNotification.init(
     'Um pedido foi atualizado',
-    'O status do pedido "{0}" foi atualizado para "{1}"',
+    'O pedido N˚:{0} foi alterado para "{1}"',
     'orderUpdate',
     '/order/',
     'true'
   )
   static ORDER_STATUS = Classes.CNotification.init(
-    'O pedido foi atualizado',
-    'O status pagamento do pedido foi atualizado para "{0}", que acabou de ser atualizado',
+    'Um pedido foi atualizado',
+    'O pagamento do pedido N˚:{0} foi alterada para "{0}"',
     'orderStatus',
     '/order/',
     'true'
   )
   static NEW_CHARGE = Classes.CNotification.init(
     'Atualização da cobrança',
-    'O status da cobrança mensal do seu contrato foi alterado',
+    'A cobrança mensal do seu contrato foi alterada',
     'newCharge',
     '/subscription/',
     'true'

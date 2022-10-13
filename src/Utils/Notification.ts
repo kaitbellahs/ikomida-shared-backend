@@ -41,9 +41,16 @@ export default class Notification extends Classes.CNotification {
     '/order/',
     'true'
   )
-  static ORDER_UPDATED = Classes.CNotification.init(
+  static USER_ORDER_UPDATED = Classes.CNotification.init(
     'Seu pedido foi atualizado',
-    'Não deixe de dar olhadinha no status do seu pedido, que acabou de ser atualizado',
+    'O status do seu pedido foi atualizado para "{0}"',
+    'orderUpdate',
+    '/order/',
+    'true'
+  )
+  static VENDOR_ORDER_UPDATED = Classes.CNotification.init(
+    'Um pedido foi atualizado',
+    'O status do pedido "{0}" foi atualizado para "{1}"',
     'orderUpdate',
     '/order/',
     'true'

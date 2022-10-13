@@ -7,6 +7,7 @@ import sharp from 'sharp'
 import iKomidaError from './iKomidaError.js'
 import Logger from './Logger.js'
 import { AddressModel } from '../Domain/Models/index.js'
+import { Message } from 'firebase-admin/lib/messaging/messaging-api.js'
 
 export default class GoogleAdmin {
   googleAdmin?: FBAdmin.app.App
@@ -254,7 +255,18 @@ export default class GoogleAdmin {
     try {
       const admin = await this.getGoogleAdmin()
       const defaultMessaging = admin?.messaging()
-      const id = await defaultMessaging?.send(payload as any)
+      if (!payload?.token) {
+        return { code: -1 }
+      }
+      const message: Message = {
+        token: payload.token,
+        data: payload.data?.toJSON(),
+        notification: {
+          title: payload.notification?.title,
+          body: payload.notification?.body,
+        }
+      }
+      const id = await defaultMessaging?.send(message)
       return { code: 0, id }
     } catch (exception: any) {
       if (exception instanceof FirebaseError) {

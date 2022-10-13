@@ -25,7 +25,7 @@ export default class OrderProductModel extends BaseModel {
   @Column(DataType.INTEGER)
   quantity?: number
   @Column({
-    type: DataType.CHAR({ length: 255 })
+    type: DataType.STRING({ length: 255 })
   })
   observation?: string
 

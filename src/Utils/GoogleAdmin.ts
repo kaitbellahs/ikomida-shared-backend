@@ -263,7 +263,7 @@ export default class GoogleAdmin {
         data: payload.data?.toJSON(),
         notification: {
           title: payload.notification?.title,
-          body: payload.notification?.body,
+          body: payload.notification?.body
         }
       }
       const id = await defaultMessaging?.send(message)

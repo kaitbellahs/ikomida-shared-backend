@@ -225,10 +225,10 @@
   dependencies:
     luxon "^3.0.4"
 
-"@ikomida/shared-types@^1.2.7":
-  version "1.2.7"
-  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.2.7.tgz#485f1d60c74f21c9f19ff8cac68c307aada7746c"
-  integrity sha512-05Coz2+Jbml1/FxDGFWtY/CUZlW7Liy0/nISjGet7GZFl5uWSBz50RZjGzS+Vbs/ufm6w9mgJko/WwObUX0UOQ==
+"@ikomida/shared-types@^1.2.8":
+  version "1.2.8"
+  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.2.8.tgz#584f77b04285683002b0f21a2a042b03c3d81b23"
+  integrity sha512-LFDhG6IhvcYT0K+1ubKKi1YXkOSC68DstqOACpgO0klZb1aY8vcGAkiFHpDMOiOzhcz1dbuMuVPQfexIa7wzaA==
 
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.2"
@@ -2796,10 +2796,10 @@ sequelize-typescript@^2.1.3:
   dependencies:
     glob "7.2.0"
 
-sequelize@^6.25.0:
-  version "6.25.0"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.25.0.tgz#957c2c7a90a5fcd544cf92903715593e49002c8b"
-  integrity sha512-Bu2V+Yjw/4fwGve0rwk02jmbuA0JGGGD1N7yrfGQXVRD91hg4j9Ecth4NwnK4fX1MQA4R0Cqfx3BaJDAOoaiSA==
+sequelize@^6.25.1:
+  version "6.25.1"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.25.1.tgz#bc1af3a3ad441dce5f887f7096ca7d103c09fe5e"
+  integrity sha512-z2oNoGFhQ8FaDLPuL+UKYA4VXsIyd5pHO6LNSRbzIPuOEma8b2bSbLdde6JjeHeaTIrmIwInC7YF34wMHfcngg==
   dependencies:
     "@types/debug" "^4.1.7"
     "@types/validator" "^13.7.1"

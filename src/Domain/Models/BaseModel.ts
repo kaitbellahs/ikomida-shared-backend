@@ -25,7 +25,7 @@ function isObject(object: any) {
 
 export function resolveBeforeEnums(instance: any, model: any) {
   for (const key of Reflect.ownKeys(isObject(instance) ? instance : {})) {
-    if (isObject(model.rawAttributes) && key in model.rawAttributes) {
+    if (isObject(model.rawAttributes) && 'rawAttributes' in model && key in model.rawAttributes) {
       const field = model.rawAttributes[key]
       const isArrayOfEnums = Reflect.getMetadata('design:type:array', model, key) === 'arrayOfEnums'
       const designType = Reflect.getMetadata('design:type', model, key)
@@ -84,7 +84,7 @@ export function resolveAfterEnums(instance: any, model: any) {
 export function handleAfterEnums(instance: any, model: any) {
   if (isObject(instance) && 'dataValues' in instance) {
     for (const key of Reflect.ownKeys(isObject(instance.dataValues) ? instance.dataValues : {})) {
-      if (isObject(model) && isObject(model.rawAttributes) && key in model.rawAttributes) {
+      if (isObject(model) && 'rawAttributes' in model && isObject(model.rawAttributes) && key in model.rawAttributes) {
         const field = model.rawAttributes[key]
         const isArrayOfEnums = Reflect.getMetadata('design:type:array', model, key) === 'arrayOfEnums'
         if (field.type.constructor.key === 'ENUM') {

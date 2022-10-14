@@ -28,11 +28,6 @@ export default class PNMessageModel extends BaseModel {
     defaultValue: true
   })
   opened?: boolean
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false
-  })
-  vendor?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => VendorPNMessageModel)

@@ -159,12 +159,16 @@ export default class Asaas {
       error.log(this.logger)
       new Return(false)
     }
+    let Cycle = Types.Asaas.TAssasSubscriptionCycle.WEEKLY
+    if (this.production) {
+      Cycle = Types.Asaas.TAssasSubscriptionCycle.MONTHLY
+    }
     const request = Classes.Asaas.CAsaasCreateSubscriptionRequest.init(
       customer.data?.id ?? '',
       Types.Asaas.TAsaasBilling.CREDIT_CARD,
       DateTime.localToday(),
       Math.ceil((payload.plan?.price ?? 0) * 0.01),
-      Types.Asaas.TAssasSubscriptionCycle.WEEKLY,
+      Cycle,
       Classes.Asaas.CAsaasCreditCardHolderInfo.init(
         payload.customer?.name ?? '',
         payload.customer?.email ?? '',

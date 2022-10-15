@@ -10,29 +10,27 @@ export interface IiKomidaError {
   errors: string
 }
 export default class iKomidaError {
-  code?: string
-  message?: string
+  code: string
+  message: string
   status?: number
   errors: any[] = []
 
   constructor(error: IiKomidaErrorModel, ...args: any[]) {
-    if (error) {
-      this.code = error.code
-      this.message = error.message
-      if ((args?.length ?? 0) > 0) {
-        const params: any[] = []
-        for (const arg of args) {
-          if (typeof arg === 'string') {
-            params.push(arg)
-          } else {
-            this.errors.push(arg)
-          }
+    this.code = error.code
+    this.message = error.message
+    if ((args?.length ?? 0) > 0) {
+      const params: any[] = []
+      for (const arg of args) {
+        if (['string', 'number'].includes(typeof arg)) {
+          params.push(arg)
+        } else {
+          this.errors.push(arg)
         }
-        this.message =
-          this.message?.replace(/{(\d+)}/g, (match, index) =>
-            params?.[index] ? this.isJsonObject(params[index]) : match
-          ) || this.message
       }
+      this.message =
+        this.message?.replace(/{(\d+)}/g, (match, index) =>
+          params?.[index] ? this.isJsonObject(params[index]) : match
+        ) || this.message
     }
   }
 

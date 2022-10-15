@@ -66,7 +66,7 @@ export default class RabbitMQ {
   async publish<T extends Types.TAMQPPayload>(queue: string, payload: Classes.CAMQPPayload<T>) {
     try {
       const channel = await this.getChannel(queue)
-      const result = await channel?.sendToQueue(queue, Buffer.from(JSON.stringify(payload)), {
+      const result = await channel?.sendToQueue(queue, Buffer.from(JSON.stringify(payload.toJSON())), {
         persistent: true
       })
       await this.closeChannel()

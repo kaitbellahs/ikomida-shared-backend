@@ -31,10 +31,6 @@ export default class Mailjet {
                 Name: object?.to?.name
               }
             ],
-            TemplateErrorReporting: {
-              Email: 'reporter@tialtonivel.com.br',
-              Name: 'Reporter'
-            },
             Subject: object?.message?.subject,
             HTMLPart: object?.message?.body,
             TextPart: object?.message?.body //TODO: -- remove html tags

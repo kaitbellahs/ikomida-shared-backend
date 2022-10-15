@@ -1,4 +1,4 @@
-import NodeMailjet, { Client, SendEmailV3_1 } from 'node-mailjet'
+import NodeMailjet, { Client } from 'node-mailjet'
 import { TRequestData } from 'node-mailjet/declarations/request/IRequest'
 import axios from 'axios'
 import { Classes } from '@ikomida/shared-types'
@@ -18,7 +18,7 @@ export default class Mailjet {
 
   async send(object: Classes.CEmail) {
     try {
-      const emails: SendEmailV3_1.IBody = {
+      const emails: TRequestData = {
         Messages: [
           {
             From: {
@@ -37,12 +37,13 @@ export default class Mailjet {
           }
         ]
       }
-      const result: SendEmailV3_1.IResponse = (await this.provider
+      const result = await this.provider
         .post('send', {
           version: 'v3.1'
         })
-        .request(emails as unknown as TRequestData)) as unknown as SendEmailV3_1.IResponse
-      if (result?.Messages?.[0]?.Status === 'success') {
+        .request(emails)
+
+      if (result.response.status >= 200 && result.response.status < 300) {
         return true
       } else {
         new iKomidaError(iKomidaError.MAILJET_SEND_EMAIL_ERROR_RESPONSE, result).log(this.logger)

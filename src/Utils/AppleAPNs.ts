@@ -3,10 +3,12 @@ import axios from 'axios'
 import https from 'https'
 import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const pkg = require('../../package.json')
-
+// import { createRequire } from 'module'
+// const require = createRequire(import.meta.url)
+// const pkg = require('../../package.json')
+const pkg = {
+  version: '1.0.30'
+}
 export default class AppleAPNs {
   logger: Logger
   production

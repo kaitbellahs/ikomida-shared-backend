@@ -18,9 +18,9 @@ export default {
         },
     ],
     plugins: [
-        json(),
-        autoExternal(),
         tsPlugin(tsconfig),
+        autoExternal(),
+        json(),
         commonjs(),
         resolve({
             exportConditions: ["import", "require", "default"],

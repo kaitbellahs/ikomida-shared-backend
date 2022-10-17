@@ -3,6 +3,9 @@ import axios from 'axios'
 import https from 'https'
 import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+const pkg = require('./package.json')
 
 export default class AppleAPNs {
   logger: Logger
@@ -46,34 +49,36 @@ export default class AppleAPNs {
     }
     return null
   }
-  async sendPushNotification(payload?: Classes.CNotificationPayload): Promise<Types.TSendReturn> {
+
+  async sendPushNotification(payload: Classes.CNotificationPayload): Promise<Types.TSendReturn> {
     try {
-      const token = payload?.token
-      const apnsid = payload?.id
+      const token = payload.token
+      const apnsid = payload.id
       const priority = payload?.priority
       const ikomidaId = payload?.ikomidaId
       const data = {
         aps: {
           alert: {
-            title: payload?.notification?.title,
-            body: payload?.notification?.body
+            title: payload.notification?.title,
+            body: payload.notification?.body
           }
         },
-        data: payload?.data
+        data: payload.data?.toJSON()
       }
       const options = {
         headers: await this.headers(apnsid, priority, ikomidaId)
       }
+      this.logger.info('data:', `URL: /3/device/${token}`, 'data:', data, 'options:', options)
       const response = await this.api.post(`/3/device/${token}`, data, options)
-      this.logger.info('data:', JSON.stringify(response?.data))
+      this.logger.info('data:', JSON.stringify('response:', response?.data))
       if (response?.status >= 200 && response?.status < 300) {
         return { code: 0, id: response?.headers?.['apns-id'] }
       }
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
-        this.logger.error(`StatusCode: ${error?.response?.status} Error: ${error?.response?.data}`)
+        this.logger.error(`StatusCode: ${error?.response?.status} Error: ${error?.response?.data}`, error)
       } else {
-        this.logger.error(`StatusCode: ${JSON.stringify(error)}`)
+        this.logger.error(error)
       }
     }
     return { code: -1 }
@@ -87,7 +92,7 @@ export default class AppleAPNs {
       'apns-expiration': apnsExpiration,
       'apns-priority': priority,
       'apns-topic': ikomidaId,
-      'X-Requested-With': `iKomida Publisher V0.0.1`
+      'X-Requested-With': `iKomida Publisher V${pkg.version}`
     }
     return headers
   }

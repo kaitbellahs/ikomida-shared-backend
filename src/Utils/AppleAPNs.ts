@@ -86,9 +86,9 @@ export default class AppleAPNs {
     return { code: -1 }
   }
   async headers(apnsid: any, priority: any, ikomidaId: any) {
-    const apnsExpiration = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).getTime() / 1000
+    const apnsExpiration = Math.floor(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).getTime() / 1000)
     const headers = {
-      authorization: `bearer ${await this.generateAccessToken()}`,
+      'authorization': `bearer ${await this.generateAccessToken()}`,
       'apns-push-type': `alert`,
       'apns-id': apnsid,
       'apns-expiration': apnsExpiration,

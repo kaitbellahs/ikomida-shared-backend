@@ -1,6 +1,6 @@
 import { Classes, Types } from '@ikomida/shared-types'
 import axios from 'axios'
-import https from 'https'
+import http from 'http'
 import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
 // import { createRequire } from 'module'
@@ -18,10 +18,10 @@ export default class AppleAPNs {
     this.logger = logger
     this.production = process.env.NODE_ENV === 'production'
 
-    const httpsAgent = new https.Agent({ keepAlive: true })
+    const httpAgent = new http.Agent({ keepAlive: true })
     this.api = axios.create({
       baseURL: this.production ? 'https://api.push.apple.com:443' : 'https://api.sandbox.push.apple.com:443',
-      httpsAgent
+      httpAgent
     })
   }
 

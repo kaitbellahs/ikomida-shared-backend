@@ -5,7 +5,7 @@ import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
-const pkg = require('./package.json')
+const pkg = require('../../package.json')
 
 export default class AppleAPNs {
   logger: Logger

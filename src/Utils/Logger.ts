@@ -1,4 +1,4 @@
-import { DateTime } from '@ikomida/shared-logics'
+import * as Logics from '@ikomida/shared-logics'
 import { Classes } from '@ikomida/shared-types'
 import { AxiosResponseHeaders, RawAxiosRequestHeaders, RawAxiosResponseHeaders } from 'axios'
 
@@ -115,7 +115,7 @@ export default class Logger {
   ) {
     return new Promise(resolve => {
       if (!this.isProduction) {
-        console.log(`iKLogger|${DateTime.now()}: [${this.service}] [INFO]: Request:`)
+        console.log(`iKLogger|${Logics.DateTime.now()}: [${this.service}] [INFO]: Request:`)
         console.log('-*-*-*-*-*-*-*-*-*-*-')
         console.log('Request :', method, ' : ', `${url}`)
         console.log('Request Headers:', requestHeaders)
@@ -131,12 +131,12 @@ export default class Logger {
 
   async writeLog(metadata: ILoggerMetadata, message: string, ...args: any[]) {
     return new Promise(resolve => {
-      const log = `iKLogger|${DateTime.now()}: [${this.service}] [${metadata.severity}]: Message: ${message}`
+      const log = `iKLogger|${Logics.DateTime.now()}: [${this.service}] [${metadata.severity}]: Message: ${message}`
       switch (metadata.severity) {
         case 'ERROR':
           console.error(log)
           if (metadata.errors) {
-            const error = `iKLogger|${DateTime.now()}: [${this.service}] [${metadata.severity}]: Error:`
+            const error = `iKLogger|${Logics.DateTime.now()}: [${this.service}] [${metadata.severity}]: Error:`
             console.error(error, ...metadata.errors)
           }
           if ((args?.length ?? 0) > 0) {

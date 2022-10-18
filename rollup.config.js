@@ -12,6 +12,7 @@ export default {
     input: "src/index.ts",
     output: [
         {
+            inlineDynamicImports: true,
             file: pkg.module,
             format: 'es',
             sourcemap: true

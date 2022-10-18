@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DateTime } from '@ikomida/shared-logics'
+import * as Logics from '@ikomida/shared-logics'
 import { Classes, Types } from '@ikomida/shared-types'
 import iKomidaError, { IiKomidaErrorModel } from '../Utils/iKomidaError.js'
 import Logger from '../Utils/Logger.js'
@@ -166,7 +166,7 @@ export default class Asaas {
     const request = Classes.Asaas.CAsaasCreateSubscriptionRequest.init(
       customer.data?.id ?? '',
       Types.Asaas.TAsaasBilling.CREDIT_CARD,
-      DateTime.localToday(),
+      Logics.DateTime.localToday(),
       Math.ceil((payload.plan?.price ?? 0) * 0.01),
       Cycle,
       Classes.Asaas.CAsaasCreditCardHolderInfo.init(
@@ -250,7 +250,7 @@ ikomidaID: ${payload.ikomidaID}`,
         phone: `${payload.customer?.phone}`,
         mobilePhone: `${payload.customer?.phone}`
       },
-      dueDate: DateTime.localToday(),
+      dueDate: Logics.DateTime.localToday(),
       remoteIp: payload.customer?.ip,
       split: {
         walletId: payload.walletId,

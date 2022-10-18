@@ -1,4 +1,4 @@
-import { Finances } from '@ikomida/shared-logics'
+import * as Logics from '@ikomida/shared-logics'
 import { Request, NextFunction, Express, Response } from 'express'
 import Return from './Return.js'
 import { IiKomidaError } from './iKomidaError.js'
@@ -51,7 +51,7 @@ export function setExpressResponse(app: Express) {
 export function isDemo(ikomidaID?: string, areaCode?: string | number, phone?: string | number) {
   return (
     ikomidaID === 'com.ikomida.br.demo' &&
-    Finances.toNumber(areaCode) === Finances.toNumber('55') &&
-    Finances.toNumber(phone) === Finances.toNumber('11922221111')
+    Logics.Finances.toNumber(areaCode) === Logics.Finances.toNumber('55') &&
+    Logics.Finances.toNumber(phone) === Logics.Finances.toNumber('11922221111')
   )
 }

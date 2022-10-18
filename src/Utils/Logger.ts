@@ -116,7 +116,7 @@ export default class Logger {
     return new Promise(resolve => {
       if (!this.isProduction) {
         console.log(
-          `iKLogger|${DateTime.now()}: [${this.service}[${process.env?.NODE_APP_INSTANCE ?? '-'}]] [INFO]: Request:`
+          `iKLogger|${DateTime.now()}: [${this.service}] [INFO]: Request:`
         )
         console.log('-*-*-*-*-*-*-*-*-*-*-')
         console.log('Request :', method, ' : ', `${url}`)
@@ -133,13 +133,13 @@ export default class Logger {
 
   async writeLog(metadata: ILoggerMetadata, message: string, ...args: any[]) {
     return new Promise(resolve => {
-      const log = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${metadata.severity
+      const log = `iKLogger|${DateTime.now()}: [${this.service}] [${metadata.severity
         }]: Message: ${message}`
       switch (metadata.severity) {
         case 'ERROR':
           console.error(log)
           if (metadata.errors) {
-            const error = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${metadata.severity
+            const error = `iKLogger|${DateTime.now()}: [${this.service}] [${metadata.severity
               }]: Error:`
             console.error(error, ...metadata.errors)
           }

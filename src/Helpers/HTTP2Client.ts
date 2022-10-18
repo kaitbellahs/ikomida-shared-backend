@@ -1,5 +1,6 @@
 import { Interfaces } from '@ikomida/shared-types';
 import http2, { ClientHttp2Session, OutgoingHttpHeaders } from 'http2'
+import Logger from '../Utils/Logger.js';
 export interface IHTTP2Response {
     status: number;
     headers: Interfaces.IMetadata;
@@ -10,14 +11,16 @@ export default class HTTP2Client {
     host: string
     port: number
     http2Client?: ClientHttp2Session
-    constructor(host: string, port: number) {
+    logger: Logger
+    constructor(logger: Logger, host: string, port: number) {
         this.host = host;
         this.port = port;
+        this.logger = logger
     }
 
     open() {
         this.http2Client = http2.connect(`${this.host}:${this.port}`)
-        this.http2Client.on('error', (err) => console.error(err));
+        this.http2Client.on('error', (error) => this.logger.error(error));
     }
 
     isAlive() {
@@ -42,11 +45,9 @@ export default class HTTP2Client {
             const req = this.http2Client?.request(headers)
             if (req) {
                 const localHeaders: Interfaces.IMetadata = {}
-                req.on('response', (heads, flags) => {
-                    console.log('flags:', flags)
-                    for (const name in heads) {
-                        localHeaders[name] = `${heads[name]}`
-                        console.log(`${name}: ${heads[name]}`)
+                req.on('response', responseHeaders => {
+                    for (const name in responseHeaders) {
+                        localHeaders[name] = `${responseHeaders[name]}`
                     }
                 });
                 req.setEncoding('utf8');
@@ -69,7 +70,7 @@ export default class HTTP2Client {
                 req.write(JSON.stringify(body))
                 req.end();
             } else {
-                reject(new Error('http2Client not initaited'));
+                reject(new Error('http2Client not initialized'));
             }
         });
 

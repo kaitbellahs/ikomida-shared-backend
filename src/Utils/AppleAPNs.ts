@@ -9,14 +9,12 @@ const pkg = {
   version: '1.0.30'
 }
 export default class AppleAPNs {
-  logger: Logger
-  production
-  http2Client
 
+  logger: Logger
+  http2Client
   constructor(logger: Logger) {
     this.logger = logger
-    this.production = process.env.NODE_ENV === 'production'
-    this.http2Client = new HTTP2Client(this.production ? 'https://api.push.apple.com' : 'https://api.sandbox.push.apple.com', 443)
+    this.http2Client = new HTTP2Client(logger, 'https://api.push.apple.com', 443)
   }
 
   async generateAccessToken() {
@@ -64,7 +62,7 @@ export default class AppleAPNs {
       const headers = await this.headers(apnsid, priority, ikomidaId)
       this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'headers:', headers)
       const response = await this.http2Client.post(`/3/device/${token?.toLowerCase()}`, headers, data)
-      this.logger.info('data:', JSON.stringify('response:', response?.data))
+      this.logger.info('response:', JSON.stringify(response))
       if (response?.status >= 200 && response?.status < 300) {
         return { code: 0, id: response?.headers?.['apns-id'] }
       }

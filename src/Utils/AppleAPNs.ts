@@ -1,5 +1,5 @@
 import { Classes, Types } from '@ikomida/shared-types'
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
 import https from 'https'
 import http from 'http'
 import { CompactSign, importPKCS8 } from 'jose'
@@ -70,7 +70,7 @@ export default class AppleAPNs {
         },
         data: payload.data?.toJSON()
       }
-      const options = {
+      const options: AxiosRequestConfig = {
         headers: await this.headers(apnsid, priority, ikomidaId)
       }
       this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'options:', options)
@@ -90,13 +90,13 @@ export default class AppleAPNs {
   }
   async headers(apnsid?: string, priority?: number, ikomidaId?: string) {
     const apnsExpiration = Math.floor(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).getTime() / 1000)
-    const headers = {
+    const headers: AxiosRequestHeaders = {
       'authorization': `bearer ${await this.generateAccessToken()}`,
       'apns-push-type': `alert`,
-      'apns-id': apnsid,
+      'apns-id': apnsid ?? '',
       'apns-expiration': apnsExpiration,
-      'apns-priority': priority,
-      'apns-topic': ikomidaId,
+      'apns-priority': priority ?? '',
+      'apns-topic': ikomidaId ?? '',
       'X-Requested-With': `iKomida Publisher V${pkg.version}`
     }
     return headers

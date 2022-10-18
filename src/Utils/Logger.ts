@@ -1,6 +1,6 @@
 import { DateTime } from '@ikomida/shared-logics'
 import { Classes } from '@ikomida/shared-types'
-import { AxiosResponseHeaders, AxiosRequestHeaders } from 'axios'
+import { AxiosResponseHeaders, RawAxiosRequestHeaders, RawAxiosResponseHeaders } from 'axios'
 
 export interface ILoggerMetadata {
   environment: string
@@ -107,10 +107,10 @@ export default class Logger {
   async logRequest(
     method: string,
     url: string,
-    responseHeaders: AxiosResponseHeaders,
+    responseHeaders: RawAxiosResponseHeaders | AxiosResponseHeaders,
     responseStatus: number,
     responseData: string | Classes.Pagseguro.CPagSeguroConnectTokenResponse | void,
-    requestHeaders?: AxiosRequestHeaders,
+    requestHeaders?: RawAxiosRequestHeaders,
     requestData?: any
   ) {
     return new Promise(resolve => {

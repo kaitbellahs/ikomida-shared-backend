@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from 'axios'
+import axios, { RawAxiosRequestHeaders } from 'axios'
 import convert from 'xml-js'
 import { Classes, Types } from '@ikomida/shared-types'
 import iKomidaError, { IiKomidaErrorModel } from '../Utils/iKomidaError.js'
@@ -36,8 +36,8 @@ export default class PagSeguro {
     this.logger = logger
   }
 
-  headers(json = true, clientID?: string, clientSecret?: string): AxiosRequestHeaders {
-    const headers: AxiosRequestHeaders = {
+  headers(json = true, clientID?: string, clientSecret?: string): RawAxiosRequestHeaders {
+    const headers: RawAxiosRequestHeaders = {
       Authorization: `Bearer ${this.accessToken}`,
       'X-Requested-With': 'iKomida-PS-V0.0.1-beta'
     }

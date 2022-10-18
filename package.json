@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "1.0.38",
+  "version": "1.1.0",
   "description": "the iKomida backend shared code",
   "private": false,
   "module": "lib/index.js",
@@ -34,7 +34,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@ikomida/shared-logics": "^0.2.3",
-    "@ikomida/shared-types": "^1.2.9",
+    "@ikomida/shared-types": "^1.3.2",
     "amqplib": "^0.10.3",
     "axios": "^1.1.3",
     "bcrypt": "^5.1.0",
@@ -70,7 +70,7 @@
     "jest-runner-tsc": "^1.6.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "rollup": "^3.2.2",
+    "rollup": "^3.2.3",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^29.0.3",

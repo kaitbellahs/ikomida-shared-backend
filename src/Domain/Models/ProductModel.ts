@@ -30,7 +30,11 @@ export default class ProductModel extends BaseModel {
   @Column(DataType.INTEGER)
   discount?: number
   @Column(DataType.INTEGER)
-  weight?: number
+  measure?: number
+  @Column({
+    type: DataType.ENUM(...Types.TMeasure.keys())
+  })
+  measureUnit?: Types.TMeasure
   @Column(DataType.INTEGER)
   quantity?: number
   @Column({

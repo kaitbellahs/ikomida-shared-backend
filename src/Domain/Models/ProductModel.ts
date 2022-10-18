@@ -33,7 +33,7 @@ export default class ProductModel extends BaseModel {
   measure?: number
   @Column({
     type: DataType.ENUM(...Types.TMeasure.keys()),
-    defaultValue: Types.TMeasure.GRAM
+    defaultValue: Types.TMeasure.GRAM.id
   })
   measureUnit?: Types.TMeasure
   @Column(DataType.INTEGER)

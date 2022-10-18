@@ -9,7 +9,6 @@ const pkg = {
   version: '1.0.30'
 }
 export default class AppleAPNs {
-
   logger: Logger
   http2Client
   production
@@ -80,7 +79,7 @@ export default class AppleAPNs {
   async headers(apnsid?: string, priority?: number, ikomidaId?: string) {
     const apnsExpiration = Math.floor(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).getTime() / 1000)
     const headers = {
-      'authorization': `bearer ${await this.generateAccessToken()}`,
+      authorization: `bearer ${await this.generateAccessToken()}`,
       'apns-push-type': `alert`,
       'apns-id': apnsid ?? '',
       'apns-expiration': apnsExpiration,

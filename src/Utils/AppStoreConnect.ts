@@ -1,5 +1,5 @@
 import { CompactSign, importPKCS8 } from 'jose'
-import axios, { AxiosRequestHeaders } from 'axios'
+import axios, { RawAxiosRequestHeaders } from 'axios'
 import https from 'https'
 import iKomidaError from './iKomidaError.js'
 import Logger from './Logger.js'
@@ -441,7 +441,7 @@ export default class AppStoreConnect {
   }
 
   private async headers(isJson = false) {
-    const object: AxiosRequestHeaders = {
+    const object: RawAxiosRequestHeaders = {
       Authorization: `Bearer ${await this.generateAccessToken()}`,
       accept: `application/json`,
       'X-Requested-With': `iKomida Publisher V0.0.1`

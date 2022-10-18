@@ -1,9 +1,7 @@
 import { Classes, Types } from '@ikomida/shared-types'
-import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
-import https from 'https'
-import http from 'http'
 import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
+import HTTP2Client from '../Helpers/HTTP2Client.js'
 // import { createRequire } from 'module'
 // const require = createRequire(import.meta.url)
 // const pkg = require('../../package.json')
@@ -13,19 +11,12 @@ const pkg = {
 export default class AppleAPNs {
   logger: Logger
   production
-  api
+  http2Client
 
   constructor(logger: Logger) {
     this.logger = logger
     this.production = process.env.NODE_ENV === 'production'
-
-    const httpAgent = new http.Agent({ keepAlive: true })
-    const httpsAgent = new https.Agent({ keepAlive: true })
-    this.api = axios.create({
-      baseURL: this.production ? 'https://api.push.apple.com:443' : 'https://api.sandbox.push.apple.com:443',
-      // httpAgent,
-      httpsAgent
-    })
+    this.http2Client = new HTTP2Client(this.production ? 'https://api.push.apple.com' : 'https://api.sandbox.push.apple.com', 443)
   }
 
   async generateAccessToken() {
@@ -70,27 +61,21 @@ export default class AppleAPNs {
         },
         data: payload.data?.toJSON()
       }
-      const options: AxiosRequestConfig = {
-        headers: await this.headers(apnsid, priority, ikomidaId)
-      }
-      this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'options:', options)
-      const response = await this.api.post(`/3/device/${token?.toLowerCase()}`, data, options)
+      const headers = await this.headers(apnsid, priority, ikomidaId)
+      this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'headers:', headers)
+      const response = await this.http2Client.post(`/3/device/${token?.toLowerCase()}`, headers, data)
       this.logger.info('data:', JSON.stringify('response:', response?.data))
       if (response?.status >= 200 && response?.status < 300) {
         return { code: 0, id: response?.headers?.['apns-id'] }
       }
     } catch (error: any) {
-      if (axios.isAxiosError(error)) {
-        this.logger.error(`StatusCode: ${error?.response?.status} Error: ${error?.response?.data}`, error)
-      } else {
-        this.logger.error(error)
-      }
+      this.logger.error(error)
     }
     return { code: -1 }
   }
   async headers(apnsid?: string, priority?: number, ikomidaId?: string) {
     const apnsExpiration = Math.floor(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).getTime() / 1000)
-    const headers: AxiosRequestHeaders = {
+    const headers = {
       'authorization': `bearer ${await this.generateAccessToken()}`,
       'apns-push-type': `alert`,
       'apns-id': apnsid ?? '',

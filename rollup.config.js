@@ -13,7 +13,7 @@ export default {
     output: [
         {
             inlineDynamicImports: true,
-            file: pkg.module,
+            file: pkg.main,
             format: 'es',
             sourcemap: true
         },

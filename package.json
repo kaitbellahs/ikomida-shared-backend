@@ -1,18 +1,15 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "the iKomida backend shared code",
   "private": false,
-  "module": "lib/index.js",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib/",
     "README.md",
     "package.json"
   ],
-  "exports": {
-    "import": "./lib/index.js"
-  },
   "type": "module",
   "node": ">=16",
   "scripts": {
@@ -33,8 +30,8 @@
   "author": "Khalid Ait Bellahs",
   "license": "UNLICENSED",
   "dependencies": {
-    "@ikomida/shared-logics": "^1.0.2",
-    "@ikomida/shared-types": "^1.3.2",
+    "@ikomida/shared-logics": "^1.0.4",
+    "@ikomida/shared-types": "^1.3.3",
     "amqplib": "^0.10.3",
     "axios": "^1.1.3",
     "bcrypt": "^5.1.0",
@@ -58,7 +55,7 @@
     "@rollup/plugin-typescript": "^9.0.1",
     "@types/amqplib": "^0.8.2",
     "@types/bcrypt": "^5.0.0",
-    "@types/node": "^18.11.0",
+    "@types/node": "^18.11.1",
     "@types/sharp": "^0.31.0",
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.8",

@@ -4,7 +4,6 @@ import https from 'https'
 import http from 'http'
 import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
-// import resuqest from 'request'
 // import { createRequire } from 'module'
 // const require = createRequire(import.meta.url)
 // const pkg = require('../../package.json')
@@ -75,7 +74,7 @@ export default class AppleAPNs {
         headers: await this.headers(apnsid, priority, ikomidaId)
       }
       this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'options:', options)
-      const response = await axios.post(`/3/device/${token?.toLowerCase()}`, data, options)
+      const response = await this.api.post(`/3/device/${token?.toLowerCase()}`, data, options)
       this.logger.info('data:', JSON.stringify('response:', response?.data))
       if (response?.status >= 200 && response?.status < 300) {
         return { code: 0, id: response?.headers?.['apns-id'] }

@@ -1,5 +1,6 @@
 import { Classes, Types } from '@ikomida/shared-types'
 import axios from 'axios'
+import https from 'https'
 import http from 'http'
 import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
@@ -19,9 +20,11 @@ export default class AppleAPNs {
     this.production = process.env.NODE_ENV === 'production'
 
     const httpAgent = new http.Agent({ keepAlive: true })
+    const httpsAgent = new https.Agent({ keepAlive: true })
     this.api = axios.create({
       baseURL: this.production ? 'https://api.push.apple.com:443' : 'https://api.sandbox.push.apple.com:443',
-      httpAgent
+      // httpAgent,
+      httpsAgent
     })
   }
 
@@ -70,8 +73,8 @@ export default class AppleAPNs {
       const options = {
         headers: await this.headers(apnsid, priority, ikomidaId)
       }
-      this.logger.info('data:', `URL: /3/device/${token}`, 'data:', data, 'options:', options)
-      const response = await this.api.post(`/3/device/${token}`, data, options)
+      this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'options:', options)
+      const response = await this.api.post(`/3/device/${token?.toLowerCase()}`, data, options)
       this.logger.info('data:', JSON.stringify('response:', response?.data))
       if (response?.status >= 200 && response?.status < 300) {
         return { code: 0, id: response?.headers?.['apns-id'] }
@@ -85,7 +88,7 @@ export default class AppleAPNs {
     }
     return { code: -1 }
   }
-  async headers(apnsid: any, priority: any, ikomidaId: any) {
+  async headers(apnsid?: string, priority?: number, ikomidaId?: string) {
     const apnsExpiration = Math.floor(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).getTime() / 1000)
     const headers = {
       'authorization': `bearer ${await this.generateAccessToken()}`,

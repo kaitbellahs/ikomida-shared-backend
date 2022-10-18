@@ -12,8 +12,10 @@ export default class AppleAPNs {
 
   logger: Logger
   http2Client
+  production
   constructor(logger: Logger) {
     this.logger = logger
+    this.production = process.env.NODE_ENV === 'production'
     this.http2Client = new HTTP2Client(logger, 'https://api.push.apple.com', 443)
   }
 
@@ -60,9 +62,13 @@ export default class AppleAPNs {
         data: payload.data?.toJSON()
       }
       const headers = await this.headers(apnsid, priority, ikomidaId)
-      this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'headers:', headers)
+      if (!this.production) {
+        this.logger.info('data:', `URL: /3/device/${token?.toLowerCase()}`, 'data:', data, 'headers:', headers)
+      }
       const response = await this.http2Client.post(`/3/device/${token?.toLowerCase()}`, headers, data)
-      this.logger.info('response:', JSON.stringify(response))
+      if (!this.production) {
+        this.logger.info('response:', JSON.stringify(response))
+      }
       if (response?.status >= 200 && response?.status < 300) {
         return { code: 0, id: response?.headers?.['apns-id'] }
       }

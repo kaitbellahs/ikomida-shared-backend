@@ -1,6 +1,6 @@
 import { DateTime } from '@ikomida/shared-logics'
 import { Classes } from '@ikomida/shared-types'
-import { AxiosResponseHeaders, RawAxiosRequestHeaders, RawAxiosResponseHeaders } from 'axios'
+import { AxiosResponseHeaders, AxiosRequestHeaders } from 'axios'
 
 export interface ILoggerMetadata {
   environment: string
@@ -45,8 +45,8 @@ export default class Logger {
       typeof logObject === 'object' && 'message' in logObject
         ? `${logObject.code}: ${logObject.message}`
         : typeof logObject === 'string'
-        ? logObject
-        : JSON.stringify(logObject)
+          ? logObject
+          : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       environment: this.isProduction ? 'Production' : 'Development',
       resource: { type: 'global' },
@@ -69,8 +69,8 @@ export default class Logger {
       logObject instanceof ILoggerObject
         ? `${logObject?.code}: ${logObject?.message}`
         : logObject instanceof String
-        ? (logObject as string)
-        : JSON.stringify(logObject)
+          ? (logObject as string)
+          : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
       environment: this.isProduction ? 'Production' : 'Development',
@@ -89,8 +89,8 @@ export default class Logger {
       logObject instanceof ILoggerObject
         ? `${logObject?.code}: ${logObject?.message}`
         : logObject instanceof String
-        ? (logObject as string)
-        : JSON.stringify(logObject)
+          ? (logObject as string)
+          : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
       environment: this.isProduction ? 'Production' : 'Development',
@@ -107,10 +107,10 @@ export default class Logger {
   async logRequest(
     method: string,
     url: string,
-    responseHeaders: RawAxiosResponseHeaders | AxiosResponseHeaders,
+    responseHeaders: AxiosResponseHeaders,
     responseStatus: number,
     responseData: string | Classes.Pagseguro.CPagSeguroConnectTokenResponse | void,
-    requestHeaders?: RawAxiosRequestHeaders,
+    requestHeaders?: AxiosRequestHeaders,
     requestData?: any
   ) {
     return new Promise(resolve => {
@@ -133,16 +133,14 @@ export default class Logger {
 
   async writeLog(metadata: ILoggerMetadata, message: string, ...args: any[]) {
     return new Promise(resolve => {
-      const log = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${
-        metadata.severity
-      }]: Message: ${message}`
+      const log = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${metadata.severity
+        }]: Message: ${message}`
       switch (metadata.severity) {
         case 'ERROR':
           console.error(log)
           if (metadata.errors) {
-            const error = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${
-              metadata.severity
-            }]: Error:`
+            const error = `iKLogger|${DateTime.now()}: [${this.service}[${process.env.NODE_APP_INSTANCE ?? '-'}]] [${metadata.severity
+              }]: Error:`
             console.error(error, ...metadata.errors)
           }
           if ((args?.length ?? 0) > 0) {

@@ -1,4 +1,6 @@
 import { Classes } from '@ikomida/shared-types'
+import RabbitMQ from '../Domain/RabbitMQ.js'
+import Logger from './Logger.js'
 
 export default class Notification extends Classes.CNotification {
   private _object: Classes.CNotification
@@ -18,6 +20,38 @@ export default class Notification extends Classes.CNotification {
 
   get object() {
     return this._object
+  }
+
+  static async sendNotification(
+    logger: Logger,
+    input: Classes.CNotification,
+    orderId?: string,
+    contractId?: string,
+    userId?: string,
+    ...args: any[]
+  ) {
+    const notification: Classes.CNotification = Classes.CNotification.fromObject(input)
+    const managedNotification = new Notification(notification, ...args)
+    const message = new Classes.CNotificationPayload()
+    message.notification = managedNotification
+    message.data = new Classes.CNotificationData()
+    message.data.method = managedNotification.method
+    message.data.uri = managedNotification.uri
+    message.data.logon = managedNotification.logon
+    message.data.payload = orderId
+    const payload = new Classes.CAMQPPayload<Classes.CAMQPPayloadObject>()
+    payload.method = 'send'
+    const payloadObject = new Classes.CAMQPPayloadObject()
+    payloadObject.message = message
+    payloadObject.contractId = contractId
+    if (userId) {
+      payloadObject.userId = userId
+    }
+    payload.object = payloadObject
+
+    const amqp = new RabbitMQ(logger)
+    await amqp?.publish(RabbitMQ.PUSH_NOTIFICATION_QUEUE, payload)
+    await amqp?.close()
   }
 
   static NEW_ORDER = Classes.CNotification.init(

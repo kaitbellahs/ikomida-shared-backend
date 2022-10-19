@@ -52,13 +52,13 @@ export default class AppleAPNs {
       const priority = payload?.priority
       const ikomidaId = payload?.ikomidaId
       const data = {
+        ...payload.data?.toJSON(),
         aps: {
           alert: {
             title: payload.notification?.title,
             body: payload.notification?.body
           }
-        },
-        data: payload.data?.toJSON()
+        }
       }
       const headers = await this.headers(apnsid, priority, ikomidaId)
       if (!this.production) {

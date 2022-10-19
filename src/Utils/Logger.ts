@@ -45,8 +45,8 @@ export default class Logger {
       typeof logObject === 'object' && 'message' in logObject
         ? `${logObject.code}: ${logObject.message}`
         : typeof logObject === 'string'
-          ? logObject
-          : JSON.stringify(logObject)
+        ? logObject
+        : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       environment: this.isProduction ? 'Production' : 'Development',
       resource: { type: 'global' },
@@ -69,8 +69,8 @@ export default class Logger {
       logObject instanceof ILoggerObject
         ? `${logObject?.code}: ${logObject?.message}`
         : logObject instanceof String
-          ? (logObject as string)
-          : JSON.stringify(logObject)
+        ? (logObject as string)
+        : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
       environment: this.isProduction ? 'Production' : 'Development',
@@ -89,8 +89,8 @@ export default class Logger {
       logObject instanceof ILoggerObject
         ? `${logObject?.code}: ${logObject?.message}`
         : logObject instanceof String
-          ? (logObject as string)
-          : JSON.stringify(logObject)
+        ? (logObject as string)
+        : JSON.stringify(logObject)
     const metadata: ILoggerMetadata = {
       resource: { type: 'global' },
       environment: this.isProduction ? 'Production' : 'Development',

@@ -3,6 +3,7 @@ import convert from 'xml-js'
 import { Classes, Types } from '@ikomida/shared-types'
 import iKomidaError, { IiKomidaErrorModel } from '../Utils/iKomidaError.js'
 import Logger from '../Utils/Logger.js'
+import TPagseguroCharge from '../Types/TPagseguroCharge.js'
 
 const host: any = {
   development: 'https://dev.ikomida.com/',
@@ -163,7 +164,14 @@ export default class PagSeguro {
     return false
   }
 
-  private handleException(exception: any, errorModel?: IiKomidaErrorModel) {
+  private handleErrors(error?: string, message?: string) {
+    if (message?.includes('exp_month')) {
+      return TPagseguroCharge.INVALID_DATE
+    }
+    return TPagseguroCharge.valueOf(error)
+  }
+
+  private handleException(exception: any, errorModel?: IiKomidaErrorModel, createCharge = false) {
     if (errorModel) {
       const error = new iKomidaError(errorModel, axios.isAxiosError(exception) ? exception.response?.data : exception)
       error.log(this.logger)
@@ -172,7 +180,11 @@ export default class PagSeguro {
     if (axios.isAxiosError(exception)) {
       errors = Classes.Pagseguro.CPagSeguroErrorResponse.fromObject(exception.response?.data)
       this.logger.error(errors?.toJSON())
-      return errors.error_messages?.[0]?.code === 41008 ? null : false
+      return !errors.error_messages?.[0]?.code || ![41008, 40002].includes(errors.error_messages?.[0]?.code)
+        ? false
+        : createCharge
+        ? this.handleErrors(errors.error_messages?.[0]?.description, errors.error_messages?.[0]?.message)
+        : null
     } else {
       this.logger.error(exception)
     }
@@ -191,7 +203,7 @@ export default class PagSeguro {
     return url
   }
 
-  async getAccessToken(code?: string): Promise<Classes.Pagseguro.CPagSeguroGetAccessTokenResponse | false | null> {
+  async getAccessToken(code?: string) {
     const request: Classes.Pagseguro.CPagseguroGetAccessTokenRequest =
       Classes.Pagseguro.CPagseguroGetAccessTokenRequest.init(
         Types.Pagseguro.TPagseguroGetAccessTokenGrant.AUTHORIZATION_CODE,
@@ -226,9 +238,7 @@ export default class PagSeguro {
     return false
   }
 
-  async refreshAccessToken(
-    refreshToken: string
-  ): Promise<Classes.Pagseguro.CPagSeguroGetAccessTokenResponse | false | null> {
+  async refreshAccessToken(refreshToken: string) {
     try {
       const request: Classes.Pagseguro.CPagseguroGetAccessTokenRequest =
         Classes.Pagseguro.CPagseguroGetAccessTokenRequest.init(
@@ -365,14 +375,12 @@ export default class PagSeguro {
       const error = new iKomidaError(iKomidaError.PAGSEGURO_CREATE_CHARGE_FAILED_2, data.toJSON())
       error.log(this.logger)
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.PAGSEGURO_CREATE_CHARGE_FAILED_1)
+      return this.handleException(exception, iKomidaError.PAGSEGURO_CREATE_CHARGE_FAILED_1, true)
     }
     return false
   }
 
-  async cancelCharge(
-    payload: Classes.Pagseguro.CPagSeguroCreateCharge
-  ): Promise<null | false | Classes.Pagseguro.CChargeResponse> {
+  async cancelCharge(payload: Classes.Pagseguro.CPagSeguroCreateCharge) {
     try {
       const request: Classes.Pagseguro.CPagSeguroChargeRequest = Classes.Pagseguro.CPagSeguroChargeRequest.fromObject({
         amount: {

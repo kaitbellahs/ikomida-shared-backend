@@ -162,11 +162,11 @@ export default class PagSeguro {
     return false
   }
 
-  private handleErrors(error?: string, message?: string) {
+  private handleErrors(message?: string) {
     if (message?.includes('exp_month')) {
       return TPagseguroCharge.INVALID_DATE
     }
-    return TPagseguroCharge.valueOf(error)
+    return TPagseguroCharge.valueOf(message)
   }
 
   private handleException(exception: any, errorModel?: IiKomidaErrorModel, createCharge = false) {
@@ -178,11 +178,11 @@ export default class PagSeguro {
     if (axios.isAxiosError(exception)) {
       errors = Classes.Pagseguro.CPagSeguroErrorResponse.fromObject(exception.response?.data)
       this.logger.error(errors?.toJSON())
-      this.logger.error(`errors.error_messages?.[0]?.code: ${typeof errors.error_messages?.[0]?.code} ${errors.error_messages?.[0]?.code} ${[41008, 40002].includes(errors.error_messages?.[0]?.code ? errors.error_messages?.[0]?.code : 0)}`);
+      this.logger.error(`TPagseguroCharge.valueOf(message): ${TPagseguroCharge.valueOf(errors.error_messages?.[0]?.message)}`);
       return !errors.error_messages?.[0]?.code || ![41008, 40002].includes(Number(errors.error_messages?.[0]?.code))
         ? false
         : createCharge
-          ? this.handleErrors(errors.error_messages?.[0]?.description, errors.error_messages?.[0]?.message)
+          ? this.handleErrors(errors.error_messages?.[0]?.message)
           : null
     } else {
       this.logger.error(exception)

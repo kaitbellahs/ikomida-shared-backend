@@ -1,48 +1,48 @@
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import UserModel from './UserModel';
-import ReferralRevuneModel from './ReferralRevuneModel';
-import { Types } from '@ikomida/shared-types';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import UserModel from './UserModel.js'
+import ReferralRevuneModel from './ReferralRevuneModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'userPIXKey',
+  modelName: 'userPIXKey'
 })
 export default class UserPIXKeyModel extends BaseModel {
   @Column(DataType.STRING(30))
-  name?: string;
+  name?: string
   @Column({
-    type: DataType.ENUM(...Types.TPIX.keys()),
+    type: DataType.ENUM(...Types.TPIX.keys())
   })
-  type?: Types.TPIX;
+  type?: Types.TPIX
   @Column(DataType.STRING(255))
-  key?: string;
+  key?: string
   @Column(DataType.STRING(50))
-  bank?: string;
+  bank?: string
   @Column(DataType.INTEGER)
-  agency?: number;
+  agency?: number
   @Column(DataType.INTEGER)
-  account?: number;
+  account?: number
   @Column(DataType.STRING(255))
-  note?: string;
+  note?: string
   @Column(DataType.STRING(50))
-  status?: string;
+  status?: string
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => ReferralRevuneModel)
   @Column(DataType.UUID)
-  referralRevuneId?: string;
+  referralRevuneId?: string
   @BelongsTo(() => ReferralRevuneModel)
-  referralRevune?: ReferralRevuneModel;
+  referralRevune?: ReferralRevuneModel
 
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 }

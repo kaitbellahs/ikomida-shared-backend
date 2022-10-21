@@ -1,12 +1,4 @@
 {
-    "include": [
-        "src",
-        "Types"
-    ],
-    "exclude": [
-        "node_modules",
-        "**/__tests__/*"
-    ],
     "compilerOptions": {
         "lib": [
             "dom",
@@ -14,10 +6,10 @@
             "esnext"
         ],
         "skipLibCheck": true,
-        "moduleResolution": "Node",
+        "moduleResolution": "Node16",
         "removeComments": true,
         "declaration": true,
-        "module": "esnext",
+        "module": "ESNext",
         "noEmitOnError": true,
         "esModuleInterop": false,
         "resolveJsonModule": true,
@@ -28,7 +20,8 @@
         "outDir": "lib",
         "declarationDir": "lib",
         "strict": true,
-        "target": "es6",
+        "useDefineForClassFields": false,
+        "target": "ES2021",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true

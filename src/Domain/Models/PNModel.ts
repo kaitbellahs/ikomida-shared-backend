@@ -1,42 +1,42 @@
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import UserModel from './UserModel';
-import PNMessageModel from './PNMessageModel';
-import Roles from '../../Types/Roles';
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import UserModel from './UserModel.js'
+import PNMessageModel from './PNMessageModel.js'
+import Roles from '../../Types/Roles.js'
 
 @Table({
   paranoid: true,
-  modelName: 'pN',
+  modelName: 'pN'
 })
 export default class PNModel extends BaseModel {
   @Column(DataType.STRING(10))
-  platform?: string;
+  platform?: string
   @Column(DataType.STRING(255))
-  token?: string;
+  token?: string
   @Column({
-    type: DataType.ENUM(...Roles.keys()),
+    type: DataType.ENUM(...Roles.keys())
   })
-  role?: Roles;
+  role?: Roles
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => PNMessageModel)
-  pNMessages?: PNMessageModel[];
+  pNMessages?: PNMessageModel[]
 }

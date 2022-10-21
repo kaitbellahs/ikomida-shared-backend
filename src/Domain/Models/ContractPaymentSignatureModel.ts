@@ -1,49 +1,49 @@
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import ContractPaymentModel from './ContractPaymentModel';
-import ContractModel from './ContractModel';
-import BaseModel from './BaseModel';
-import { Types } from '@ikomida/shared-types';
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import { Types } from '@ikomida/shared-types'
+import ContractPaymentModel from './ContractPaymentModel.js'
+import ContractModel from './ContractModel.js'
+import BaseModel from './BaseModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'contractPaymentSignature',
+  modelName: 'contractPaymentSignature'
 })
 export default class ContractPaymentSignatureModel extends BaseModel {
   @Column(DataType.STRING(50))
-  gateway?: string;
+  gateway?: string
   @Column(DataType.TEXT)
-  subscriptionID?: string;
+  subscriptionID?: string
   @Column({
-    type: DataType.ENUM(...Types.TAsaasSignatureStatus.keys()),
+    type: DataType.ENUM(...Types.TAsaasSignatureStatus.keys())
   })
-  status?: Types.TAsaasSignatureStatus;
+  status?: Types.TAsaasSignatureStatus
   @Column(DataType.STRING(20))
-  cycle?: string;
+  cycle?: string
   @Column(DataType.TEXT)
-  cardToken?: string;
+  cardToken?: string
   @Column(DataType.INTEGER)
-  value?: number;
+  value?: number
   @Column(DataType.INTEGER)
-  netValue?: number;
+  netValue?: number
   @Column(DataType.INTEGER({ length: 6 }))
-  number?: number;
+  number?: number
   @Column(DataType.DATE)
-  nextDueDate?: Date;
+  nextDueDate?: Date
   @Column(DataType.DATE)
-  lastDueDate?: Date;
+  lastDueDate?: Date
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => ContractPaymentModel)
-  contractPayments?: ContractPaymentModel[];
+  contractPayments?: ContractPaymentModel[]
 }

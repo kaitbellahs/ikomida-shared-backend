@@ -1,60 +1,60 @@
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import OrderModel from './OrderModel';
-import UserCreditCardModel from './UserCreditCardModel';
-import UserModel from './UserModel';
-import ContractModel from './ContractModel';
-import { Types } from '@ikomida/shared-types';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import OrderModel from './OrderModel.js'
+import UserCreditCardModel from './UserCreditCardModel.js'
+import UserModel from './UserModel.js'
+import ContractModel from './ContractModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'userPayment',
+  modelName: 'userPayment'
 })
 export default class UserPaymentModel extends BaseModel {
   @Column({
-    type: DataType.ENUM(...Types.TPagSeguroPaymentStatus.keys()),
+    type: DataType.ENUM(...Types.TPagSeguroPaymentStatus.keys())
   })
-  status?: Types.TPagSeguroPaymentStatus;
+  status?: Types.TPagSeguroPaymentStatus
   @Column(DataType.STRING(50))
-  gateway?: string;
+  gateway?: string
   @Column(DataType.STRING(20))
-  brand?: string;
-  @Column(DataType.CHAR({ length: 6 }))
-  firstDigits?: string;
-  @Column(DataType.CHAR({ length: 4 }))
-  lastDigits?: string;
+  brand?: string
+  @Column(DataType.STRING({ length: 6 }))
+  firstDigits?: string
+  @Column(DataType.STRING({ length: 4 }))
+  lastDigits?: string
   @Column(DataType.TEXT)
-  gatewayPaymentID?: string;
+  gatewayPaymentID?: string
   @Column
-  amount?: number;
+  amount?: number
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @ForeignKey(() => OrderModel)
   @Column(DataType.UUID)
-  orderId?: string;
+  orderId?: string
   @BelongsTo(() => OrderModel)
-  order?: OrderModel;
+  order?: OrderModel
 
   @ForeignKey(() => UserCreditCardModel)
   @Column(DataType.UUID)
-  userCreditCardId?: number;
+  userCreditCardId?: number
   @BelongsTo(() => UserCreditCardModel)
-  userCreditCard?: UserCreditCardModel;
+  userCreditCard?: UserCreditCardModel
 }

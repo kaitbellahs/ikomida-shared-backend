@@ -1,55 +1,55 @@
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import UserModel from './UserModel';
-import ContractModel from './ContractModel';
-import UserPaymentModel from './UserPaymentModel';
-import OrderModel from './OrderModel';
-import { Types } from '@ikomida/shared-types';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import UserModel from './UserModel.js'
+import ContractModel from './ContractModel.js'
+import UserPaymentModel from './UserPaymentModel.js'
+import OrderModel from './OrderModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'userCreditCard',
+  modelName: 'userCreditCard'
 })
 export default class UserCreditCardModel extends BaseModel {
   @Column(DataType.TEXT)
-  token?: string;
+  token?: string
   @Column({
-    type: DataType.ENUM(...Types.TPaymentMethod.keys()),
+    type: DataType.ENUM(...Types.TPaymentMethod.keys())
   })
-  type?: Types.TPaymentMethod;
+  type?: Types.TPaymentMethod
   @Column(DataType.STRING(20))
-  brand?: string;
-  @Column(DataType.CHAR({ length: 6 }))
-  firstDigits?: string;
-  @Column(DataType.CHAR({ length: 4 }))
-  lastDigits?: string;
+  brand?: string
+  @Column(DataType.STRING({ length: 6 }))
+  firstDigits?: string
+  @Column(DataType.STRING({ length: 4 }))
+  lastDigits?: string
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  selected?: boolean;
+  selected?: boolean
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => OrderModel)
-  orders?: OrderModel[];
+  orders?: OrderModel[]
 
   @HasMany(() => UserPaymentModel)
-  userPayments?: UserPaymentModel[];
+  userPayments?: UserPaymentModel[]
 }

@@ -1,2 +1,2 @@
-// export { default as IResponse } from './IResponse'
-export { default as Roles } from './Roles';
+export { default as TPagseguroCharge } from './TPagseguroCharge.js'
+export { default as Roles } from './Roles.js'

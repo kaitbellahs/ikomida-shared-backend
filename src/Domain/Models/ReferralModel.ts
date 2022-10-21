@@ -1,35 +1,35 @@
-import { Table, Column, DataType, HasMany, HasOne } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import UserModel from './UserModel';
-import ContractModel from './ContractModel';
-import ReferralRevuneModel from './ReferralRevuneModel';
+import { Table, Column, DataType, HasMany, HasOne } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import UserModel from './UserModel.js'
+import ContractModel from './ContractModel.js'
+import ReferralRevuneModel from './ReferralRevuneModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'referral',
+  modelName: 'referral'
 })
 export default class ReferralModel extends BaseModel {
   @Column(DataType.STRING(8))
-  code?: string;
+  code?: string
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @HasMany(() => ReferralRevuneModel)
-  referralRevunes?: ReferralRevuneModel[];
+  referralRevunes?: ReferralRevuneModel[]
 
   @HasMany(() => UserModel)
-  users?: UserModel[];
+  users?: UserModel[]
 
   @HasMany(() => ContractModel)
-  contracts?: ContractModel[];
+  contracts?: ContractModel[]
 
   @HasOne(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @HasOne(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 }

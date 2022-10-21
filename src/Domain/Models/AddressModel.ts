@@ -1,68 +1,68 @@
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import UserModel from './UserModel';
-import ContractModel from './ContractModel';
-import OrderModel from './OrderModel';
-import { Types } from '@ikomida/shared-types';
-import Roles from '../../Types/Roles';
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import { Types } from '@ikomida/shared-types'
+import BaseModel from './BaseModel.js'
+import UserModel from './UserModel.js'
+import ContractModel from './ContractModel.js'
+import OrderModel from './OrderModel.js'
+import Roles from '../../Types/Roles.js'
 
 @Table({
   paranoid: true,
-  modelName: 'address',
+  modelName: 'address'
 })
 export default class AddressModel extends BaseModel {
   @Column({
-    type: DataType.ENUM(...Roles.keys()),
+    type: DataType.ENUM(...Roles.keys())
   })
-  role?: Roles;
+  role?: Roles
   @Column({
-    type: DataType.ENUM(...Types.TAddress.keys()),
+    type: DataType.ENUM(...Types.TAddress.keys())
   })
-  kind?: Types.TAddress;
+  kind?: Types.TAddress
   @Column(DataType.STRING(20))
-  postalCode?: string;
+  postalCode?: string
   @Column(DataType.STRING(255))
-  street?: string;
+  street?: string
   @Column(DataType.STRING(50))
-  number?: string;
+  number?: string
   @Column(DataType.STRING(50))
-  complement?: string;
+  complement?: string
   @Column(DataType.STRING(50))
-  neighborhood?: string;
+  neighborhood?: string
   @Column(DataType.STRING(50))
-  city?: string;
+  city?: string
   @Column(DataType.STRING(2))
-  stat?: string;
+  stat?: string
   @Column(DataType.STRING(255))
-  reference?: string;
+  reference?: string
   @Column(DataType.INTEGER)
-  distance?: number;
+  distance?: number
   @Column(DataType.INTEGER)
-  duration?: number;
+  duration?: number
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  selected?: boolean;
+  selected?: boolean
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => OrderModel)
-  orders?: OrderModel[];
+  orders?: OrderModel[]
 }

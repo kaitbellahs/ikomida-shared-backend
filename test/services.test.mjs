@@ -1,27 +1,12 @@
-import DB from '../src/DB/Connection.mjs';
 import {
-    cryptPassword,
-    comparePassword,
-
-    generateAccessToken,
-    authenticateToken,
-    pad,
-    signData,
-    validateSignature,
-    generateReturn,
-    deepCopy,
-    toNumber
-} from '../src/index.mjs';
-import {
-    expect
+    expect,
+    describe
 } from 'chai';
-import {
-    Db,
-    Collection
-} from 'mongodb';
 
-describe('DB/Connection.js tests', () => {
-    const db = DB.getInstance()
+describe('class equals tests', () => {
+    const product = CProduct.init('ka', 100, 1, Types.Types.TDiscount.NO, 1, undefined, undefined, undefined, undefined, undefined, undefined, [Types.Classes.CProductOptionsCategory.fillWith(null), Types.Classes.CProductOptionsCategory.fillWith(null)], [])
+    const product2 = Types.Classes.CProduct.init('ka', 100, 1, Types.Types.TDiscount.NO, 1, undefined, undefined, undefined, undefined, undefined, undefined, [Types.Classes.CProductOptionsCategory.fillWith(null)], [])
+    console.log('equals:', product.equal(product2))
     it('db should be instance of DB', () => {
         expect(db).to.be.an.instanceof(DB)
     })

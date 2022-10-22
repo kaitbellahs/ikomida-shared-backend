@@ -1,33 +1,33 @@
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import VendorSettingsModel from './VendorSettingsModel';
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import VendorSettingsModel from './VendorSettingsModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'vendorPaymentGateway',
+  modelName: 'vendorPaymentGateway'
 })
 export default class VendorPaymentGatewayModel extends BaseModel {
   @Column(DataType.STRING(50))
-  gateway?: string;
+  gateway?: string
   @Column(DataType.JSON)
-  data: any;
+  data: any
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @ForeignKey(() => VendorSettingsModel)
   @Column(DataType.UUID)
-  vendorSettingsId?: string;
+  vendorSettingsId?: string
   @BelongsTo(() => VendorSettingsModel)
-  vendorSettings?: VendorSettingsModel;
+  vendorSettings?: VendorSettingsModel
 }

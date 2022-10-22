@@ -1,35 +1,35 @@
-import { Table, Column, DataType } from 'sequelize-typescript';
-import Roles from '../../Types/Roles';
-import BaseModel from './BaseModel';
+import { Table, Column, DataType } from 'sequelize-typescript'
+import Roles from '../../Types/Roles.js'
+import BaseModel from './BaseModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'loginFail',
+  modelName: 'loginFail'
 })
 export default class LoginFailModel extends BaseModel {
   @Column(DataType.STRING(255))
-  ikomidaID?: string;
+  ikomidaID?: string
   @Column(DataType.STRING(20))
-  ip?: string;
+  ip?: string
   @Column({
-    type: DataType.ENUM(...Roles.keys()),
+    type: DataType.ENUM(...Roles.keys())
   })
-  role?: Roles;
+  role?: Roles
   @Column(DataType.STRING(20))
-  phone?: string;
+  phone?: string
   @Column(DataType.INTEGER({ length: 2 }))
-  areaCode?: number;
+  areaCode?: number
   @Column(DataType.STRING(10))
-  platform?: string;
+  platform?: string
   @Column(DataType.INTEGER)
-  attempts?: number;
+  attempts?: number
   @Column(DataType.INTEGER)
-  blockWindow?: number;
+  blockWindow?: number
   @Column(DataType.DATE)
-  blockDate?: Date;
+  blockDate?: Date
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 }

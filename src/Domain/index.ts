@@ -1,3 +1,3 @@
-export * as SqlDB from './SqlDB';
-export { default as RabbitMQ } from './RabbitMQ';
-export { default as MicroService } from './MicroService';
+export * as SqlDB from './SqlDB.js'
+export { default as RabbitMQ } from './RabbitMQ.js'
+export { default as MicroService } from './MicroService.js'

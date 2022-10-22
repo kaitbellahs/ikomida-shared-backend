@@ -1,39 +1,39 @@
-import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import OrderModel from './OrderModel';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import OrderModel from './OrderModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'coupon',
+  modelName: 'coupon'
 })
 export default class CouponModel extends BaseModel {
   @Column(DataType.STRING(20))
-  name?: string;
+  name?: string
   @Column(DataType.INTEGER)
-  value?: number;
+  value?: number
   @Column(DataType.DATE)
-  validity?: Date;
+  validity?: Date
   @Column({
-    type: DataType.ENUM(...Types.TDiscount.keys()),
+    type: DataType.ENUM(...Types.TDiscount.keys())
   })
-  valueType?: Types.TDiscount;
+  valueType?: Types.TDiscount
   @Column(DataType.INTEGER)
-  quantity?: number;
+  quantity?: number
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: number;
+  contractId?: number
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @HasMany(() => OrderModel)
-  orders?: OrderModel[];
+  orders?: OrderModel[]
 }

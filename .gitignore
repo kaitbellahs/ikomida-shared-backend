@@ -7,3 +7,4 @@ dist
 .npmrc
 *.log
 lib
+!yarn.lock

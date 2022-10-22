@@ -1,89 +1,92 @@
-import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo } from 'sequelize-typescript';
-import AddressModel from './AddressModel';
-import BaseModel from './BaseModel';
-import CouponModel from './CouponModel';
-import UserCreditCardModel from './UserCreditCardModel';
-import UserModel from './UserModel';
-import OrderProductModel from './OrderProductModel';
-import ContractModel from './ContractModel';
-import UserPaymentModel from './UserPaymentModel';
-import { Types } from '@ikomida/shared-types';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo } from 'sequelize-typescript'
+import AddressModel from './AddressModel.js'
+import BaseModel from './BaseModel.js'
+import CouponModel from './CouponModel.js'
+import UserCreditCardModel from './UserCreditCardModel.js'
+import UserModel from './UserModel.js'
+import OrderProductModel from './OrderProductModel.js'
+import ContractModel from './ContractModel.js'
+import UserPaymentModel from './UserPaymentModel.js'
+import OrderProductOptionModel from './OrderProductOptionModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'order',
+  modelName: 'order'
 })
 export default class OrderModel extends BaseModel {
   @Column(DataType.INTEGER)
-  customID?: number;
+  customID?: number
   @Column({
-    type: DataType.ENUM(...Types.TOrderStatus.keys()),
+    type: DataType.ENUM(...Types.TOrderStatus.keys())
   })
-  status?: Types.TOrderStatus;
+  status?: Types.TOrderStatus
   @Column(DataType.DATE)
-  finishedAt?: Date;
+  finishedAt?: Date
   @Column(DataType.INTEGER)
-  subtotal?: number;
+  subtotal?: number
   @Column(DataType.INTEGER)
-  delivery?: number;
+  delivery?: number
   @Column(DataType.INTEGER)
-  distance?: number;
+  distance?: number
   @Column(DataType.INTEGER)
-  duration?: number;
+  duration?: number
   @Column(DataType.INTEGER)
-  discount?: number;
+  discount?: number
   @Column(DataType.STRING(30))
-  locationLatitude?: string;
+  locationLatitude?: string
   @Column(DataType.STRING(30))
-  locationLongitude?: string;
+  locationLongitude?: string
   @Column(DataType.INTEGER)
-  preparationMin?: number;
+  preparationMin?: number
   @Column(DataType.INTEGER)
-  preparationMax?: number;
+  preparationMax?: number
   @Column({
-    type: DataType.ENUM(...Types.TPaymentMethod.keys()),
+    type: DataType.ENUM(...Types.TPaymentMethod.keys())
   })
-  paymentMethodType?: Types.TPaymentMethod;
+  paymentMethodType?: Types.TPaymentMethod
   @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: true,
+    type: DataType.STRING({ length: 255 })
   })
-  active?: boolean;
+  observation?: string
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 
   @ForeignKey(() => UserCreditCardModel)
   @Column(DataType.UUID)
-  userCreditCardId?: string;
+  userCreditCardId?: string
   @BelongsTo(() => UserCreditCardModel)
-  userCreditCard?: UserCreditCardModel;
+  userCreditCard?: UserCreditCardModel
 
   @ForeignKey(() => AddressModel)
   @Column(DataType.UUID)
-  addressId?: string;
+  addressId?: string
   @BelongsTo(() => AddressModel)
-  address?: AddressModel;
+  address?: AddressModel
 
   @ForeignKey(() => CouponModel)
   @Column(DataType.UUID)
-  couponId?: string;
+  couponId?: string
   @BelongsTo(() => CouponModel)
-  coupon?: CouponModel;
+  coupon?: CouponModel
 
   @HasOne(() => UserPaymentModel)
-  userPayment?: UserPaymentModel;
+  userPayment?: UserPaymentModel
 
   @HasMany(() => OrderProductModel)
-  orderProducts?: OrderProductModel[];
+  orderProducts?: OrderProductModel[]
+
+  @HasMany(() => OrderProductOptionModel)
+  orderProductOptions?: OrderProductOptionModel[]
 }

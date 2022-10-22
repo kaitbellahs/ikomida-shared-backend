@@ -1,38 +1,38 @@
-import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import Roles from '../../Types/Roles';
-import BaseModel from './BaseModel';
-import ContractModel from './ContractModel';
-import UserModel from './UserModel';
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import Roles from '../../Types/Roles.js'
+import BaseModel from './BaseModel.js'
+import ContractModel from './ContractModel.js'
+import UserModel from './UserModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'phoneValidationCode',
+  modelName: 'phoneValidationCode'
 })
 export default class PhoneValidationCodeModel extends BaseModel {
   @Column({
-    type: DataType.ENUM(...Roles.keys()),
+    type: DataType.ENUM(...Roles.keys())
   })
-  role?: Roles;
+  role?: Roles
   @Column(DataType.INTEGER({ length: 4 }))
-  code?: number;
+  code?: number
   @Column(DataType.TEXT)
-  signature?: string;
+  signature?: string
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)
   @Column(DataType.UUID)
-  userId?: string;
+  userId?: string
   @BelongsTo(() => UserModel)
-  user?: UserModel;
+  user?: UserModel
 
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)
-  contractId?: string;
+  contractId?: string
   @BelongsTo(() => ContractModel)
-  contract?: ContractModel;
+  contract?: ContractModel
 }

@@ -1,28 +1,28 @@
-import { Types } from '@ikomida/shared-types';
-import { Table, Column, DataType, HasMany } from 'sequelize-typescript';
-import BaseModel from './BaseModel';
-import TermHashModel from './TermHashModel';
+import { Types } from '@ikomida/shared-types'
+import { Table, Column, DataType, HasMany } from 'sequelize-typescript'
+import BaseModel from './BaseModel.js'
+import TermHashModel from './TermHashModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'term',
+  modelName: 'term'
 })
 export default class TermModel extends BaseModel {
   @Column(DataType.STRING(100))
-  name?: string;
+  name?: string
   @Column(DataType.TEXT)
-  text?: string;
+  text?: string
   @Column({
-    type: DataType.ENUM(...Types.TTerm.keys()),
+    type: DataType.ENUM(...Types.TTerm.keys())
   })
-  type?: Types.TTerm;
+  type?: Types.TTerm
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @HasMany(() => TermHashModel)
-  termHashs?: TermHashModel[];
+  termHashs?: TermHashModel[]
 }

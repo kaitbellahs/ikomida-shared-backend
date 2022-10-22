@@ -1,139 +1,151 @@
-import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo } from 'sequelize-typescript';
-import AddressModel from './AddressModel';
-import AppModel from './AppModel';
-import BaseModel from './BaseModel';
-import ContractPaymentSignatureModel from './ContractPaymentSignatureModel';
-import CouponModel from './CouponModel';
-import OrderModel from './OrderModel';
-import PlanModel from './PlanModel';
-import ReferralModel from './ReferralModel';
-import TermHashModel from './TermHashModel';
-import UserCreditCardModel from './UserCreditCardModel';
-import UserModel from './UserModel';
-import UserPaymentModel from './UserPaymentModel';
-import VendorPNMessageModel from './VendorPNMessageModel';
-import PNMessageModel from './PNMessageModel';
-import OrderProductModel from './OrderProductModel';
-import ProductCategoryModel from './ProductCategoryModel';
-import ProductModel from './ProductModel';
-import PNModel from './PNModel';
-import PhoneValidationCodeModel from './PhoneValidationCodeModel';
-import VendorPaymentGatewayModel from './VendorPaymentGatewayModel';
-import VendorSettingsModel from './VendorSettingsModel';
-import ContractPaymentModel from './ContractPaymentModel';
-import { Types } from '@ikomida/shared-types';
+import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo } from 'sequelize-typescript'
+import AddressModel from './AddressModel.js'
+import AppModel from './AppModel.js'
+import BaseModel from './BaseModel.js'
+import ContractPaymentSignatureModel from './ContractPaymentSignatureModel.js'
+import CouponModel from './CouponModel.js'
+import OrderModel from './OrderModel.js'
+import PlanModel from './PlanModel.js'
+import ReferralModel from './ReferralModel.js'
+import TermHashModel from './TermHashModel.js'
+import UserCreditCardModel from './UserCreditCardModel.js'
+import UserModel from './UserModel.js'
+import UserPaymentModel from './UserPaymentModel.js'
+import VendorPNMessageModel from './VendorPNMessageModel.js'
+import PNMessageModel from './PNMessageModel.js'
+import OrderProductModel from './OrderProductModel.js'
+import ProductCategoryModel from './ProductCategoryModel.js'
+import ProductModel from './ProductModel.js'
+import PNModel from './PNModel.js'
+import PhoneValidationCodeModel from './PhoneValidationCodeModel.js'
+import VendorPaymentGatewayModel from './VendorPaymentGatewayModel.js'
+import VendorSettingsModel from './VendorSettingsModel.js'
+import ContractPaymentModel from './ContractPaymentModel.js'
+import { Types } from '@ikomida/shared-types'
+import ProductOptionsCategoryModel from './ProductOptionsCategoryModel.js'
+import ProductOptionModel from './ProductOptionModel.js'
+import OrderProductOptionModel from './OrderProductOptionModel.js'
 
 @Table({
   paranoid: true,
-  modelName: 'contract',
+  modelName: 'contract'
 })
 export default class ContractModel extends BaseModel {
   @Column(DataType.STRING(255))
-  ikomidaID?: string;
+  ikomidaID?: string
   @Column(DataType.STRING(100))
-  contractName?: string;
+  contractName?: string
   @Column(DataType.STRING(25))
-  contractIdentity?: string;
+  contractIdentity?: string
   @Column(DataType.STRING(255))
-  email?: string;
+  email?: string
   @Column({
-    type: DataType.ENUM(...Types.TAsaasSignatureStatus.keys()),
+    type: DataType.ENUM(...Types.TAsaasSignatureStatus.keys())
   })
-  status?: Types.TAsaasSignatureStatus;
+  status?: Types.TAsaasSignatureStatus
   @Column(DataType.STRING(30))
-  name?: string;
+  name?: string
   @Column(DataType.STRING(50))
-  lastName?: string;
+  lastName?: string
   @Column(DataType.STRING(20))
-  identity?: string;
+  identity?: string
   @Column(DataType.INTEGER({ length: 3 }))
-  areaCode?: number;
+  areaCode?: number
   @Column(DataType.STRING(20))
-  phone?: string;
+  phone?: string
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0,
+    defaultValue: 0
   })
-  lastOrderCustomID?: number;
+  lastOrderCustomID?: number
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: true
   })
-  active?: boolean;
+  active?: boolean
 
   //MARK: --Associations
   @HasOne(() => ContractPaymentSignatureModel)
-  contractPaymentSignature?: ContractPaymentSignatureModel;
+  contractPaymentSignature?: ContractPaymentSignatureModel
 
   @HasOne(() => VendorSettingsModel)
-  vendorSettings?: VendorSettingsModel;
+  vendorSettings?: VendorSettingsModel
 
   @HasOne(() => VendorPaymentGatewayModel)
-  vendorPaymentGateway?: VendorPaymentGatewayModel;
+  vendorPaymentGateway?: VendorPaymentGatewayModel
 
   @HasMany(() => AppModel)
-  apps?: AppModel[];
+  apps?: AppModel[]
 
   @HasMany(() => UserPaymentModel)
-  userPayments?: UserPaymentModel[];
+  userPayments?: UserPaymentModel[]
 
   @HasMany(() => UserModel)
-  users?: UserModel[];
+  users?: UserModel[]
 
   @HasMany(() => ContractPaymentModel)
-  contractPayments?: ContractPaymentModel[];
+  contractPayments?: ContractPaymentModel[]
 
   @HasMany(() => PNModel)
-  pNs?: PNModel[];
+  pNs?: PNModel[]
 
   @HasMany(() => UserCreditCardModel)
-  userCreditCards?: UserCreditCardModel[];
+  userCreditCards?: UserCreditCardModel[]
 
   @HasMany(() => CouponModel)
-  coupons?: CouponModel[];
+  coupons?: CouponModel[]
 
   @HasMany(() => ProductModel)
-  products?: ProductModel[];
+  products?: ProductModel[]
 
   @HasMany(() => OrderModel)
-  orders?: OrderModel[];
+  orders?: OrderModel[]
 
   @HasMany(() => ProductCategoryModel)
-  productCategories?: ProductCategoryModel[];
+  productCategories?: ProductCategoryModel[]
+
+  @HasMany(() => ProductOptionsCategoryModel)
+  productOptionsCategories?: ProductOptionsCategoryModel[]
+
+  @HasMany(() => ProductOptionModel)
+  productOptions?: ProductOptionModel[]
 
   @HasMany(() => OrderProductModel)
-  orderProducts?: OrderProductModel[];
+  orderProducts?: OrderProductModel[]
 
   @HasMany(() => VendorPNMessageModel)
-  vendorPNMessages?: VendorPNMessageModel[];
+  vendorPNMessages?: VendorPNMessageModel[]
 
   @HasMany(() => TermHashModel)
-  termHashs?: TermHashModel[];
+  termHashs?: TermHashModel[]
 
   @HasMany(() => PNMessageModel)
-  pNMessages?: PNMessageModel[];
+  pNMessages?: PNMessageModel[]
 
   @HasMany(() => PhoneValidationCodeModel)
-  phoneValidationCodes?: PhoneValidationCodeModel[];
+  phoneValidationCodes?: PhoneValidationCodeModel[]
+
+  @HasMany(() => OrderProductOptionModel)
+  orderProductOptions?: OrderProductOptionModel[]
 
   @HasMany(() => AddressModel)
-  addresses?: AddressModel[];
+  addresses?: AddressModel[]
 
   @ForeignKey(() => PlanModel)
   @Column(DataType.UUID)
-  planId?: string;
+  planId?: string
   @BelongsTo(() => PlanModel)
-  plan?: PlanModel;
+  plan?: PlanModel
 
   @ForeignKey(() => ReferralModel)
   @Column(DataType.UUID)
-  referralId?: string;
+  referralId?: string
   @BelongsTo(() => ReferralModel)
-  referral?: ReferralModel;
+  referral?: ReferralModel
 
   @ForeignKey(() => ReferralModel)
   @Column(DataType.UUID)
-  referredById?: string;
+  referredById?: string
   @BelongsTo(() => ReferralModel)
-  referredBy?: ReferralModel;
+  referredBy?: ReferralModel
 }

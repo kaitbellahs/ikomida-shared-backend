@@ -163,10 +163,13 @@ export default class Asaas {
     if (this.production) {
       Cycle = Types.Asaas.TAssasSubscriptionCycle.MONTHLY
     }
+    const nextDueDate = new Date()
+    nextDueDate.setDate(nextDueDate.getDate() + (payload.plan?.dueDateAfterXDays ?? 0))
+    const localNextDueDate = Logics.DateTime.localDate(nextDueDate.toISOString()).toFormat('yyyy-MM-dd')
     const request = Classes.Asaas.CAsaasCreateSubscriptionRequest.init(
       customer.data?.id ?? '',
       Types.Asaas.TAsaasBilling.CREDIT_CARD,
-      Logics.DateTime.localToday(),
+      localNextDueDate,
       Math.ceil((payload.plan?.price ?? 0) * 0.01),
       Cycle,
       Classes.Asaas.CAsaasCreditCardHolderInfo.init(

@@ -37,6 +37,8 @@ export default class PlanModel extends BaseModel {
   productOptions?: number
   @Column(DataType.INTEGER)
   billing?: number
+  @Column({ type: DataType.INTEGER, defaultValue: 0 })
+  dueDateAfterXDays?: number
   @Column(DataType.JSON)
   @Enum(Types.TSupport)
   support?: Types.TSupport[]

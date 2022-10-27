@@ -294,6 +294,8 @@ export default class GoogleAdmin {
   ) {
     try {
       const sharpData = sharp(fileContents).resize({
+        withoutEnlargement: true,
+        fit: 'fill',
         width: 512
       })
       let data

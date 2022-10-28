@@ -2,12 +2,7 @@ import { Classes, Types } from '@ikomida/shared-types'
 import { CompactSign, importPKCS8 } from 'jose'
 import Logger from './Logger.js'
 import HTTP2Client from '../Helpers/HTTP2Client.js'
-// import { createRequire } from 'module'
-// const require = createRequire(import.meta.url)
-// const pkg = require('../../package.json')
-const pkg = {
-  version: '1.0.30'
-}
+import pkg from '../../package.json' assert { type: 'json' }
 export default class AppleAPNs {
   logger: Logger
   http2Client
@@ -85,7 +80,8 @@ export default class AppleAPNs {
       'apns-expiration': apnsExpiration,
       'apns-priority': priority ?? '',
       'apns-topic': ikomidaId ?? '',
-      'X-Requested-With': `iKomida Publisher V${pkg.version}`
+      'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+      'user-agent': `iKomida/sl V${pkg.version}`
     }
     return headers
   }

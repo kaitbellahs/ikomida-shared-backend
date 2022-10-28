@@ -3,6 +3,7 @@ import axios, { RawAxiosRequestHeaders } from 'axios'
 import https from 'https'
 import iKomidaError from './iKomidaError.js'
 import Logger from './Logger.js'
+import pkg from '../../package.json' assert { type: 'json' }
 
 export default class AppStoreConnect {
   logger: Logger
@@ -444,7 +445,8 @@ export default class AppStoreConnect {
     const object: RawAxiosRequestHeaders = {
       Authorization: `Bearer ${await this.generateAccessToken()}`,
       accept: `application/json`,
-      'X-Requested-With': `iKomida Publisher V0.0.1`
+      'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+      'user-agent': `iKomida/sl V${pkg.version}`
     }
     if (isJson) {
       object['Content-Type'] = `application/json`

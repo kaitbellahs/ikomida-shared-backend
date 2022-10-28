@@ -18,6 +18,7 @@
         "declarationMap": false,
         "emitDeclarationOnly": true,
         "outDir": "lib",
+        "rootDir": ".",
         "declarationDir": "lib",
         "strict": true,
         "useDefineForClassFields": false,

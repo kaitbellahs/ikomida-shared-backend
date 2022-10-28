@@ -1,5 +1,5 @@
-import NodeMailjet, { Client } from 'node-mailjet'
-import { TRequestData } from 'node-mailjet/declarations/request/IRequest'
+import { Client } from 'node-mailjet'
+import { TRequestData } from 'node-mailjet/declarations/request/IRequest.js'
 import axios from 'axios'
 import { Classes } from '@ikomida/shared-types'
 import Logger from '../Utils/Logger.js'
@@ -9,7 +9,7 @@ export default class Mailjet {
   logger: Logger
 
   constructor(logger: Logger) {
-    this.provider = new NodeMailjet({
+    this.provider = new Client({
       apiKey: process.env?.MAILJET_APIKEY,
       apiSecret: process.env?.MAILJET_SECRETKEY
     })

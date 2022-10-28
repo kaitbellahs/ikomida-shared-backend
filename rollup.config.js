@@ -20,12 +20,12 @@ export default {
     ],
     plugins: [
         tsPlugin(tsconfig),
-        autoExternal(),
         json(),
-        commonjs(),
+        autoExternal(),
         resolve({
             exportConditions: ["import", "require", "default"],
             preferBuiltins: true
         }),
+        commonjs(),
     ],
 }

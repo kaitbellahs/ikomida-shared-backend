@@ -7,7 +7,8 @@ import sharp from 'sharp'
 import iKomidaError from './iKomidaError.js'
 import Logger from './Logger.js'
 import { AddressModel } from '../Domain/Models/index.js'
-import { Message } from 'firebase-admin/lib/messaging/messaging-api.js'
+import { Message } from 'firebase-admin/messaging'
+import pkg from '../../package.json' assert { type: 'json' }
 
 export default class GoogleAdmin {
   googleAdmin?: FBAdmin.app.App
@@ -66,7 +67,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       if (response.status >= 200 && response.status < 300) {
@@ -89,7 +91,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       if (!this.production) {
@@ -115,7 +118,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       this.logger.log(response?.data)
@@ -135,7 +139,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       this.logger.log(response?.data)
@@ -383,7 +388,8 @@ export default class GoogleAdmin {
     try {
       const response = await axios.get(`${uri}`, {
         headers: {
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       if (response.status >= 200 && response.status < 300) {

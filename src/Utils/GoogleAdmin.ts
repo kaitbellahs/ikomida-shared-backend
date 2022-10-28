@@ -354,20 +354,21 @@ export default class GoogleAdmin {
         }
         const imageUri = `${identity.ikomidaID}/${dir}/${id}/0.${imageExtension}`
         const buffer = Buffer.from(base64Image, 'base64')
-
-        return (
-          (await this.uploadFileToStorage(
-            `${bucket[process.env.NODE_ENV ?? 'development']}cdn.ikomida.com`,
-            buffer,
-            imageExtension,
-            imageUri,
-            {
-              ikomidaID: identity.ikomidaID,
-              type,
-              dir
-            }
-          )) ?? image
-        )
+        const url =
+          (
+            (await this.uploadFileToStorage(
+              `${bucket[process.env.NODE_ENV ?? 'development']}cdn.ikomida.com`,
+              buffer,
+              imageExtension,
+              imageUri,
+              {
+                ikomidaID: identity.ikomidaID,
+                type,
+                dir
+              }
+            )) ?? image
+          )?.split('?') ?? []
+        return url.length > 0 ? `${url?.[0]}?${new Date().getTime()}` : image
       }
     } catch (exception: any) {
       new iKomidaError(iKomidaError.IKOMIDA_PRODUCTS_SERVICE_EDIT_PRODUCT_UPLOAD_IMAGE, exception).log(this.logger)

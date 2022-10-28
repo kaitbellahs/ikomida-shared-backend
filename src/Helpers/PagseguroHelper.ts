@@ -52,7 +52,7 @@ export default class PagseguroHelper {
         Classes.Pagseguro.CPagSeguroGetAccessTokenResponse.fromObject(vendorPaymentGatewayModel?.data)
       if (
         new Date(Logics.DateTime?.localDate().toString()).getTime() >
-        gatewayData?.expires_in + vendorPaymentGatewayModel?.updatedAt?.getTime() &&
+          gatewayData?.expires_in + vendorPaymentGatewayModel?.updatedAt?.getTime() &&
         gatewayData.refresh_token
       ) {
         const response = await paymentGateway?.refreshAccessToken(gatewayData?.refresh_token)

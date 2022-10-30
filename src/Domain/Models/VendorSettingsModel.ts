@@ -29,6 +29,7 @@ export default class VendorSettingsModel extends BaseModel {
   phone?: string
   @Column(DataType.JSON)
   businessHours?: Classes.CBusinessTimeHours[]
+  @Column(DataType.JSON)
   businessDays?: number[]
   @Column(DataType.JSON)
   layout?: Classes.CLayout

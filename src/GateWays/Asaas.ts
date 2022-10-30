@@ -4,6 +4,7 @@ import { Classes, Types } from '@ikomida/shared-types'
 import iKomidaError, { IiKomidaErrorModel } from '../Utils/iKomidaError.js'
 import Logger from '../Utils/Logger.js'
 import Return from '../Utils/Return.js'
+import pkg from '../../package.json' assert { type: 'json' }
 export default class Asaas {
   accessToken: string
   production = false
@@ -22,7 +23,8 @@ export default class Asaas {
       access_token: this.accessToken,
       'Content-Type': 'application/json',
       accept: 'application/json',
-      'X-Requested-With': 'iKomida-PS-V0.0.1'
+      'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+      'user-agent': `iKomida/sl V${pkg.version}`
     }
   }
 

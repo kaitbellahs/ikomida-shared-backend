@@ -2,6 +2,7 @@ import { Classes } from '@ikomida/shared-types'
 import axios from 'axios'
 import iKomidaError from '../Utils/iKomidaError.js'
 import Logger from '../Utils/Logger.js'
+import pkg from '../../package.json' assert { type: 'json' }
 
 export default class OtimaTel {
   host = 'https://mm.otimatel.com.br/api/v2'
@@ -29,7 +30,8 @@ export default class OtimaTel {
         ...{
           accept: 'application/json',
           'content-type': 'application/json',
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       }
     }

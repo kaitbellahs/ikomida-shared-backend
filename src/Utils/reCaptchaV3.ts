@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Logger from './Logger.js'
+import pkg from '../../package.json' assert { type: 'json' }
 export default class ReCaptcha {
   apiKey: string
   logger: Logger
@@ -14,7 +15,8 @@ export default class ReCaptcha {
     try {
       const response = await axios.post(`${uri}`, {
         headers: {
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       if (response.status >= 200 && response.status < 300) {

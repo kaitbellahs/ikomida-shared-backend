@@ -4,6 +4,7 @@ import ContractModel from './ContractModel.js'
 import ProductModel from './ProductModel.js'
 import ProductOptionsCategoryModel from './ProductOptionsCategoryModel.js'
 import ProductOptionModel from './ProductOptionModel.js'
+import { Classes } from '@ikomida/shared-types'
 
 @Table({
   paranoid: true,
@@ -21,6 +22,9 @@ export default class ProductCategoryModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column(DataType.JSON)
+  businessHours?: Classes.CBusinessTimeHours[]
+  businessDays?: number[]
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)

@@ -7,7 +7,8 @@ import sharp from 'sharp'
 import iKomidaError from './iKomidaError.js'
 import Logger from './Logger.js'
 import { AddressModel } from '../Domain/Models/index.js'
-import { Message } from 'firebase-admin/lib/messaging/messaging-api.js'
+import { Message } from 'firebase-admin/messaging'
+import pkg from '../../package.json' assert { type: 'json' }
 
 export default class GoogleAdmin {
   googleAdmin?: FBAdmin.app.App
@@ -66,7 +67,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       if (response.status >= 200 && response.status < 300) {
@@ -89,7 +91,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       if (!this.production) {
@@ -115,7 +118,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       this.logger.log(response?.data)
@@ -135,7 +139,8 @@ export default class GoogleAdmin {
       const response = await axios.get(`${uri}`, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       this.logger.log(response?.data)
@@ -294,6 +299,8 @@ export default class GoogleAdmin {
   ) {
     try {
       const sharpData = sharp(fileContents).resize({
+        withoutEnlargement: true,
+        fit: 'fill',
         width: 512
       })
       let data
@@ -347,20 +354,21 @@ export default class GoogleAdmin {
         }
         const imageUri = `${identity.ikomidaID}/${dir}/${id}/0.${imageExtension}`
         const buffer = Buffer.from(base64Image, 'base64')
-
-        return (
-          (await this.uploadFileToStorage(
-            `${bucket[process.env.NODE_ENV ?? 'development']}cdn.ikomida.com`,
-            buffer,
-            imageExtension,
-            imageUri,
-            {
-              ikomidaID: identity.ikomidaID,
-              type,
-              dir
-            }
-          )) ?? image
-        )
+        const url =
+          (
+            (await this.uploadFileToStorage(
+              `${bucket[process.env.NODE_ENV ?? 'development']}cdn.ikomida.com`,
+              buffer,
+              imageExtension,
+              imageUri,
+              {
+                ikomidaID: identity.ikomidaID,
+                type,
+                dir
+              }
+            )) ?? image
+          )?.split('?') ?? []
+        return url.length > 0 ? `${url?.[0]}?${new Date().getTime()}` : image
       }
     } catch (exception: any) {
       new iKomidaError(iKomidaError.IKOMIDA_PRODUCTS_SERVICE_EDIT_PRODUCT_UPLOAD_IMAGE, exception).log(this.logger)
@@ -381,7 +389,8 @@ export default class GoogleAdmin {
     try {
       const response = await axios.get(`${uri}`, {
         headers: {
-          'X-Requested-With': 'iKomida-PS-V0.0.1'
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
         }
       })
       if (response.status >= 200 && response.status < 300) {

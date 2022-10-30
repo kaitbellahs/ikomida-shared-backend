@@ -4,6 +4,7 @@ import { Classes, Types } from '@ikomida/shared-types'
 import iKomidaError, { IiKomidaErrorModel } from '../Utils/iKomidaError.js'
 import Logger from '../Utils/Logger.js'
 import TPagseguroCharge from '../Types/TPagseguroCharge.js'
+import pkg from '../../package.json' assert { type: 'json' }
 
 const host: any = {
   development: 'https://dev.ikomida.com/',
@@ -40,7 +41,8 @@ export default class PagSeguro {
   headers(json = true, clientID?: string, clientSecret?: string): RawAxiosRequestHeaders {
     const headers: RawAxiosRequestHeaders = {
       Authorization: `Bearer ${this.accessToken}`,
-      'X-Requested-With': 'iKomida-PS-V0.0.1-beta'
+      'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+      'user-agent': `iKomida/sl V${pkg.version}`
     }
     if (json) {
       headers.accept = 'application/json'

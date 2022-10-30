@@ -1,15 +1,19 @@
-import NodeMailjet, { Client } from 'node-mailjet'
-import { TRequestData } from 'node-mailjet/declarations/request/IRequest'
+import MailjetClient from 'node-mailjet'
+import { TRequestData } from 'node-mailjet/declarations/request/IRequest.js'
 import axios from 'axios'
 import { Classes } from '@ikomida/shared-types'
 import Logger from '../Utils/Logger.js'
 import iKomidaError from '../Utils/iKomidaError.js'
 export default class Mailjet {
-  provider: Client
-  logger: Logger
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  private provider: MailjetClient
+  private logger: Logger
 
   constructor(logger: Logger) {
-    this.provider = new NodeMailjet({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.provider = new MailjetClient({
       apiKey: process.env?.MAILJET_APIKEY,
       apiSecret: process.env?.MAILJET_SECRETKEY
     })

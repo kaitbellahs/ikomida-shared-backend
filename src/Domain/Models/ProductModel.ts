@@ -43,6 +43,10 @@ export default class ProductModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column({
+    type: DataType.JSON
+  })
+  orderTypes?: Types.TOrderType[]
 
   //MARK: --Associaions
 

@@ -13,6 +13,8 @@ export default class CouponModel extends BaseModel {
   name?: string
   @Column(DataType.INTEGER)
   value?: number
+  @Column(DataType.INTEGER)
+  minValue?: number
   @Column(DataType.DATE)
   validity?: Date
   @Column({

@@ -28,8 +28,8 @@ export function resolveBeforeEnums(instance: any, model: any) {
     if (isObject(model.rawAttributes) && 'rawAttributes' in model && key in model.rawAttributes) {
       const field = model.rawAttributes[key]
       const isArrayOfEnums = Reflect.getMetadata('design:type:array', model, key) === 'arrayOfEnums'
-      const designType = Reflect.getMetadata('design:type', model, key)
       if (field.type.constructor.key === 'ENUM' && isObject(instance[key])) {
+        const designType = Reflect.getMetadata('design:type', model, key)
         if (Types.TBaseType.isInstance(instance[key])) {
           instance[key] = (instance[key] as Types.TBaseType).id
         } else if (isObject(instance[key])) {
@@ -48,6 +48,7 @@ export function resolveBeforeEnums(instance: any, model: any) {
           }
         }
       } else if (isArrayOfEnums && Array.isArray(instance[key])) {
+        const designType = Reflect.getMetadata('design:type:array:type', model, key)
         const newValue = []
         for (const value of instance[key]) {
           if (isObject(value)) {
@@ -56,6 +57,8 @@ export function resolveBeforeEnums(instance: any, model: any) {
             } else if (value instanceof designType) {
               newValue.push(value)
             }
+          } else {
+            newValue.push(value)
           }
         }
         instance[key] = newValue

@@ -58,7 +58,7 @@ export function resolveBeforeEnums(instance: any, model: any) {
               newValue.push(value)
             }
           } else {
-            newValue.push(value);
+            newValue.push(value)
           }
         }
         instance[key] = newValue

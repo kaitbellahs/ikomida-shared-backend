@@ -61,6 +61,10 @@ export default class UserModel extends BaseModel {
   })
   active?: boolean
 
+  //MARK: -- attributs
+  ordersCount?: number
+  ordersBilling?: number
+
   //MARK: --Associations
   @ForeignKey(() => ContractModel)
   @Column(DataType.UUID)

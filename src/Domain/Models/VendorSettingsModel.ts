@@ -1,5 +1,6 @@
-import { Classes } from '@ikomida/shared-types'
+import { Classes, Types } from '@ikomida/shared-types'
 import { Table, Column, DataType, ForeignKey, HasOne, BelongsTo } from 'sequelize-typescript'
+import { Enum } from '../../Decorators/Enum.js'
 import BaseModel from './BaseModel.js'
 import ContractModel from './ContractModel.js'
 import VendorPaymentGatewayModel from './VendorPaymentGatewayModel.js'
@@ -51,6 +52,13 @@ export default class VendorSettingsModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column({
+    type: DataType.JSON
+  })
+  @Enum(Types.TOrderType)
+  orderTypes?: Types.TOrderType[]
+  @Column(DataType.INTEGER)
+  tip?: number
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)

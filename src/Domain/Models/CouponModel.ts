@@ -1,5 +1,6 @@
 import { Types } from '@ikomida/shared-types'
 import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript'
+import { Enum } from '../../Decorators/Enum.js'
 import BaseModel from './BaseModel.js'
 import ContractModel from './ContractModel.js'
 import OrderModel from './OrderModel.js'
@@ -13,6 +14,8 @@ export default class CouponModel extends BaseModel {
   name?: string
   @Column(DataType.INTEGER)
   value?: number
+  @Column(DataType.INTEGER)
+  minValue?: number
   @Column(DataType.DATE)
   validity?: Date
   @Column({
@@ -26,6 +29,11 @@ export default class CouponModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column({
+    type: DataType.JSON
+  })
+  @Enum(Types.TOrderType)
+  orderTypes?: Types.TOrderType[]
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)

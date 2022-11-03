@@ -5,6 +5,7 @@ import ContractModel from './ContractModel.js'
 import ProductCategoryModel from './ProductCategoryModel.js'
 import ProductOptionsCategoryModel from './ProductOptionsCategoryModel.js'
 import ProductOptionModel from './ProductOptionModel.js'
+import { Enum } from '../../Decorators/Enum.js'
 
 @Table({
   paranoid: true,
@@ -43,6 +44,11 @@ export default class ProductModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column({
+    type: DataType.JSON
+  })
+  @Enum(Types.TOrderType)
+  orderTypes?: Types.TOrderType[]
 
   //MARK: --Associaions
 

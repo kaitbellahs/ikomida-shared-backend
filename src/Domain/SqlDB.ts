@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize-typescript'
 import { Transaction } from 'sequelize'
-export { Op, Includeable, col as Column, Transaction } from 'sequelize'
+export { Op, Includeable, col as Column, Transaction, fn, cast, literal } from 'sequelize'
 import Logger from '../Utils/Logger.js'
 import * as Models from './Models/index.js'
 

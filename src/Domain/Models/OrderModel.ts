@@ -49,6 +49,14 @@ export default class OrderModel extends BaseModel {
     type: DataType.STRING({ length: 255 })
   })
   observation?: string
+  @Column({
+    type: DataType.ENUM(...Types.TOrderType.keys())
+  })
+  orderType?: Types.TOrderType
+  @Column(DataType.INTEGER)
+  tip?: number
+  @Column(DataType.STRING(50))
+  table?: string
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)

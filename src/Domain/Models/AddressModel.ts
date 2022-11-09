@@ -49,6 +49,10 @@ export default class AddressModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column(DataType.STRING(50))
+  longitude?: string
+  @Column(DataType.STRING(50))
+  latitude?: string
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)

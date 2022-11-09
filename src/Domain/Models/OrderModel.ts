@@ -57,6 +57,8 @@ export default class OrderModel extends BaseModel {
   tip?: number
   @Column(DataType.STRING(50))
   table?: string
+  @Column(DataType.INTEGER)
+  change?: number
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)

@@ -39,6 +39,10 @@ export default class ProductModel extends BaseModel {
   measureUnit?: Types.TMeasure
   @Column(DataType.INTEGER)
   quantity?: number
+  @Column(DataType.INTEGER)
+  totalQuantity?: number
+  @Column(DataType.INTEGER)
+  maxQuantityPerOrder?: number
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true

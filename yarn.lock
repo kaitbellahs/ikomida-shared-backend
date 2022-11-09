@@ -492,10 +492,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ikomida/shared-logics@^1.2.0":
-  version "1.2.0"
-  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-logics/-/@ikomida/shared-logics-1.2.0.tgz#b0836ef44eea2ec9e942d7c405dafa0172a1fb54"
-  integrity sha512-Gz2Eiqyev5JAGDII4KCmtuNRIeXEjS4j1BFTaD+88syWDlIYHhWFGRKkmKPG5/MiBFVzxY8SVfjPVUgdmYROpQ==
+"@ikomida/shared-logics@^1.2.1":
+  version "1.2.1"
+  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-logics/-/@ikomida/shared-logics-1.2.1.tgz#57c5a2b7a1155d99c7adff83d6a188528d35f921"
+  integrity sha512-z2+pEGazLh6UVszB3vWjJR4DtGVDdG3vJbwASpstNmP2N6YTYcEp4KFfAHPgoNvcFwXRrpWCBi8sgTLYF02dZw==
   dependencies:
     luxon "^3.1.0"
 

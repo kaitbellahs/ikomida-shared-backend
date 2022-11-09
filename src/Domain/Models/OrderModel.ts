@@ -9,6 +9,7 @@ import OrderProductModel from './OrderProductModel.js'
 import ContractModel from './ContractModel.js'
 import UserPaymentModel from './UserPaymentModel.js'
 import OrderProductOptionModel from './OrderProductOptionModel.js'
+import CGeometry from '../../Types/CGeometry.js'
 
 @Table({
   paranoid: true,
@@ -33,10 +34,8 @@ export default class OrderModel extends BaseModel {
   duration?: number
   @Column(DataType.INTEGER)
   discount?: number
-  @Column(DataType.STRING(30))
-  locationLatitude?: string
-  @Column(DataType.STRING(30))
-  locationLongitude?: string
+  @Column(DataType.GEOMETRY('POINT'))
+  coordinates?: CGeometry
   @Column(DataType.INTEGER)
   preparationMin?: number
   @Column(DataType.INTEGER)
@@ -57,6 +56,8 @@ export default class OrderModel extends BaseModel {
   tip?: number
   @Column(DataType.STRING(50))
   table?: string
+  @Column(DataType.INTEGER)
+  change?: number
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)

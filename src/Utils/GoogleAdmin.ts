@@ -412,12 +412,12 @@ export default class GoogleAdmin {
     }
   }
 
-  static async getGeocoding(street: string, number: string, neighborhood: string, city: string, stat: string, postalCode: string) {
+  static async getGeocoding(address?: Classes.CAddress) {
     const apiKey = process.env.GEOCODING_API_KEY
-    if (!apiKey) {
+    if (!apiKey || !address) {
       return false
     }
-    const addressOrigin = `${street}, ${number}, ${neighborhood} - ${city}/${stat}, cep:${postalCode}`
+    const addressOrigin = `${address.street}, ${address.number}, ${address.neighborhood} - ${address.city}/${address.stat}, cep:${address.postalCode}`
     const uri = `https://maps.googleapis.com/maps/api/geocode/json?key=${apiKey}&address=${encodeURI(
       addressOrigin
     )}`

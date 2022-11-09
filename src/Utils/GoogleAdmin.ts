@@ -411,4 +411,38 @@ export default class GoogleAdmin {
       }
     }
   }
+
+  static async getGeocoding(address?: Classes.CAddress) {
+    const apiKey = process.env.GEOCODING_API_KEY
+    if (!apiKey || !address) {
+      return false
+    }
+    const addressOrigin = `${address.street}, ${address.number}, ${address.neighborhood} - ${address.city}/${address.stat}, cep:${address.postalCode}`
+    const uri = `https://maps.googleapis.com/maps/api/geocode/json?key=${apiKey}&address=${encodeURI(addressOrigin)}`
+    try {
+      const response = await axios.get(`${uri}`, {
+        headers: {
+          'X-Requested-With': `iKomida-sl-V${pkg.version}`,
+          'user-agent': `iKomida/sl V${pkg.version}`
+        }
+      })
+      if (response.status >= 200 && response.status < 300) {
+        for (const result of response?.data?.results || []) {
+          const location = result.geometry?.location
+          if (location) {
+            return Classes.CLocation.fromObject({ longitude: location.lng, latitude: location.lat })
+          }
+        }
+      }
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.error(`StatusCode: ${error?.response?.status} Error: ${error?.response?.data}`)
+        if (error?.response?.status === 409) {
+          return { error: 1 }
+        }
+      } else {
+        console.error(`StatusCode: ${JSON.stringify(error)}`)
+      }
+    }
+  }
 }

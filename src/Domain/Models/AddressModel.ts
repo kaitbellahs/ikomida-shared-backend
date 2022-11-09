@@ -5,6 +5,7 @@ import UserModel from './UserModel.js'
 import ContractModel from './ContractModel.js'
 import OrderModel from './OrderModel.js'
 import Roles from '../../Types/Roles.js'
+import CGeometry from '../../Types/CGeometry.js'
 
 @Table({
   paranoid: true,
@@ -49,6 +50,8 @@ export default class AddressModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column(DataType.GEOMETRY('POINT'))
+  coordinates?: CGeometry
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)

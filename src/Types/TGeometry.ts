@@ -1,10 +1,10 @@
 import { Types } from '@ikomida/shared-types'
 
 export default class TGeometry extends Types.TBaseType {
-    POINT = new TGeometry('Point')
-    LINE_STRING = new TGeometry('LineString')
-    POLYGON = new TGeometry('Polygon')
-    MULTI_POINT = new TGeometry('MultiPoint')
-    MULTI_LINE_STRING = new TGeometry('MultiLineString')
-    MULTI_POLYGON = new TGeometry('MultiPolygon')
+    static POINT = new TGeometry('Point')
+    static LINE_STRING = new TGeometry('LineString')
+    static POLYGON = new TGeometry('Polygon')
+    static MULTI_POINT = new TGeometry('MultiPoint')
+    static MULTI_LINE_STRING = new TGeometry('MultiLineString')
+    static MULTI_POLYGON = new TGeometry('MultiPolygon')
 }

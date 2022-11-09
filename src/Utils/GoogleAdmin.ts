@@ -418,9 +418,7 @@ export default class GoogleAdmin {
       return false
     }
     const addressOrigin = `${address.street}, ${address.number}, ${address.neighborhood} - ${address.city}/${address.stat}, cep:${address.postalCode}`
-    const uri = `https://maps.googleapis.com/maps/api/geocode/json?key=${apiKey}&address=${encodeURI(
-      addressOrigin
-    )}`
+    const uri = `https://maps.googleapis.com/maps/api/geocode/json?key=${apiKey}&address=${encodeURI(addressOrigin)}`
     try {
       const response = await axios.get(`${uri}`, {
         headers: {
@@ -432,7 +430,7 @@ export default class GoogleAdmin {
         for (const result of response?.data?.results || []) {
           const location = result.geometry?.location
           if (location) {
-            return Classes.CLocation.fromObject({ longitude: location.lng, latitude: location.lat, })
+            return Classes.CLocation.fromObject({ longitude: location.lng, latitude: location.lat })
           }
         }
       }

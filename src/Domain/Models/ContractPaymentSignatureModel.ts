@@ -17,6 +17,11 @@ export default class ContractPaymentSignatureModel extends BaseModel {
     type: DataType.ENUM(...Types.TAsaasSignatureStatus.keys())
   })
   status?: Types.TAsaasSignatureStatus
+  @Column({
+    type: DataType.ENUM(...Types.Asaas.TAsaasBilling.keys()),
+    defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD
+  })
+  billingType?: Types.Asaas.TAsaasBilling
   @Column(DataType.STRING(20))
   cycle?: string
   @Column(DataType.TEXT)

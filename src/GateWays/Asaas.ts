@@ -136,13 +136,13 @@ export default class Asaas {
     try {
       const response = await axios.get(`${this.host}${endpoint}`)
       const data: Classes.Asaas.CAsaasPaymentQrCode = Classes.Asaas.CAsaasPaymentQrCode.fromObject(response.data)
-      if (response.status >= 200 && response.status < 300 && data?.id) {
+      if (response.status >= 200 && response.status < 300 && data?.success) {
         return new Return(true, data)
       }
-      const error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_FAILED_2, data.toJSON())
+      const error = new iKomidaError(iKomidaError.ASAAS_PAYMENT_QRCODE_FAILED_2, data.toJSON())
       error.log(this.logger)
     } catch (exception: any) {
-      return this.handleException(exception, iKomidaError.ASAAS_SUBSCRIPTION_FAILED_1)
+      return this.handleException(exception, iKomidaError.ASAAS_PAYMENT_QRCODE_FAILED_1)
     }
     return new Return(false)
   }

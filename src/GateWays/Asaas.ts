@@ -191,20 +191,22 @@ export default class Asaas {
     const localNextDueDate = Logics.DateTime.localDate(nextDueDate.toISOString()).toFormat('yyyy-MM-dd')
     const request = Classes.Asaas.CAsaasCreateSubscriptionRequest.init(
       customer.data?.id ?? '',
-      Types.Asaas.TAsaasBilling.CREDIT_CARD,
+      payload.billingType ?? Types.Asaas.TAsaasBilling.CREDIT_CARD,
       localNextDueDate,
       Math.ceil((payload.plan?.price ?? 0) * 0.01),
       Cycle,
-      Classes.Asaas.CAsaasCreditCardHolderInfo.init(
-        payload.customer?.name ?? '',
-        payload.customer?.email ?? '',
-        `${payload.customer?.identity ?? ''}`,
-        payload.customer?.address.postalCode ?? '',
-        payload.customer?.address.number ?? '',
-        payload.customer?.address.complement,
-        `${payload.customer?.phone ?? ''}`,
-        `${payload.customer?.phone ?? ''}`
-      ),
+      payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
+        ? Classes.Asaas.CAsaasCreditCardHolderInfo.init(
+            payload.customer?.name ?? '',
+            payload.customer?.email ?? '',
+            `${payload.customer?.identity ?? ''}`,
+            payload.customer?.address.postalCode ?? '',
+            payload.customer?.address.number ?? '',
+            payload.customer?.address.complement,
+            `${payload.customer?.phone ?? ''}`,
+            `${payload.customer?.phone ?? ''}`
+          )
+        : undefined,
       ip,
       undefined,
       undefined,

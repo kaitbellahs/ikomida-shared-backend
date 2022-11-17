@@ -136,6 +136,8 @@ export default class Asaas {
     try {
       const response = await axios.get(`${this.host}${endpoint}`)
       const data: Classes.Asaas.CAsaasPaymentQrCode = Classes.Asaas.CAsaasPaymentQrCode.fromObject(response.data)
+      console.log('response.data:', response.data)
+      console.log('data:', data)
       if (response.status >= 200 && response.status < 300 && data?.success) {
         return new Return(true, data)
       }
@@ -198,15 +200,15 @@ export default class Asaas {
       ip,
       payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
         ? Classes.Asaas.CAsaasCreditCardHolderInfo.init(
-            payload.customer?.name ?? '',
-            payload.customer?.email ?? '',
-            `${payload.customer?.identity ?? ''}`,
-            payload.customer?.address.postalCode ?? '',
-            payload.customer?.address.number ?? '',
-            payload.customer?.address.complement,
-            `${payload.customer?.phone ?? ''}`,
-            `${payload.customer?.phone ?? ''}`
-          )
+          payload.customer?.name ?? '',
+          payload.customer?.email ?? '',
+          `${payload.customer?.identity ?? ''}`,
+          payload.customer?.address.postalCode ?? '',
+          payload.customer?.address.number ?? '',
+          payload.customer?.address.complement,
+          `${payload.customer?.phone ?? ''}`,
+          `${payload.customer?.phone ?? ''}`
+        )
         : undefined,
       undefined,
       undefined,

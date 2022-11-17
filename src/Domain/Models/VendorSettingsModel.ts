@@ -59,6 +59,11 @@ export default class VendorSettingsModel extends BaseModel {
   orderTypes?: Types.TOrderType[]
   @Column(DataType.INTEGER)
   tip?: number
+  @Column({
+    type: DataType.ENUM(...Types.Asaas.TAsaasBilling.keys()),
+    defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD.id
+  })
+  billingType?: Types.Asaas.TAsaasBilling
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)

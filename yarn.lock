@@ -488,10 +488,10 @@
   dependencies:
     luxon "^3.1.0"
 
-"@ikomida/shared-types@^1.5.9":
-  version "1.5.9"
-  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.5.9.tgz#2156221f97ba72dd62743731573d3cd29c2b8393"
-  integrity sha512-++v2nch7X4Zt3l04KcxUA14YJKAcwmOwwwn7FVJMeQCcJ79xGzOvy/EvRXI0Bz0+yq5cyhwhMANzyxZBwu9lbg==
+"@ikomida/shared-types@^1.5.11":
+  version "1.5.11"
+  resolved "https://us-central1-npm.pkg.dev/ikomida-dev/node/@ikomida/shared-types/-/@ikomida/shared-types-1.5.11.tgz#18c02a79d5ec1230ce0d549a0044a1f5f13e74ab"
+  integrity sha512-cFRbI9FSCBwdzTmwlEA46/a5yNp3xJEU5HV/Ib97sk2sujTq0SBkP7N/Hm4qkfjc/v+ynTUoC6EfPQtpj/AJnQ==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"

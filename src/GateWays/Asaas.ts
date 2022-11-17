@@ -126,6 +126,27 @@ export default class Asaas {
     return new Return(false)
   }
 
+  async paymentQrCode(id: string): Promise<Return<Classes.Asaas.CSubscriptionResponse>> {
+    if (!id) {
+      const error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_OBJECT)
+      error.log(this.logger)
+      return new Return(false)
+    }
+    const endpoint = `/pixQrCode/createPaymentQrCode/${id}`
+    try {
+      const response = await axios.get(`${this.host}${endpoint}`)
+      const data: Classes.Asaas.CAsaasPaymentQrCode = Classes.Asaas.CAsaasPaymentQrCode.fromObject(response.data)
+      if (response.status >= 200 && response.status < 300 && data?.success) {
+        return new Return(true, data)
+      }
+      const error = new iKomidaError(iKomidaError.ASAAS_PAYMENT_QRCODE_FAILED_2, data.toJSON())
+      error.log(this.logger)
+    } catch (exception: any) {
+      return this.handleException(exception, iKomidaError.ASAAS_PAYMENT_QRCODE_FAILED_1)
+    }
+    return new Return(false)
+  }
+
   async getPayments(subscriptionId: string): Promise<Return<Classes.Asaas.CAsaasPayment[]>> {
     if (!subscriptionId) {
       const error = new iKomidaError(iKomidaError.ASAAS_SUBSCRIPTION_OBJECT)
@@ -170,21 +191,23 @@ export default class Asaas {
     const localNextDueDate = Logics.DateTime.localDate(nextDueDate.toISOString()).toFormat('yyyy-MM-dd')
     const request = Classes.Asaas.CAsaasCreateSubscriptionRequest.init(
       customer.data?.id ?? '',
-      Types.Asaas.TAsaasBilling.CREDIT_CARD,
+      payload.billingType ?? Types.Asaas.TAsaasBilling.CREDIT_CARD,
       localNextDueDate,
       Math.ceil((payload.plan?.price ?? 0) * 0.01),
       Cycle,
-      Classes.Asaas.CAsaasCreditCardHolderInfo.init(
-        payload.customer?.name ?? '',
-        payload.customer?.email ?? '',
-        `${payload.customer?.identity ?? ''}`,
-        payload.customer?.address.postalCode ?? '',
-        payload.customer?.address.number ?? '',
-        payload.customer?.address.complement,
-        `${payload.customer?.phone ?? ''}`,
-        `${payload.customer?.phone ?? ''}`
-      ),
       ip,
+      payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
+        ? Classes.Asaas.CAsaasCreditCardHolderInfo.init(
+          payload.customer?.name ?? '',
+          payload.customer?.email ?? '',
+          `${payload.customer?.identity ?? ''}`,
+          payload.customer?.address.postalCode ?? '',
+          payload.customer?.address.number ?? '',
+          payload.customer?.address.complement,
+          `${payload.customer?.phone ?? ''}`,
+          `${payload.customer?.phone ?? ''}`
+        )
+        : undefined,
       undefined,
       undefined,
       undefined,

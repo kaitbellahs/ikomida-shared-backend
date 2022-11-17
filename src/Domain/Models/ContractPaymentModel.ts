@@ -21,8 +21,11 @@ export default class ContractPaymentModel extends BaseModel {
   status?: Types.TAsaasPaymentStatus
   @Column(DataType.STRING(50))
   plan?: string
-  @Column(DataType.STRING(50))
-  billingType?: string
+  @Column({
+    type: DataType.ENUM(...Types.Asaas.TAsaasBilling.keys()),
+    defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD.id
+  })
+  billingType?: Types.Asaas.TAsaasBilling
   @Column(DataType.STRING(20))
   creditCardBrand?: string
   @Column(DataType.TEXT)
@@ -33,6 +36,10 @@ export default class ContractPaymentModel extends BaseModel {
   invoiceNumber?: string
   @Column(DataType.STRING(255))
   transactionReceiptUrl?: string
+  @Column({
+    type: DataType.STRING(255)
+  })
+  bankSlipUrl?: string
   @Column(DataType.INTEGER({ length: 2 }))
   month?: number
   @Column(DataType.INTEGER({ length: 6 }))

@@ -136,8 +136,6 @@ export default class Asaas {
     try {
       const response = await axios.get(`${this.host}${endpoint}`)
       const data: Classes.Asaas.CAsaasPaymentQrCode = Classes.Asaas.CAsaasPaymentQrCode.fromObject(response.data)
-      console.log('response.data:', response.data)
-      console.log('data:', data)
       if (response.status >= 200 && response.status < 300 && data?.success) {
         return new Return(true, data)
       }

@@ -23,7 +23,7 @@ export default class ContractPaymentModel extends BaseModel {
   plan?: string
   @Column({
     type: DataType.ENUM(...Types.Asaas.TAsaasBilling.keys()),
-    defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD
+    defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD.id
   })
   billingType?: Types.Asaas.TAsaasBilling
   @Column(DataType.STRING(20))

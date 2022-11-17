@@ -61,7 +61,7 @@ export default class VendorSettingsModel extends BaseModel {
   tip?: number
   @Column({
     type: DataType.ENUM(...Types.Asaas.TAsaasBilling.keys()),
-    defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD
+    defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD.id
   })
   billingType?: Types.Asaas.TAsaasBilling
 

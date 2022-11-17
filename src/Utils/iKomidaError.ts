@@ -139,6 +139,14 @@ export default class iKomidaError {
     code: 'AS0012',
     message: 'Não foi possível criar uma inscrição pagamento: erro externo'
   }
+  static ASAAS_PAYMENT_QRCODE_FAILED_1: IiKomidaErrorModel = {
+    code: 'AS0010',
+    message: 'Não foi possível gerar o PIX QrCode!'
+  }
+  static ASAAS_PAYMENT_QRCODE_FAILED_2: IiKomidaErrorModel = {
+    code: 'AS0011',
+    message: 'Não foi possível gerar o PIX QrCode!'
+  }
 
   //MARK: -- PAGSEGURO payment lib
   static PAGSEGURO_CREATE_CHARGE_MISSING_DATA: IiKomidaErrorModel = {

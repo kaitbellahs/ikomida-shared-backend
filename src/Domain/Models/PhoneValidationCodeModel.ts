@@ -1,5 +1,5 @@
+import { Types } from '@ikomida/shared-types'
 import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
-import Roles from '../../Types/Roles.js'
 import BaseModel from './BaseModel.js'
 import ContractModel from './ContractModel.js'
 import UserModel from './UserModel.js'
@@ -10,9 +10,9 @@ import UserModel from './UserModel.js'
 })
 export default class PhoneValidationCodeModel extends BaseModel {
   @Column({
-    type: DataType.ENUM(...Roles.keys())
+    type: DataType.ENUM(...Types.TRoles.keys())
   })
-  role?: Roles
+  role?: Types.TRoles
   @Column(DataType.INTEGER({ length: 4 }))
   code?: number
   @Column(DataType.TEXT)

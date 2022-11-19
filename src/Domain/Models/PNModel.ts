@@ -3,7 +3,7 @@ import BaseModel from './BaseModel.js'
 import ContractModel from './ContractModel.js'
 import UserModel from './UserModel.js'
 import PNMessageModel from './PNMessageModel.js'
-import Roles from '../../Types/Roles.js'
+import { Types } from '@ikomida/shared-types'
 
 @Table({
   paranoid: true,
@@ -15,9 +15,9 @@ export default class PNModel extends BaseModel {
   @Column(DataType.STRING(255))
   token?: string
   @Column({
-    type: DataType.ENUM(...Roles.keys())
+    type: DataType.ENUM(...Types.TRoles.keys())
   })
-  role?: Roles
+  role?: Types.TRoles
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true

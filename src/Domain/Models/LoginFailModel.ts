@@ -1,5 +1,5 @@
+import { Types } from '@ikomida/shared-types'
 import { Table, Column, DataType } from 'sequelize-typescript'
-import Roles from '../../Types/Roles.js'
 import BaseModel from './BaseModel.js'
 
 @Table({
@@ -12,9 +12,9 @@ export default class LoginFailModel extends BaseModel {
   @Column(DataType.STRING(20))
   ip?: string
   @Column({
-    type: DataType.ENUM(...Roles.keys())
+    type: DataType.ENUM(...Types.TRoles.keys())
   })
-  role?: Roles
+  role?: Types.TRoles
   @Column(DataType.STRING(20))
   phone?: string
   @Column(DataType.INTEGER({ length: 2 }))

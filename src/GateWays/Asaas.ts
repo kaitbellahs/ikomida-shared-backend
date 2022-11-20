@@ -198,15 +198,15 @@ export default class Asaas {
       ip,
       payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
         ? Classes.Asaas.CAsaasCreditCardHolderInfo.init(
-          payload.customer?.name ?? '',
-          payload.customer?.email ?? '',
-          `${payload.customer?.identity ?? ''}`,
-          payload.customer?.address.postalCode ?? '',
-          payload.customer?.address.number ?? '',
-          payload.customer?.address.complement,
-          `${payload.customer?.phone ?? ''}`,
-          `${payload.customer?.phone ?? ''}`
-        )
+            payload.customer?.name ?? '',
+            payload.customer?.email ?? '',
+            `${payload.customer?.identity ?? ''}`,
+            payload.customer?.address.postalCode ?? '',
+            payload.customer?.address.number ?? '',
+            payload.customer?.address.complement,
+            `${payload.customer?.phone ?? ''}`,
+            `${payload.customer?.phone ?? ''}`
+          )
         : undefined,
       undefined,
       undefined,

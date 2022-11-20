@@ -64,6 +64,8 @@ export default class VendorSettingsModel extends BaseModel {
     defaultValue: Types.Asaas.TAsaasBilling.CREDIT_CARD.id
   })
   billingType?: Types.Asaas.TAsaasBilling
+  @Column({ type: DataType.INTEGER, defaultValue: 0 })
+  orderMinValue?: number
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)

@@ -4,7 +4,6 @@ import BaseModel from './BaseModel.js'
 import UserModel from './UserModel.js'
 import ContractModel from './ContractModel.js'
 import OrderModel from './OrderModel.js'
-import Roles from '../../Types/Roles.js'
 import CGeometry from '../../Types/CGeometry.js'
 
 @Table({
@@ -13,9 +12,9 @@ import CGeometry from '../../Types/CGeometry.js'
 })
 export default class AddressModel extends BaseModel {
   @Column({
-    type: DataType.ENUM(...Roles.keys())
+    type: DataType.ENUM(...Types.TRoles.keys())
   })
-  role?: Roles
+  role?: Types.TRoles
   @Column({
     type: DataType.ENUM(...Types.TAddress.keys())
   })

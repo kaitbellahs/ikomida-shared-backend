@@ -15,7 +15,6 @@ import UserCreditCardModel from './UserCreditCardModel.js'
 import TermHashModel from './TermHashModel.js'
 import BaseModel from './BaseModel.js'
 import AppModel from './AppModel.js'
-import Roles from '../../Types/Roles.js'
 
 @Table({
   paranoid: true,
@@ -25,9 +24,9 @@ export default class UserModel extends BaseModel {
   @Column(DataType.TEXT)
   avatar?: string
   @Column({
-    type: DataType.ENUM(...Roles.keys())
+    type: DataType.ENUM(...Types.TRoles.keys())
   })
-  role?: Roles
+  role?: Types.TRoles
   @Column(DataType.STRING(30))
   name?: string
   @Column(DataType.STRING(50))

@@ -182,19 +182,17 @@ export default class Asaas {
       error.log(this.logger)
       new Return(false)
     }
-    let Cycle = Types.Asaas.TAssasSubscriptionCycle.WEEKLY
-    if (this.production) {
-      Cycle = Types.Asaas.TAssasSubscriptionCycle.MONTHLY
-    }
     const nextDueDate = new Date()
+    console.log('plan:', payload.plan.toJSON())
     nextDueDate.setDate(nextDueDate.getDate() + (payload.plan?.dueDateAfterXDays ?? 0))
     const localNextDueDate = Logics.DateTime.localDate(nextDueDate.toISOString()).toFormat('yyyy-MM-dd')
+    console.log('date:', new Date, 'dueDate:', localNextDueDate)
     const request = Classes.Asaas.CAsaasCreateSubscriptionRequest.init(
       customer.data?.id ?? '',
       payload.billingType ?? Types.Asaas.TAsaasBilling.CREDIT_CARD,
       localNextDueDate,
       (payload.plan?.price ?? 0) * 0.01,
-      Cycle,
+      Types.Asaas.TAssasSubscriptionCycle.MONTHLY,
       ip,
       payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
         ? Classes.Asaas.CAsaasCreditCardHolderInfo.init(

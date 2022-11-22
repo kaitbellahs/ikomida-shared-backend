@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "1.5.21",
+  "version": "1.5.22",
   "description": "the iKomida backend shared code",
   "private": false,
   "main": "lib/index.js",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@firebase/app-types": "0.x",
     "@ikomida/shared-logics": "^1.2.1",
-    "@ikomida/shared-types": "^1.5.13",
+    "@ikomida/shared-types": "^1.5.14",
     "@rollup/plugin-commonjs": "^23.0.2",
     "@rollup/plugin-json": "^5.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",

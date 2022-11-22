@@ -193,30 +193,30 @@ export default class Asaas {
       customer.data?.id ?? '',
       payload.billingType ?? Types.Asaas.TAsaasBilling.CREDIT_CARD,
       localNextDueDate,
-      Math.ceil((payload.plan?.price ?? 0) * 0.01),
+      (payload.plan?.price ?? 0) * 0.01,
       Cycle,
       ip,
       payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
         ? Classes.Asaas.CAsaasCreditCardHolderInfo.init(
-          payload.customer?.name ?? '',
-          payload.customer?.email ?? '',
-          `${payload.customer?.identity ?? ''}`,
-          payload.customer?.address.postalCode ?? '',
-          payload.customer?.address.number ?? '',
-          payload.customer?.address.complement,
-          `${payload.customer?.phone ?? ''}`,
-          `${payload.customer?.phone ?? ''}`
-        )
+            payload.customer?.name ?? '',
+            payload.customer?.email ?? '',
+            `${payload.customer?.identity ?? ''}`,
+            payload.customer?.address.postalCode ?? '',
+            payload.customer?.address.number ?? '',
+            payload.customer?.address.complement,
+            `${payload.customer?.phone ?? ''}`,
+            `${payload.customer?.phone ?? ''}`
+          )
         : undefined,
       undefined,
       undefined,
       Classes.Asaas.CAsaasDiscount.init(
-        Math.ceil((payload.plan?.discount ?? 0) * 0.01),
+        (payload.plan?.discount ?? 0) * 0.01,
         payload.plan.discountType === Types.TDiscount.PERCENT
           ? Types.Asaas.TAsaasDiscount.PERCENTAGE
           : payload.plan.discountType === Types.TDiscount.VALUE
-            ? Types.Asaas.TAsaasDiscount.FIXED
-            : undefined
+          ? Types.Asaas.TAsaasDiscount.FIXED
+          : undefined
       ),
       undefined,
       undefined,
@@ -227,12 +227,12 @@ ikomidaID: ${payload.ikomidaID}`,
       undefined,
       payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
         ? Classes.Asaas.CAsaasCard.init(
-          payload.payment?.holderName ?? '',
-          payload.payment?.number ?? 0,
-          payload.payment?.expiryMonth ?? 0,
-          payload.payment?.expiryYear ?? 0,
-          payload.payment?.ccv ?? 0
-        )
+            payload.payment?.holderName ?? '',
+            payload.payment?.number ?? 0,
+            payload.payment?.expiryMonth ?? 0,
+            payload.payment?.expiryYear ?? 0,
+            payload.payment?.ccv ?? 0
+          )
         : undefined,
       JSON.stringify({
         plan: payload.plan?.name,
@@ -274,7 +274,7 @@ ikomidaID: ${payload.ikomidaID}`,
     const request = new Classes.Asaas.CAsaasRequestPayment({
       customer: payload.customer?.id,
       billingType: payload.type,
-      value: `${Math.ceil((payload.amount ?? 0) * 0.01)}`,
+      value: `${(payload.amount ?? 0) * 0.01}`,
       description: payload.description?.substring(0, 64),
       externalReference: payload.reference,
       creditCardHolderInfo: {
@@ -327,7 +327,7 @@ ikomidaID: ${payload.ikomidaID}`,
     const payload: Classes.Asaas.CAsaasTransfer = Classes.Asaas.CAsaasTransfer.fromObject(input)
     const request = new Classes.Asaas.CAsaasTransferRequest({
       pixAddressKeyType: payload.pixAddressKeyType,
-      value: Math.ceil((payload.amount ?? 0) * 0.01),
+      value: (payload.amount ?? 0) * 0.01,
       description: payload.description?.substring(0, 64),
       pixAddressKey: payload.pixAddressKey
     })

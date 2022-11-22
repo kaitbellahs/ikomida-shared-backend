@@ -198,33 +198,42 @@ export default class Asaas {
       ip,
       payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
         ? Classes.Asaas.CAsaasCreditCardHolderInfo.init(
-            payload.customer?.name ?? '',
-            payload.customer?.email ?? '',
-            `${payload.customer?.identity ?? ''}`,
-            payload.customer?.address.postalCode ?? '',
-            payload.customer?.address.number ?? '',
-            payload.customer?.address.complement,
-            `${payload.customer?.phone ?? ''}`,
-            `${payload.customer?.phone ?? ''}`
-          )
+          payload.customer?.name ?? '',
+          payload.customer?.email ?? '',
+          `${payload.customer?.identity ?? ''}`,
+          payload.customer?.address.postalCode ?? '',
+          payload.customer?.address.number ?? '',
+          payload.customer?.address.complement,
+          `${payload.customer?.phone ?? ''}`,
+          `${payload.customer?.phone ?? ''}`
+        )
         : undefined,
       undefined,
       undefined,
+      Classes.Asaas.CAsaasDiscount.init(
+        Math.ceil((payload.plan?.discount ?? 0) * 0.01),
+        payload.plan.discountType === Types.TDiscount.PERCENT
+          ? Types.Asaas.TAsaasDiscount.PERCENTAGE
+          : payload.plan.discountType === Types.TDiscount.VALUE
+            ? Types.Asaas.TAsaasDiscount.FIXED
+            : undefined
+      ),
       undefined,
       undefined,
-      undefined,
-      `Contrato iKomida, 
-    plano: ${payload.plan?.name},
+      `Contrato iKomida
+plano: ${payload.plan?.name}
 ikomidaID: ${payload.ikomidaID}`,
       undefined,
       undefined,
-      Classes.Asaas.CAsaasCard.init(
-        payload.payment?.holderName ?? '',
-        payload.payment?.number ?? 0,
-        payload.payment?.expiryMonth ?? 0,
-        payload.payment?.expiryYear ?? 0,
-        payload.payment?.ccv ?? 0
-      ),
+      payload.billingType === Types.Asaas.TAsaasBilling.CREDIT_CARD
+        ? Classes.Asaas.CAsaasCard.init(
+          payload.payment?.holderName ?? '',
+          payload.payment?.number ?? 0,
+          payload.payment?.expiryMonth ?? 0,
+          payload.payment?.expiryYear ?? 0,
+          payload.payment?.ccv ?? 0
+        )
+        : undefined,
       JSON.stringify({
         plan: payload.plan?.name,
         planId: payload.plan?.id,

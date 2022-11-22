@@ -183,10 +183,8 @@ export default class Asaas {
       new Return(false)
     }
     const nextDueDate = new Date()
-    console.log('plan:', payload.plan.toJSON())
     nextDueDate.setDate(nextDueDate.getDate() + (payload.plan?.dueDateAfterXDays ?? 0))
     const localNextDueDate = Logics.DateTime.localDate(nextDueDate.toISOString()).toFormat('yyyy-MM-dd')
-    console.log('date:', new Date, 'dueDate:', localNextDueDate)
     const request = Classes.Asaas.CAsaasCreateSubscriptionRequest.init(
       customer.data?.id ?? '',
       payload.billingType ?? Types.Asaas.TAsaasBilling.CREDIT_CARD,

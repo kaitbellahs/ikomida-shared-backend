@@ -37,6 +37,14 @@ export default class AppModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column(DataType.STRING(255))
+  icon?: string
+  @Column(DataType.STRING(3500))
+  description?: string
+  @Column(DataType.STRING(255))
+  androidLink?: string
+  @Column(DataType.STRING(255))
+  iosLink?: string
 
   //MARK: --Associations
   @ForeignKey(() => UserModel)

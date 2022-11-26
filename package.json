@@ -1,6 +1,6 @@
 {
   "name": "@ikomida/shared-backend",
-  "version": "1.5.23",
+  "version": "1.5.24",
   "description": "the iKomida backend shared code",
   "private": false,
   "main": "lib/index.js",

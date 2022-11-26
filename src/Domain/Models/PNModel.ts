@@ -14,6 +14,8 @@ export default class PNModel extends BaseModel {
   platform?: string
   @Column(DataType.STRING(255))
   token?: string
+  @Column(DataType.STRING(255))
+  deviceId?: string
   @Column({
     type: DataType.ENUM(...Types.TRoles.keys())
   })

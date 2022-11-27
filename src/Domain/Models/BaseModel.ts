@@ -146,6 +146,7 @@ export default class BaseModel extends Model {
 
   @BeforeCount
   @BeforeFind
+  @BeforeDestroy
   static DoBeforeFind(instance: any, options: any) {
     if (isObject(instance) && 'where' in instance) {
       resolveBeforeEnums(instance.where, this.prototype)
@@ -158,7 +159,6 @@ export default class BaseModel extends Model {
   @BeforeUpdate
   @BeforeSave
   @BeforeCreate
-  @BeforeDestroy
   static beforeDestroyModel(instance: any, options: any): void {
     if (isObject(instance) && !('instanceValidated' in instance) && !instance.instanceValidated) {
       resolveBeforeEnums(instance.dataValues, this.prototype)

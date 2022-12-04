@@ -46,7 +46,8 @@ export default class Mailjet {
           version: 'v3.1'
         })
         .request(emails)
-      this.logger.log('result.response:', result.response)
+      this.logger.log('result.response.status:', result?.response?.status)
+      this.logger.log('result.response.data:', JSON.stringify(result?.response?.data))
       if (result.response.status >= 200 && result.response.status < 300) {
         return true
       } else {

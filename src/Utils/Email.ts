@@ -1,3 +1,7 @@
+import { Classes } from '@ikomida/shared-types'
+import RabbitMQ from '../Domain/RabbitMQ.js'
+import Logger from './Logger.js'
+
 export interface IEmail {
   subject: string
   body: string
@@ -17,6 +21,33 @@ export default class Email {
     }
   }
 
+  static async sendEmail(
+    logger: Logger,
+    toMail: string,
+    toName: string,
+    message: Email,
+    fromName = `iKomida`,
+    fromEmail = `no-replay@ikomida.com`
+  ) {
+    const emailPayload = new Classes.CAMQPPayload<Classes.CAMQPPayloadObject>()
+    emailPayload.method = 'send'
+    const messagePayload: Classes.CEmail = Classes.CEmail.fromObject({
+      from: {
+        email: fromEmail,
+        name: fromName
+      },
+      to: {
+        email: toMail,
+        name: toName
+      },
+      message
+    })
+    emailPayload.object = messagePayload
+    const amqp = new RabbitMQ(logger)
+    await amqp?.publish(RabbitMQ.EMAIL_QUEUE, emailPayload)
+    await amqp?.close()
+  }
+
   static VENDOR_REGISTRATION_SUCCESSFULL: IEmail = {
     subject: 'Cadastro bem sucedido!',
     body: `<div><h1>{0}</h1><p>Olá <b>{1}</b>,<br /><br />Seu cadastro foi concluído com sucesso.<br />Agora você pode usufruir das funcionalidades da nossa plataforma.<br />Segue os dados da sua conta:<ul><li>Link para download do iKomida dashboard: {2}</li><li>ID do do seu estabelecimento: {3}</li><li>Seu login: {4}</li><li>Sua senha: é a mesma que você colocou na hora de contratação do serviço.</li></ul><br /><br />Estamos muito felizes em tê-lo conosco.<br /><br />Qualquer dúvida entre em contato conosco.<br />Atenciosamente<br />Equipe do <b><a href="{6}">{5}</a></b></p></div>`
@@ -24,12 +55,12 @@ export default class Email {
 
   static RESELLER_REGISTRATION_SUCCESSFULL: IEmail = {
     subject: 'Cadastro bem sucedido!',
-    body: `<div><h1>{0}</h1><p>Olá <b>{1}</b>,<br /><br />Você foi escolhido para participar no nosso programa autônomo de vendas, se você for adicionado de uma forma iligal ou sem sua autorização, entre em contato com a gente.<br />Agora você pode ajudar no crescimento da nossa plataforma ganhando dinheiro junto com a gente como um vendedor autônomo, com isso você vende quando quiser, onde e como quiser sem compromisso com a gente, você receberá o que você vende.<br />Segue os dados da sua conta:<ul><li><a href="{2}">Link para download do app</a></li><li>Seu login: {3}</li><li>Sua senha: {4}<br />Essa é uma senha gerada aleatoriamente, troca ela assim que logar no app, e se tiver algum problema entre em contato com a nossa equipe.</li></ul><br /><br />Estamos muito felizes em tê-lo conosco.<br /><br />Atenciosamente<br />Equipe do <b><a href="{6}">{5}</a></b></p></div>`
+    body: `<div><h1>{0}</h1><p>Olá <b>{1}</b>,<br /><br />Você foi escolhido para participar no nosso programa autônomo de vendas, se você for adicionado de uma forma iligal ou sem sua autorização, entre em contato com a gente.<br />Agora você pode ajudar no crescimento da nossa plataforma ganhando dinheiro junto com a gente como um vendedor autônomo, com isso você vende quando quiser, onde e como quiser sem compromisso com a gente, você receberá o que você vende.<br />Segue os dados da sua conta:<ul><li><a href="{2}">Link para download do app</a></li><li>Seu login: {3}</li><li>Sua senha: {4}<br />Essa é uma senha gerada aleatoriamente, troca ela assim que logar no app, e se tiver algum problema entre em contato com a nossa equipe.</li></ul><br /><br />Estamos muito felizes em tê-lo conosco.<br /><br />Atenciosamente<br />Equipe do <b><a href="{5}">{6}</a></b></p></div>`
   }
 
   static STAFF_REGISTRATION_SUCCESSFULL: IEmail = {
     subject: 'Cadastro bem sucedido!',
-    body: `<div><h1>{0}</h1><p>Olá <b>{1}</b>,<br /><br />Você foi adicionado para ser um colaborador no estabelecimento {2}, se você for adicionado de uma forma iligal ou sem sua autorização, entre em contato com a gente.<br />Agora você pode ajudar a cuidar do estabelecimento {2} através do app iKomida dashboard.<br />Segue os dados da sua conta:<ul><li><a href="{3}">Link para download do app</a></li><li>Seu login: {4}</li><li>Sua senha: {5}<br />Essa é uma senha gerada aleatoriamente, troca ela assim que logar no app, e se tiver algum problema entre em contato com a nossa equipe.</li></ul><br /><br />Estamos muito felizes em tê-lo conosco.<br /><br />Atenciosamente<br />Equipe do <b><a href="{7}">{6}</a></b></p></div>`
+    body: `<div><h1>{0}</h1><p>Olá <b>{1}</b>,<br /><br />Você foi adicionado para ser um colaborador no estabelecimento {2}, se você for adicionado de uma forma iligal ou sem sua autorização, entre em contato com a gente.<br />Agora você pode ajudar a cuidar do estabelecimento {2} através do app iKomida dashboard.<br />Segue os dados da sua conta:<ul><li><a href="{3}">Link para download do app</a></li><li>Id estabilicimento: {4}</li><li>Seu login: {5}</li><li>Sua senha: {6}<br />Essa é uma senha gerada aleatoriamente, troca ela assim que logar no app, e se tiver algum problema entre em contato com a nossa equipe.</li></ul><br /><br />Estamos muito felizes em tê-lo conosco.<br /><br />Atenciosamente<br />Equipe do <b><a href="{7}">{8}</a></b></p></div>`
   }
   static CLIENT_REGISTRATION_SUCCESSFULL: IEmail = {
     subject: 'Cadastro bem sucedido!',

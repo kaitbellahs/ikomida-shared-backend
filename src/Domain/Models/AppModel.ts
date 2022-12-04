@@ -2,6 +2,7 @@ import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typesc
 import UserModel from './UserModel.js'
 import ContractModel from './ContractModel.js'
 import BaseModel from './BaseModel.js'
+import { Types } from '@ikomida/shared-types'
 
 @Table({
   paranoid: true,
@@ -20,18 +21,24 @@ export default class AppModel extends BaseModel {
   fireBaseId?: string
   @Column(DataType.STRING(20))
   iOSProfileId?: string
-  @Column(DataType.STRING(50))
-  storeStatus?: string
+  @Column({
+    type: DataType.ENUM(...Types.TAppStoreStatus.keys())
+  })
+  storeStatus?: Types.TAppStoreStatus
   @Column(DataType.TEXT)
   storeNote?: string
   @Column(DataType.JSON)
   storeEvidences: any
   @Column(DataType.STRING(50))
   storeVersion?: string
-  @Column(DataType.STRING(50))
-  storeBuildStatus?: string
-  @Column(DataType.STRING(50))
-  storePublishStatus?: string
+  @Column({
+    type: DataType.ENUM(...Types.TAppStoreStatus.keys())
+  })
+  storeBuildStatus?: Types.TAppStoreStatus
+  @Column({
+    type: DataType.ENUM(...Types.TAppStoreStatus.keys())
+  })
+  storePublishStatus?: Types.TAppStoreStatus
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true

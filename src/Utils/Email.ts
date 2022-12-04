@@ -60,7 +60,7 @@ export default class Email {
 
   static STAFF_REGISTRATION_SUCCESSFULL: IEmail = {
     subject: 'Cadastro bem sucedido!',
-    body: `<div><h1>{0}</h1><p>Olá <b>{1}</b>,<br /><br />Você foi adicionado para ser um colaborador no estabelecimento {2}, se você for adicionado de uma forma iligal ou sem sua autorização, entre em contato com a gente.<br />Agora você pode ajudar a cuidar do estabelecimento {2} através do app iKomida dashboard.<br />Segue os dados da sua conta:<ul><li><a href="{3}">Link para download do app</a></li><li>Id estabilicimento: {4}</li><li>Seu login: {5}</li><li>Sua senha: {6}<br />Essa é uma senha gerada aleatoriamente, troca ela assim que logar no app, e se tiver algum problema entre em contato com a nossa equipe.</li></ul><br /><br />Estamos muito felizes em tê-lo conosco.<br /><br />Atenciosamente<br />Equipe do <b><a href="{7}">{8}</a></b></p></div>`
+    body: `<div><h1>{0}</h1><p>Olá <b>{1}</b>,<br /><br />Você foi adicionado para ser um colaborador no estabelecimento {2}, se você for adicionado de uma forma iligal ou sem sua autorização, entre em contato com a gente.<br />Agora você pode ajudar a cuidar do estabelecimento {2} através do app iKomida dashboard.<br />Segue os dados da sua conta:<ul><li><a href="{3}">Link para download do app</a></li><li>Id estabelecimento: {4}</li><li>Seu login: {5}</li><li>Sua senha: {6}<br />Essa é uma senha gerada aleatoriamente, troca ela assim que logar no app, e se tiver algum problema entre em contato com a nossa equipe.</li></ul><br /><br />Estamos muito felizes em tê-lo conosco.<br /><br />Atenciosamente<br />Equipe do <b><a href="{7}">{8}</a></b></p></div>`
   }
   static CLIENT_REGISTRATION_SUCCESSFULL: IEmail = {
     subject: 'Cadastro bem sucedido!',

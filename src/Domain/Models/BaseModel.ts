@@ -16,7 +16,8 @@ import {
   BeforeSave,
   BeforeUpdate,
   BeforeValidate,
-  AllowNull
+  AllowNull,
+  BeforeDestroy
 } from 'sequelize-typescript'
 
 function isObject(object: any) {
@@ -144,15 +145,8 @@ export default class BaseModel extends Model {
   id?: string = undefined
 
   @BeforeCount
-  static DoBeforeCount(instance: any, options: any) {
-    if (isObject(instance) && 'where' in instance) {
-      resolveBeforeEnums(instance.where, this.prototype)
-    }
-    if (isObject(instance) && 'include' in instance) {
-      hanfleIncludes(instance.include)
-    }
-  }
   @BeforeFind
+  @BeforeDestroy
   static DoBeforeFind(instance: any, options: any) {
     if (isObject(instance) && 'where' in instance) {
       resolveBeforeEnums(instance.where, this.prototype)
@@ -161,25 +155,16 @@ export default class BaseModel extends Model {
       hanfleIncludes(instance.include)
     }
   }
+
   @BeforeUpdate
-  static DoBeforeUpdate(instance: any, options: any) {
-    if (isObject(instance) && !('instanceValidated' in instance) && !instance.instanceValidated) {
-      resolveBeforeEnums(instance.dataValues, this.prototype)
-    }
-  }
-  // NOTE: this hook only available in Sequelize v4
   @BeforeSave
-  static beforeSaveModel(instance: any, options: any): void {
-    if (isObject(instance) && !('instanceValidated' in instance) && !instance.instanceValidated) {
-      resolveBeforeEnums(instance.dataValues, this.prototype)
-    }
-  }
   @BeforeCreate
-  static beforeCreateModel(instance: any, options: any): void {
+  static beforeDestroyModel(instance: any, options: any): void {
     if (isObject(instance) && !('instanceValidated' in instance) && !instance.instanceValidated) {
       resolveBeforeEnums(instance.dataValues, this.prototype)
     }
   }
+
   @BeforeValidate
   static DoBeforeValidate(instance: any, options: any) {
     resolveBeforeEnums(instance.dataValues, this.prototype)
@@ -188,24 +173,9 @@ export default class BaseModel extends Model {
   }
 
   @AfterFind
-  static DoAfterFind(instance: any, options: any) {
-    resolveAfterEnums(instance, this.prototype)
-  }
   @AfterCreate
-  static afterCreateModel(instance: any, options: any): void {
-    resolveAfterEnums(instance, this.prototype)
-  }
-
   @AfterRestore
-  static afterRestoreModel(instance: any, options: any): void {
-    resolveAfterEnums(instance, this.prototype)
-  }
-
   @AfterUpdate
-  static afterUpdateModel(instance: any, options: any): void {
-    resolveAfterEnums(instance, this.prototype)
-  }
-
   @AfterSave
   static afterSaveModel(instance: any, options: any): void {
     resolveAfterEnums(instance, this.prototype)

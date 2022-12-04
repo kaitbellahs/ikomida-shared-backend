@@ -6,7 +6,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 const pkg = require('./package.json')
-const tsconfig = require('./tsconfig.json')
 
 export default {
     input: "src/index.ts",
@@ -19,7 +18,7 @@ export default {
         },
     ],
     plugins: [
-        tsPlugin(tsconfig),
+        tsPlugin(),
         json(),
         autoExternal(),
         resolve({

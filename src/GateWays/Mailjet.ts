@@ -37,7 +37,7 @@ export default class Mailjet {
             ],
             Subject: object?.message?.subject,
             HTMLPart: object?.message?.body,
-            TextPart: object?.message?.body //TODO: -- remove html tags
+            TextPart: object?.message?.body?.replace(/<[^>]*>/g, '')
           }
         ]
       }
@@ -46,7 +46,8 @@ export default class Mailjet {
           version: 'v3.1'
         })
         .request(emails)
-
+      this.logger.log('result.response.status:', result?.response?.status)
+      this.logger.log('result.response.data:', JSON.stringify(result?.response?.data))
       if (result.response.status >= 200 && result.response.status < 300) {
         return true
       } else {

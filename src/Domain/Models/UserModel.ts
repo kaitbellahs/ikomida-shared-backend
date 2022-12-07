@@ -59,6 +59,8 @@ export default class UserModel extends BaseModel {
     defaultValue: true
   })
   active?: boolean
+  @Column(DataType.DATE)
+  deleteAccount?: Date
 
   //MARK: -- attributs
   ordersCount?: number

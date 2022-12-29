@@ -1,6 +1,6 @@
 import * as Logics from '@ikomida/shared-logics'
+import { Classes } from '@ikomida/shared-types'
 import { Request, NextFunction, Express, Response } from 'express'
-import Return from './Return.js'
 import { IiKomidaError } from './iKomidaError.js'
 
 export async function sleep(ms: number) {
@@ -9,7 +9,7 @@ export async function sleep(ms: number) {
 
 declare module 'express-serve-static-core' {
   interface Response {
-    sendResponse: (data: any) => Response
+    sendResponse: <T extends any & IiKomidaError>(data: Classes.Return<T> | T) => Response
   }
 }
 
@@ -19,24 +19,30 @@ export function setExpressResponse(app: Express) {
       try {
         req.headers.identity = JSON.parse(req.headers?.identity as string)
         // eslint-disable-next-line no-empty
-      } catch (_) {}
+      } catch (_) { }
     }
-    res.sendResponse = function <T extends any & IiKomidaError>(data: Return<T> | T): Response {
+    res.sendResponse = function <T extends any & IiKomidaError>(data: Classes.Return<T> | T): Response {
       try {
         if (!this?.statusCode) {
           this.status(200)
         }
-        if (data instanceof Return && data.status && !isNaN(Number(data.status))) {
+        if (data instanceof Classes.Return && data.status && !isNaN(Number(data.status))) {
           this.status(data.status ?? 0)
           delete data.status
         }
+        if (data instanceof Classes.Return && data.headers) {
+          for (const key of Object.keys(data.headers)) {
+            this.setHeader(key, data.headers[key] ?? '')
+          }
+          delete data.headers
+        }
         this.type('json')
-        this.end(data instanceof Return ? data.toString() : JSON.stringify(data))
+        this.end(data instanceof Classes.Return ? data.toString() : JSON.stringify(data))
       } catch (exception: any) {
         console.error(new Date().toString(), 'exception:', exception)
         this.type('json')
         this.status(500).end(
-          new Return(
+          new Classes.Return(
             false,
             'Ocorreu um erro interno nos serviços, tente de novo mais tarde, e se o erro persiste entre em contato com nosso suporte'
           ).toString()

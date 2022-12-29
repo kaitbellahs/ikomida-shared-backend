@@ -1,13 +1,15 @@
-import { Classes } from '@ikomida/shared-types'
+import { Classes, Interfaces } from '@ikomida/shared-types'
 
 export default class Return<T> {
   success: boolean
   data?: T
   status?: number
-  constructor(success: boolean, data?: T, status?: number) {
+  headers?: Interfaces.IMetadata
+  constructor(success: boolean, data?: T, status?: number, headers?: Interfaces.IMetadata) {
     this.success = success
     this.data = data
     this.status = status
+    this.headers = headers
   }
   toString() {
     let data

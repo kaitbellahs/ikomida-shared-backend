@@ -1,5 +1,6 @@
+import { Classes } from '@ikomida/shared-types'
 import Logger from './Logger.js'
-import Return from './Return.js'
+
 export interface IiKomidaErrorModel {
   code: string
   message: string
@@ -69,7 +70,7 @@ export default class iKomidaError {
 
   logAndReturn(logger: Logger) {
     this.log(logger)
-    return new Return(false, this.json(), this.status)
+    return new Classes.Return(false, this.json(), this.status)
   }
 
   //MARK: -MQ Service lib

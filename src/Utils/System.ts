@@ -9,7 +9,9 @@ export async function sleep(ms: number) {
 
 declare module 'express-serve-static-core' {
   interface Response {
-    sendResponse: <T extends any & IiKomidaError>(data: Classes.Return<IiKomidaError> | Classes.Return<T> | T) => Response
+    sendResponse: <T extends any & IiKomidaError>(
+      data: Classes.Return<IiKomidaError> | Classes.Return<T> | T
+    ) => Response
   }
 }
 
@@ -19,9 +21,11 @@ export function setExpressResponse(app: Express) {
       try {
         req.headers.identity = JSON.parse(req.headers?.identity as string)
         // eslint-disable-next-line no-empty
-      } catch (_) { }
+      } catch (_) {}
     }
-    res.sendResponse = function <T extends any & IiKomidaError>(data: Classes.Return<IiKomidaError> | Classes.Return<T> | T): Response {
+    res.sendResponse = function <T extends any & IiKomidaError>(
+      data: Classes.Return<IiKomidaError> | Classes.Return<T> | T
+    ): Response {
       try {
         if (!this?.statusCode) {
           this.status(200)

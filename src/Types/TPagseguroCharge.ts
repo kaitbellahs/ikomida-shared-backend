@@ -13,10 +13,10 @@ export default class TPagseguroCharge extends Types.TBaseType {
         this.description = 'A bandeira do cartão digitado não é suportada'
         break
       case 'INVALID_DATE':
-        this.description = ' A data de validade do cartão não é válida'
+        this.description = 'A data de validade do cartão não é válida'
         break
       case 'INVALID_CARD_ID':
-        this.description = ' O cartão não é válida'
+        this.description = 'O cartão não é válido, recadastre o cartão ou use outro'
         break
       default:
         this.description = 'Os dados do cartão encontram se inválidos'

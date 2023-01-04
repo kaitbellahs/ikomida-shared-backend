@@ -506,7 +506,7 @@ export default class iKomidaError {
   }
   static IKOMIDA_ORDERS_SERVICE_NEW_ORDER_PRODUCTS_PAYMENT_RESPONSE_INVILID: IiKomidaErrorModel = {
     code: 'POS0010',
-    message: 'Não foi possível realizar a cobrança. o seu pedido será cancelado!'
+    message: 'Não foi possível realizar a cobrança ({0}). o seu pedido será cancelado!'
   }
   static IKOMIDA_ORDERS_SERVICE_NEW_ORDER_PRODUCTS_PAYMENT_EXCEPTION: IiKomidaErrorModel = {
     code: 'POS011',

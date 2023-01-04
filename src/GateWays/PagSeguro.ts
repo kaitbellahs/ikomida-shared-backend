@@ -170,6 +170,9 @@ export default class PagSeguro {
     if (message?.includes('exp_month')) {
       return TPagseguroCharge.INVALID_DATE
     }
+    if (message?.includes('INVALID_CARD_ID')) {
+      return TPagseguroCharge.INVALID_CARD_ID
+    }
     return TPagseguroCharge.valueOf(message)
   }
 

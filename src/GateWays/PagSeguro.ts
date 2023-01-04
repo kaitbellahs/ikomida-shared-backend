@@ -336,7 +336,7 @@ export default class PagSeguro {
         type: payload.type.id,
         installments: 1,
         capture: true,
-        soft_descriptor: payload.statementID,
+        soft_descriptor: payload.statementID?.substring(0, 17),
         card
       },
       notification_urls: [`${this.host}${this.webhooks}${payload.contractID}`.replace(/([^:]\/)\/+/g, '$1')],

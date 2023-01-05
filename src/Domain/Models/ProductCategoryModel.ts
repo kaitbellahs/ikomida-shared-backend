@@ -23,9 +23,7 @@ export default class ProductCategoryModel extends BaseModel {
   })
   active?: boolean
   @Column(DataType.JSON)
-  businessHours?: Classes.CBusinessTimeHours[]
-  @Column(DataType.JSON)
-  businessDays?: number[]
+  businessHours?: Classes.CBusinessTime[]
 
   //MARK: --Associations
   @ForeignKey(() => ContractModel)

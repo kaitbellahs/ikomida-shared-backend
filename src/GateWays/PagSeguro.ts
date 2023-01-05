@@ -170,6 +170,9 @@ export default class PagSeguro {
     if (message?.includes('exp_month')) {
       return TPagseguroCharge.INVALID_DATE
     }
+    if (message?.includes('INVALID_CARD_ID')) {
+      return TPagseguroCharge.INVALID_CARD_ID
+    }
     return TPagseguroCharge.valueOf(message)
   }
 
@@ -336,7 +339,7 @@ export default class PagSeguro {
         type: payload.type.id,
         installments: 1,
         capture: true,
-        soft_descriptor: payload.statementID,
+        soft_descriptor: payload.statementID?.substring(0, 17),
         card
       },
       notification_urls: [`${this.host}${this.webhooks}${payload.contractID}`.replace(/([^:]\/)\/+/g, '$1')],

@@ -1,5 +1,5 @@
 import MailjetClient from 'node-mailjet'
-import { TRequestData } from 'node-mailjet/declarations/request/IRequest.js'
+import { RequestData } from 'node-mailjet/declarations/request/Request.js'
 import axios from 'axios'
 import { Classes } from '@ikomida/shared-types'
 import Logger from '../Utils/Logger.js'
@@ -22,7 +22,7 @@ export default class Mailjet {
 
   async send(object: Classes.CEmail) {
     try {
-      const emails: TRequestData = {
+      const emails: RequestData = {
         Messages: [
           {
             From: {

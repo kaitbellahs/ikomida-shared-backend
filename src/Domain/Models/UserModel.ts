@@ -1,5 +1,5 @@
 import { Types } from '@ikomida/shared-types'
-import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo } from 'sequelize-typescript'
+import { Table, Column, DataType, ForeignKey, HasMany, HasOne, BelongsTo, BelongsToMany } from 'sequelize-typescript'
 import PNMessageModel from './PNMessageModel.js'
 import OrderProductModel from './OrderProductModel.js'
 import PNModel from './PNModel.js'
@@ -15,6 +15,8 @@ import UserCreditCardModel from './UserCreditCardModel.js'
 import TermHashModel from './TermHashModel.js'
 import BaseModel from './BaseModel.js'
 import AppModel from './AppModel.js'
+import OrdersGroupUserAssociationModel from './OrdersGroupUserAssociationModel.js'
+import OrdersGroupModel from './OrdersGroupModel.js'
 
 @Table({
   paranoid: true,
@@ -39,6 +41,8 @@ export default class UserModel extends BaseModel {
   phone?: string
   @Column(DataType.INTEGER({ length: 3 }))
   areaCode?: number
+  @Column(DataType.INTEGER)
+  pin?: Number
   @Column(DataType.STRING(100))
   password?: string
   @Column(DataType.JSON)
@@ -120,4 +124,10 @@ export default class UserModel extends BaseModel {
 
   @HasMany(() => AppModel)
   apps?: AppModel[]
+
+  @HasMany(() => OrdersGroupModel)
+  ordersGroups?: OrdersGroupModel[]
+
+  @BelongsToMany(() => OrdersGroupModel, () => OrdersGroupUserAssociationModel)
+  nestedOrdersGroups?: OrdersGroupModel[]
 }

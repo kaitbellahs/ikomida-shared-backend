@@ -5,6 +5,8 @@ import OrderModel from './OrderModel.js'
 import UserCreditCardModel from './UserCreditCardModel.js'
 import UserModel from './UserModel.js'
 import ContractModel from './ContractModel.js'
+import PosModel from './PosModel.js'
+import OrdersGroupModel from './OrdersGroupModel.js'
 
 @Table({
   paranoid: true,
@@ -57,4 +59,16 @@ export default class UserPaymentModel extends BaseModel {
   userCreditCardId?: number
   @BelongsTo(() => UserCreditCardModel)
   userCreditCard?: UserCreditCardModel
+
+  @ForeignKey(() => PosModel)
+  @Column(DataType.UUID)
+  posId?: string
+  @BelongsTo(() => PosModel)
+  pos?: PosModel
+
+  @ForeignKey(() => OrdersGroupModel)
+  @Column(DataType.UUID)
+  ordersGroupId?: string
+  @BelongsTo(() => OrdersGroupModel)
+  ordersGroup?: OrdersGroupModel
 }

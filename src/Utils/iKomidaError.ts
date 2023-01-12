@@ -1248,7 +1248,7 @@ export default class iKomidaError {
   }
   static IKOMIDA_ADMIN_SERVICE_NEW_PLAN_DISCOUNT_TYPE: IiKomidaErrorModel = {
     code: 'PAS017',
-    message: 'Tipo do disconto nao foi definido!'
+    message: 'Tipo do desconto nao foi definido!'
   }
 
   //MARK: -- Reseller microservice

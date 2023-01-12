@@ -4,6 +4,8 @@ import BaseModel from './BaseModel.js'
 import ContractModel from './ContractModel.js'
 import OrderModel from './OrderModel.js'
 import OrderProductOptionModel from './OrderProductOptionModel.js'
+import OrdersGroupModel from './OrdersGroupModel.js'
+import PosModel from './PosModel.js'
 import ProductModel from './ProductModel.js'
 import UserModel from './UserModel.js'
 
@@ -53,6 +55,18 @@ export default class OrderProductModel extends BaseModel {
   productId?: string
   @BelongsTo(() => ProductModel)
   product?: ProductModel
+
+  @ForeignKey(() => PosModel)
+  @Column(DataType.UUID)
+  posId?: string
+  @BelongsTo(() => PosModel)
+  pos?: PosModel
+
+  @ForeignKey(() => OrdersGroupModel)
+  @Column(DataType.UUID)
+  ordersGroupId?: string
+  @BelongsTo(() => OrdersGroupModel)
+  ordersGroup?: OrdersGroupModel
 
   @HasMany(() => OrderProductOptionModel)
   orderProductOptions?: OrderProductOptionModel[]

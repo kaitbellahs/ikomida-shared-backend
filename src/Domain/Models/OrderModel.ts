@@ -10,6 +10,8 @@ import ContractModel from './ContractModel.js'
 import UserPaymentModel from './UserPaymentModel.js'
 import OrderProductOptionModel from './OrderProductOptionModel.js'
 import CGeometry from '../../Types/CGeometry.js'
+import PosModel from './PosModel.js'
+import OrdersGroupModel from './OrdersGroupModel.js'
 
 @Table({
   paranoid: true,
@@ -90,6 +92,18 @@ export default class OrderModel extends BaseModel {
   @BelongsTo(() => CouponModel)
   coupon?: CouponModel
 
+  @ForeignKey(() => PosModel)
+  @Column(DataType.UUID)
+  posId?: string
+  @BelongsTo(() => PosModel)
+  pos?: PosModel
+
+  @ForeignKey(() => OrdersGroupModel)
+  @Column(DataType.UUID)
+  ordersGroupId?: string
+  @BelongsTo(() => OrdersGroupModel)
+  ordersGroup?: OrdersGroupModel
+
   @HasOne(() => UserPaymentModel)
   userPayment?: UserPaymentModel
 
@@ -98,4 +112,10 @@ export default class OrderModel extends BaseModel {
 
   @HasMany(() => OrderProductOptionModel)
   orderProductOptions?: OrderProductOptionModel[]
+
+  @HasMany(() => PosModel)
+  poses?: PosModel[]
+
+  @HasMany(() => OrdersGroupModel)
+  ordersGroups?: OrdersGroupModel[]
 }
